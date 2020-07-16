@@ -1,0 +1,59 @@
+<div class="coreWrapper">
+  <h1>Hello there!</h1>
+  <button class="venueAcc" (click)="triggerModel()">Create a venue account</button>
+</div>
+
+<form class="customModel" *ngIf="showVenueAddModel">
+  <div>
+    <h2>OWNER DETAILS</h2>
+    <div>
+      <label color="primary">YOUR NAME</label>
+      <input type="text" name="name" placeholder="First & Last Name" [(ngModel)]="venueOBJ.userName" />
+    </div>
+    <div>
+      <label color="primary">EMAIL ADDRESS</label>
+      <input type="email" name="email" placeholder="Email"  [(ngModel)]="venueOBJ.email" />
+    </div>
+    <div>
+      <label color="primary">CONTACT PHONE</label>
+      <input type="tel" name="ph" placeholder="Phone" [(ngModel)]="venueOBJ.ph" />
+    </div>
+
+    <h2>ACCOUNT DETAILS</h2>
+    <div>
+      <label color="primary">PASSWORD</label>
+      <input type="password" name="pass" placeholder="Password" [(ngModel)]="venueOBJ.pass" />
+    </div>
+    <div>
+      <label color="primary">CONFIRM PASSWORD</label>
+      <input type="password" name="confirmPass" placeholder="Confirm Password" [(ngModel)]="venueOBJ.confirmPass" />
+    </div>
+  </div>
+  <div>
+    <h2>VENUE DETAILS</h2>
+    <div>
+      <label color="primary">VENUE NAME</label>
+      <input type="text" name="venueName" placeholder="Search for your venue" [(ngModel)]="venueOBJ.venueName" />
+    </div>
+    <div>
+      <label color="primary">PHYSICAL ADDRESS</label>
+      <input type="text" name="street" placeholder="Street Name & Number" [(ngModel)]="venueOBJ.location.street" />
+      <input type="text" name="city" placeholder="City" [(ngModel)]="venueOBJ.location.city" />
+      <input type="text" name="state" placeholder="State" [(ngModel)]="venueOBJ.location.state" />
+      <input type="text" name="postcode" placeholder="Postcode" [(ngModel)]="venueOBJ.location.postcode" />
+    </div>
+    <div>
+      <label color="primary">COUNTRY</label>
+      <input type="text" name="country" placeholder="Country" [(ngModel)]="venueOBJ.location.country" />
+    </div>
+    <div>
+      <label color="primary">INDUSTRY</label>
+      <input type="text" name="industry" placeholder="Industry" [(ngModel)]="venueOBJ.industry" />
+    </div>
+
+    <button type="button" name="button" (click)="submitVenue()">Submit Venue</button>
+  </div>
+
+</form>
+
+<div class="dimmer" *ngIf="showVenueAddModel" (click)="triggerModel()"></div>

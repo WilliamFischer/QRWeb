@@ -1,0 +1,65 @@
+<div class="coreWrapper">
+
+  <div *ngIf="venueFound">
+    <h1>Welcome to {{ currentVenue.venueName }}</h1>
+    <button (click)="triggerModel()">Register</button> <br /><br />
+    <button (click)="triggerSignInModel()">Sign In</button>
+  </div>
+
+  <div *ngIf="!venueFound">
+    <h1>Sorry! Venue not found :(</h1>
+    <button (click)="goToLanding()">Go Home</button>
+  </div>
+
+</div>
+
+<form class="customModel" *ngIf="showUserSignInModel">
+  <div>
+    <h2>WELCOME BACK</h2>
+    <div>
+      <label color="primary">EMAIL ADDRESS</label>
+      <input type="email" name="email" placeholder="Email Address" [(ngModel)]="userObj.email" />
+    </div>
+    <div>
+      <label color="primary">PASSWORD</label>
+      <input type="password" name="password" placeholder="Password" [(ngModel)]="userObj.password" />
+    </div>
+
+    <button type="button" name="name" (click)="submitSignInDetails()">Sign In</button>
+  </div>
+</form>
+
+<form class="customModel" *ngIf="showUserAddModel">
+  <div>
+    <h2>YOUR DETAILS</h2>
+    <div>
+      <label color="primary">NAME</label>
+      <input type="text" name="name" placeholder="First & Last Name" [(ngModel)]="userObj.name" />
+    </div>
+    <div>
+      <label color="primary">EMAIL ADDRESS</label>
+      <input type="email" name="email" placeholder="Email Address" [(ngModel)]="userObj.email" />
+    </div>
+    <div>
+      <label color="primary">PASSWORD</label>
+      <input type="password" name="password" placeholder="Password" [(ngModel)]="userObj.password" />
+    </div>
+  </div>
+
+  <div>
+    <h2>MORE DETAILS</h2>
+    <div>
+      <label color="primary">POST CODE</label>
+      <input type="text" name="postCode" placeholder="Post Code" [(ngModel)]="userObj.postCode" />
+    </div>
+    <div>
+      <label color="primary">PHONE NUMBER</label>
+      <input type="tel" name="ph" placeholder="Phone Number" [(ngModel)]="userObj.ph" />
+    </div>
+
+    <button type="button" name="name" (click)="submitUserDetails()">Register</button>
+  </div>
+
+</form>
+
+<div class="dimmer" *ngIf="showUserAddModel || showUserSignInModel" (click)="hideModels()"></div>
