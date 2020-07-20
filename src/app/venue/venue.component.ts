@@ -7,7 +7,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 @Component({
   selector: 'app-venue',
   templateUrl: './venue.component.html',
-  styleUrls: ['./venue.component.css']
+  styleUrls: ['./venue.component.scss']
 })
 export class VenueComponent implements OnInit {
   currentVenue : any;

@@ -1,0 +1,61 @@
+h1{
+  font-size: 21px;
+}
+
+h3{
+  font-size: 16px;
+
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+
+  width: 50%;
+  color: #8e8e8e;
+}
+
+.topHeader{
+  width: 100%;
+  overflow: hidden;
+  display: inline-flex;
+  background: #fff;
+
+  padding-top: 40px;
+  text-align: center;
+
+  .logo{
+    padding: 5px;
+    color: #D8C8F0;
+    font-size: 21px;
+    width: 100%;
+    text-align: center;
+
+    label{
+      color: #9068D3;
+    }
+  }
+
+}
+
+.checkInList{
+  input{
+    border: none;
+    padding: 15px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+
+  button{
+    padding: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+
+    border: none;
+    background: #9068D3;
+    color: #fff;
+    border-radius: 6px;
+
+    margin-top: 3%;
+  }
+
+}

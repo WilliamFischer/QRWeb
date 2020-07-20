@@ -6,7 +6,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.css']
+  styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent implements OnInit {
 
