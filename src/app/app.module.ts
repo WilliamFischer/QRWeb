@@ -19,6 +19,10 @@ import { VenuePanelComponent } from './venue-panel/venue-panel.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { CheckinSuccessComponent } from './checkin-success/checkin-success.component';
 
+// QR Code
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+import { GeneratedQRComponent } from './generated-qr/generated-qr.component';
+
 export const environment = {
   production: false,
   firebase: {
@@ -39,7 +43,8 @@ export const environment = {
     LandingComponent,
     VenueComponent,
     VenuePanelComponent,
-    CheckinSuccessComponent
+    CheckinSuccessComponent,
+    GeneratedQRComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +53,7 @@ export const environment = {
     AngularFirestoreModule,
     AngularFireAuthModule,
     AgGridModule.withComponents([]),
+    NgxQRCodeModule,
     FormsModule
   ],
   providers: [],

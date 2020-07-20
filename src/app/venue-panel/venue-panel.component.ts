@@ -78,4 +78,7 @@ export class VenuePanelComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  myQR(){this.router.navigateByUrl('/myqr')
+  }
+
 }

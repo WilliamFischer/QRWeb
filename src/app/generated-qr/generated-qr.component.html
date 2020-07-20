@@ -1,0 +1,25 @@
+<div class="topHeader">
+  <div class="logo"><label>QR</label>Web</div>
+</div>
+
+<div class="coreWrapper">
+  <!-- <h1>Thanks for signing up!</h1> -->
+  <br /><br />
+  
+  <h4>
+      Send your guests to this URL:
+      <br /><br /> <a href="{{elementType}}" >{{elementType}}</a> <br /><br />
+      Or <a href="#">print</a>
+      the following QR Code for your guests to scan:
+  </h4>
+
+  <ngx-qrcode
+      [elementType]="elementType"
+      [value] = "value"
+      cssClass = "qrCode"
+      errorCorrectionLevel = "L">
+  </ngx-qrcode>
+
+</div>
+
+<footer></footer>

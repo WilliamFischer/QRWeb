@@ -66,6 +66,9 @@ body, html, router-outlet{
   z-index: 0;
 }
 
+.qrCode img{
+  width: 250px !important;
+}
 
 
 footer{
