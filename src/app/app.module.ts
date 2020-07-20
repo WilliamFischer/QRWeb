@@ -13,6 +13,11 @@ import { VenueComponent } from './venue/venue.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { VenuePanelComponent } from './venue-panel/venue-panel.component';
+
+// AG Grid
+import { AgGridModule } from 'ag-grid-angular';
+import { CheckinSuccessComponent } from './checkin-success/checkin-success.component';
 
 export const environment = {
   production: false,
@@ -32,7 +37,9 @@ export const environment = {
   declarations: [
     AppComponent,
     LandingComponent,
-    VenueComponent
+    VenueComponent,
+    VenuePanelComponent,
+    CheckinSuccessComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +47,7 @@ export const environment = {
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    AgGridModule.withComponents([]),
     FormsModule
   ],
   providers: [],

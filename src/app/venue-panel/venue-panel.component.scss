@@ -1,0 +1,52 @@
+.dataTableWrapper{
+  width: 90% !important;
+}
+
+h1{
+  text-transform: capitalize;
+  color: #8e8e8e;
+  font-size: 21px;
+  margin-bottom: 5%;
+}
+
+.headerSection{
+  width: 100%;
+
+  .topSection{
+    width: 100%;
+    overflow: hidden;
+    display: inline-flex;
+
+    .logo{
+      padding: 5px;
+      color: #D8C8F0;
+      font-size: 21px;
+
+      label{
+        color: #9068D3;
+      }
+    }
+
+    .side{
+      width: 50%;
+
+      padding-left: 40px;
+      padding-right: 40px;
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+
+    .signInFloatBtn{
+      padding: 10px;
+      border: none;
+      background: #9068D3;
+      color: #fff;
+      border-radius: 10px;
+      width: 130px;
+      white-space: nowrap;
+      font-weight: 900;
+
+      float: right;
+    }
+  }
+}

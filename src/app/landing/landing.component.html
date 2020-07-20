@@ -1,8 +1,15 @@
-<div class="simpleWrapper">
+<div class="simpleWrapper" *ngIf="canShowPage">
   <div class="headerSection">
+
       <div class="topSection">
-        <div class="logo"><label>QR</label>Web</div>
+        <div class="side">
+          <div class="logo"><label>QR</label>Web</div>
+        </div>
+        <div class="side">
+          <button class="signInFloatBtn" (click)="triggerSigninModel()">Venue Login</button>
+        </div>
       </div>
+
       <div class="coreGrid">
         <div class="side leftSide">
           <div class="contentWrap">
@@ -11,9 +18,10 @@
           </div>
         </div>
         <div class="side rightSide">
-          <img src="https://cdn.dribbble.com/users/663312/screenshots/4844936/dribbble_girl.png" />
+          <img src="../assets/landing_header.png" />
         </div>
       </div>
+
   </div>
 </div>
 
@@ -28,7 +36,7 @@
       <input type="text" name="name" placeholder="First & Last Name" [(ngModel)]="venueOBJ.userName" />
     </div>
     <div>
-      <input type="email" name="email" placeholder="Email"  [(ngModel)]="venueOBJ.email" />
+      <input type="email" name="email" placeholder="Email"  [(ngModel)]="venueACCOBJ.email" />
     </div>
     <div>
       <input type="tel" name="ph" placeholder="Phone" [(ngModel)]="venueOBJ.ph" />
@@ -36,10 +44,10 @@
 
     <h2>ACCOUNT DETAILS</h2>
     <div>
-      <input type="password" name="pass" placeholder="Password" [(ngModel)]="venueOBJ.pass" />
+      <input type="password" name="pass" placeholder="Password" [(ngModel)]="venueACCOBJ.pass" />
     </div>
     <div>
-      <input type="password" name="confirmPass" placeholder="Confirm Password" [(ngModel)]="venueOBJ.confirmPass" />
+      <input type="password" name="confirmPass" placeholder="Confirm Password" [(ngModel)]="venueACCOBJ.confirmPass" />
     </div>
   </div>
 
@@ -69,4 +77,29 @@
 
 </form>
 
-<div class="dimmer" *ngIf="showVenueAddModel" (click)="triggerModel()"></div>
+
+<form class="customModel registerModel" *ngIf="showVenueLoginModel">
+  <div class="fullSide">
+    <h1>Welcome Back! Login to view your guests.</h1>
+  </div>
+
+  <div class="fullSide">
+    <div>
+      <input type="email" name="email" placeholder="Email Address"  [(ngModel)]="venueShortOBJ.email" />
+    </div>
+    <div>
+      <input type="password" name="password" placeholder="Password" [(ngModel)]="venueShortOBJ.password" />
+    </div>
+  </div>
+
+  <div class="fullSide">
+    <button type="button" class="registerVenueBtn" (click)="login()">Login As Venue</button>
+    <div class="buffer"></div>
+  </div>
+
+</form>
+
+<footer>
+</footer>
+
+<div class="dimmer" *ngIf="showVenueAddModel || showVenueLoginModel" (click)="closeModals()"></div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 
 // Firebase
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -14,11 +14,11 @@ export class VenueComponent implements OnInit {
   venueFound : boolean;
   showUserAddModel : boolean;
   showUserSignInModel : boolean;
+  venueLoaded : boolean;
 
   userObj = {
     name : '',
     email : '',
-    password : '',
     postCode : '',
     ph : '',
     date : ''
@@ -30,7 +30,7 @@ export class VenueComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let venueCode = window.location.pathname.replace('/venue/', '');
+    let venueCode = window.location.pathname.replace('/', '');
 
     let venueCollection = this.fireStore.collection('Venues/').valueChanges().subscribe(
     venues =>{
@@ -50,6 +50,8 @@ export class VenueComponent implements OnInit {
       if(!venueExists){
         this.venueFound = false;
       }
+
+      this.venueLoaded = true;
     });
   }
 
@@ -92,6 +94,8 @@ export class VenueComponent implements OnInit {
     venueSignInAddress.set(this.userObj,{
       merge: true
     });
+
+    this.router.navigateByUrl('/success')
   }
 
 }

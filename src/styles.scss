@@ -1,16 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
 
+// Font Imports
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700&display=swap');
+
+// AG Grid Import
+@import "../node_modules/ag-grid-community/src/styles/ag-grid.scss";
+@import "../node_modules/ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin.scss";
+
+.ag-theme-alpine {
+    @include ag-theme-alpine();
+}
 
 *{
   font-family: 'Mulish', sans-serif;
+  transition: all 1s ease;
 }
 
 body, html, router-outlet{
   padding: 0;
   margin: 0;
 
-  background: #FCFBFC;
+  background: #fff;
 }
 
 .coreWrapper{
@@ -25,6 +34,29 @@ body, html, router-outlet{
   padding-top: 3%;
 }
 
+.topHeader{
+  width: 100%;
+  overflow: hidden;
+  display: inline-flex;
+  background: #FCFBFC;
+
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+
+  .logo{
+    padding: 5px;
+    color: #D8C8F0;
+    font-size: 21px;
+    width: 100%;
+    text-align: center;
+
+    label{
+      color: #9068D3;
+    }
+  }
+}
+
 .dimmer{
   position: absolute;
   width: 100%;
@@ -34,9 +66,20 @@ body, html, router-outlet{
   z-index: 0;
 }
 
+
+
+footer{
+  width: 100%;
+  display: block;
+  bottom: 0;
+  height: 80px;
+  background: #FCFBFC;
+  position: absolute;
+}
+
 .customModel{
-  width: 50%;
-  height: 500px;
+  width: 800px;
+  height: 600px;
   top: 10%;
   position: absolute;
   display: flex;
@@ -59,18 +102,20 @@ body, html, router-outlet{
 @media (max-width: 750px) {
   .side{
     width: 100% !important;
+    height: auto !important;
   }
 
-  .leftSide{
-    order: 2 !important;
-  }
-
-  .rightSide{
-    order:1 !important;
-  }
+  // .leftSide{
+  //   order: 2 !important;
+  // }
+  //
+  // .rightSide{
+  //   order:1 !important;
+  // }
 
   .contentWrap{
-    margin-top: 0% !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
 
   .customModel{

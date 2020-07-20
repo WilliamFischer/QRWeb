@@ -3,55 +3,30 @@
 </div>
 
 <div class="coreWrapper">
-  <div *ngIf="venueFound">
-    <h1>Checkin to {{ currentVenue.venueName }}</h1>
-    <h3>Please enter your details below to check in and then show your confirmed check in message to one of our team</h3>
+  <div *ngIf="venueLoaded">
+    <div *ngIf="venueFound">
+      <h1>Check-in to <u>{{ currentVenue.venueName }}</u></h1>
+      <h3>Please enter your details below to check in and then show your confirmed check in message to one of our team</h3>
 
-    <div class="checkInList">
-      <div class="slide">
-        <input type="text" name="name" placeholder="First & Last Name" [(ngModel)]="userObj.name" />
-        <input type="text" name="postCode" placeholder="Post Code" [(ngModel)]="userObj.postCode" />
-      </div>
-      <div class="slide">
-        <input type="email" name="email" placeholder="Email Address" [(ngModel)]="userObj.email" />
-        <input type="tel" name="ph" placeholder="Phone Number" [(ngModel)]="userObj.ph" />
-      </div>
+      <div class="checkInList">
+        <div class="slide">
+          <input type="text" name="name" placeholder="First & Last Name" [(ngModel)]="userObj.name" />
+          <input type="text" name="postCode" placeholder="Post Code" [(ngModel)]="userObj.postCode" />
+        </div>
+        <div class="slide">
+          <input type="email" name="email" placeholder="Email Address" [(ngModel)]="userObj.email" />
+          <input type="tel" name="ph" placeholder="Phone Number" [(ngModel)]="userObj.ph" />
+        </div>
 
-      <div class="fullSide">
-        <button type="button" name="name" (click)="submitUserDetails()">Register</button>
+        <div class="fullSide">
+          <button type="button" name="name" (click)="submitUserDetails()">Register</button>
+        </div>
       </div>
     </div>
 
-    <!-- <button (click)="triggerModel()">Firsttime using </button> <br /><br />
-    <button (click)="triggerSignInModel()">Sign In</button> -->
+    <div *ngIf="!venueFound">
+      <h1>Sorry! Venue not found :(</h1>
+      <button (click)="goToLanding()">Go Home</button>
+    </div>
   </div>
-
-  <div *ngIf="!venueFound">
-    <h1>Sorry! Venue not found :(</h1>
-    <button (click)="goToLanding()">Go Home</button>
-  </div>
-
 </div>
-
-<!-- <form class="customModel" *ngIf="showUserSignInModel">
-  <div>
-    <h2>WELCOME BACK</h2>
-    <div>
-      <label color="primary">EMAIL ADDRESS</label>
-      <input type="email" name="email" placeholder="Email Address" [(ngModel)]="userObj.email" />
-    </div>
-    <div>
-      <label color="primary">PASSWORD</label>
-      <input type="password" name="password" placeholder="Password" [(ngModel)]="userObj.password" />
-    </div>
-
-    <button type="button" name="name" (click)="submitSignInDetails()">Sign In</button>
-  </div>
-</form>
-
-<form class="customModel" *ngIf="showUserAddModel">
-
-
-</form> -->
-
-<div class="dimmer" *ngIf="showUserAddModel || showUserSignInModel" (click)="hideModels()"></div>
