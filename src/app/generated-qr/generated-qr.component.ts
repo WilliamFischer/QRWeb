@@ -12,8 +12,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class GeneratedQRComponent implements OnInit {
 
-  elementType = 'https://www.npmjs.com/package/@techiediaries/ngx-qrcode';
-  value = 'Techiediaries';
+  qrCodeUrl : string;
 
   user : any;
   canShowPage: boolean;
@@ -47,10 +46,8 @@ export class GeneratedQRComponent implements OnInit {
         if(this.user.uid == venue['uid']){
           console.log(venue)
 
-          this.elementType = window.location.href.replace('/myqr', '/' + venue.venueURL);
-          this.value = venue.venueName;
-
-          console.log(this.elementType)
+          this.qrCodeUrl = window.location.href.replace('/myqr', '/' + venue.venueURL);
+          console.log('Generated URL is ' + this.qrCodeUrl)
 
           this.canShowPage = true;
           venueCollection.unsubscribe();
