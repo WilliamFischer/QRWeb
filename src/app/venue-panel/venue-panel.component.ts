@@ -66,6 +66,9 @@ export class VenuePanelComponent implements OnInit {
   }
 
   getRowData() {
+
+    console.log(this.user);
+
     let venueCollection = this.fireStore.collection('Venues/').valueChanges().subscribe(
     venues =>{
       let venueObj = [];
@@ -74,7 +77,8 @@ export class VenuePanelComponent implements OnInit {
       venueObj.push(venues);
 
       venueObj[0].forEach(venue => {
-        if(this.user.uid == venue['uid']){
+        console.log(this.user.email +' vs '+ venue['email'])
+        if(this.user.email == venue['email']){
           venueExists = true;
           this.venue = venue;
           console.log(venue)
@@ -92,6 +96,7 @@ export class VenuePanelComponent implements OnInit {
 
       if(!venueExists){
         alert('Oops! We couldn\'t find any venues under your account, please login again.');
+        this.logout();
       }
 
     });

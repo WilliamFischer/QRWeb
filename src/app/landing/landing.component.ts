@@ -25,7 +25,7 @@ export class LandingComponent implements OnInit {
   };
 
   venueOBJ : any = {
-    userName : '',
+    email : '',
     uid : '',
     ph : '',
     location : {
@@ -98,8 +98,12 @@ export class LandingComponent implements OnInit {
 
   async login() {
     if(this.venueShortOBJ.email && this.venueShortOBJ.password){
-      var result = await this.afAuth.signInWithEmailAndPassword(this.venueShortOBJ.email, this.venueShortOBJ.password)
-      this.router.navigate(['/venuepanel']);
+      var result = await this.afAuth.signInWithEmailAndPassword(this.venueShortOBJ.email, this.venueShortOBJ.password).then(function() {
+        this.router.navigate(['/venuepanel']);
+      }).catch(function(error) {
+        console.log(error);
+        alert(error.message);
+      });
     }else{
       alert('Something is missing...')
     }
@@ -109,6 +113,7 @@ export class LandingComponent implements OnInit {
     this.afAuth.authState.subscribe(user => {
       if (user){
         this.venueOBJ.uid = user.uid;
+        this.venueOBJ.email = this.venueACCOBJ.email
         localStorage.setItem('user', JSON.stringify(user));
 
         this.saveUser();
