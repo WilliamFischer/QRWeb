@@ -2,10 +2,10 @@
   <div class="logo"><label>QR</label>Web</div>
 </div>
 
-<div class="coreWrapper">
+<div class="coreWrapper venueCore">
   <div *ngIf="venueLoaded">
     <div *ngIf="venueFound">
-      <h1>Check-in to <u>{{ currentVenue.venueName }}</u></h1>
+      <h1>Check-in to {{ currentVenue.venueName }}</h1>
       <h3>Please enter your details below to check in and then show your confirmed check in message to one of our team</h3>
 
       <div class="checkInList">

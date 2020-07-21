@@ -1,15 +1,15 @@
 <div class="topHeader">
-  <div class="logo"><label>QR</label>Web</div>
+  <div class="logo" (click)="goHome()"><label>QR</label>Web</div>
 </div>
 
-<div class="coreWrapper">
+<div class="coreWrapper genQRWrapper" *ngIf="canShowPage">
   <!-- <h1>Thanks for signing up!</h1> -->
   <br /><br />
-  
+
   <h4>
       Send your guests to this URL:
-      <br /><br /> <a href="{{elementType}}" >{{elementType}}</a> <br /><br />
-      Or <a href="#">print</a>
+      <br /><br /> <a href="{{elementType}}" target="_blank">{{elementType}}</a> <br /><br />
+      Or <a href="javascript:void(0);" (click)="printTrigger()">print</a>
       the following QR Code for your guests to scan:
   </h4>
 
@@ -19,6 +19,10 @@
       cssClass = "qrCode"
       errorCorrectionLevel = "L">
   </ngx-qrcode>
+
+  <div class="fullSide">
+    <button type="button" name="name" class="registerVenueBtn" (click)="goHome()">View Guests</button>
+  </div>
 
 </div>
 

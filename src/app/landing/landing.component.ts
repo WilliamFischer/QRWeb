@@ -16,6 +16,8 @@ export class LandingComponent implements OnInit {
   showVenueLoginModel : boolean;
   canShowPage : boolean;
 
+  hasChecked : string;
+
   venueACCOBJ : any = {
     email : '',
     pass : '',
@@ -71,22 +73,26 @@ export class LandingComponent implements OnInit {
   }
 
   submitVenue(){
-    if(this.venueACCOBJ.email && this.venueACCOBJ.pass){
-      if(this.venueACCOBJ.pass.length >= 6){
+    if(this.hasChecked){
+      if(this.venueACCOBJ.email && this.venueACCOBJ.pass){
+        if(this.venueACCOBJ.pass.length >= 6){
 
-        let scope = this;
+          let scope = this;
 
-        this.afAuth.createUserWithEmailAndPassword(this.venueACCOBJ.email, this.venueACCOBJ.pass).then(function() {
-          scope.checkUserStatus();
-        }).catch(function(error) {
-          alert(error.message);
-        });
+          this.afAuth.createUserWithEmailAndPassword(this.venueACCOBJ.email, this.venueACCOBJ.pass).then(function() {
+            scope.checkUserStatus();
+          }).catch(function(error) {
+            alert(error.message);
+          });
 
+        }else{
+          alert('Your password is too short!')
+        }
       }else{
-        alert('Your password is too short!')
+        alert('Please enter a password & email')
       }
     }else{
-      alert('Something is wrong!')
+      alert('You haven\'t agree to our terms & conditions')
     }
   }
 
@@ -116,15 +122,14 @@ export class LandingComponent implements OnInit {
     console.log(this.venueOBJ);
 
     this.venueOBJ.venueURL = this.venueOBJ.venueName.toLowerCase().replace(/ /g, '');
-    let venueAddress = this.fireStore.doc('Venues/' + this.venueOBJ.venueURL);
-    venueAddress.set(this.venueOBJ,{
+    this.fireStore.doc('Venues/' + this.venueOBJ.venueURL).set(this.venueOBJ,{
       merge: true
     });
 
-    alert('Welcome to QRWeb!');
+    alert('Welcome to QRWeb! You will now be taken to your QR Code');
     this.triggerModel();
 
-    this.router.navigate(['/venuepanel']);
+    this.router.navigate(['/myqr']);
   }
 
 }

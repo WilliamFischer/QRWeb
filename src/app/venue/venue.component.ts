@@ -44,11 +44,14 @@ export class VenueComponent implements OnInit {
           this.currentVenue = venue;
           this.venueFound = true;
           venueExists = true;
+
+          venueCollection.unsubscribe();
         }
       });
 
       if(!venueExists){
         this.venueFound = false;
+        venueCollection.unsubscribe();
       }
 
       this.venueLoaded = true;
@@ -76,8 +79,8 @@ export class VenueComponent implements OnInit {
     console.log(this.userObj)
 
     this.userObj.date = new Date().toString();
-    let userAddress = this.fireStore.doc('Users/' + this.userObj.email);
-    userAddress.set(this.userObj,{
+
+    this.fireStore.doc('Users/' + this.userObj.email).set(this.userObj,{
       merge: true
     });
 
@@ -90,8 +93,7 @@ export class VenueComponent implements OnInit {
 
   signUserIn(){
     this.userObj.date = new Date().toString();
-    let venueSignInAddress = this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/SIGNINS/' + this.userObj.date);
-    venueSignInAddress.set(this.userObj,{
+    this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/SIGNINS/' + this.userObj.date).set(this.userObj,{
       merge: true
     });
 

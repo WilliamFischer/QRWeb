@@ -1,0 +1,23 @@
+@media print {
+   #header, #footer, #nav, .topHeader, h4{
+     display: none !important;
+   }
+
+   .qrCode img{
+     width: 9000px !important;
+   }
+}
+
+
+.registerVenueBtn{
+  padding: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+
+  border: none;
+  background: #9068D3;
+  color: #fff;
+  border-radius: 10px;
+
+  margin-top: 3%;
+}

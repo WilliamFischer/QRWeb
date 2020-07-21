@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,7 +18,11 @@ import { VenuePanelComponent } from './venue-panel/venue-panel.component';
 
 // AG Grid
 import { AgGridModule } from 'ag-grid-angular';
+import 'ag-grid-enterprise';
+
 import { CheckinSuccessComponent } from './checkin-success/checkin-success.component';
+
+
 
 // QR Code
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
@@ -54,7 +59,8 @@ export const environment = {
     AngularFireAuthModule,
     AgGridModule.withComponents([]),
     NgxQRCodeModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

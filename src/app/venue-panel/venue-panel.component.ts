@@ -17,13 +17,34 @@ export class VenuePanelComponent implements OnInit {
   venue : any;
   rowData : any;
 
-  columnDefs = [
+  gridOptions = {
+    columnDefs: [
+      {headerName: 'Check-in Date', field: 'date'},
       {headerName: 'Name', field: 'name'},
       {headerName: 'Email Address', field: 'email'},
       {headerName: 'Postcode', field: 'postCode'},
-      {headerName: 'Phone Number', field: 'ph'},
-      {headerName: 'Check-in Date', field: 'date'}
-  ];
+      {headerName: 'Phone Number', field: 'ph'}
+    ],
+    defaultColDef : {
+      flex: 1,
+      sortable: true,
+      filter: true,
+      resizable: true
+    },
+    enableSorting: true,
+    sideBar : {
+        toolPanels: [
+            {
+                id: 'filters',
+                labelDefault: 'Filters',
+                labelKey: 'filters',
+                iconKey: 'filter',
+                toolPanel: 'agFiltersToolPanel',
+            }
+        ],
+        defaultToolPanel: ''
+    }
+  };
 
   constructor(
     private fireStore : AngularFirestore,
@@ -62,6 +83,9 @@ export class VenuePanelComponent implements OnInit {
           users =>{
             console.log(users);
             this.rowData = users;
+
+            venueCollection.unsubscribe();
+            userCollection.unsubscribe();
           });
         }
       });

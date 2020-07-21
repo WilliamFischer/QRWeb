@@ -7,23 +7,20 @@
       <div class="side">
         <button class="signInFloatBtn" (click)="logout()">Logout</button>
         <button class="signInFloatBtn" (click)="myQR()">MY QR</button>
-        </div>
+      </div>
     </div>
 
 </div>
 
 
 <div class="coreWrapper dataTableWrapper" *ngIf="canShowPage && venue">
-
-
   <h1>{{venue.venueName}}'s Guests</h1>
 
   <ag-grid-angular
       style="width: 100%; height: 500px;"
       class="ag-theme-alpine"
       [rowData]="rowData"
-      [columnDefs]="columnDefs"
-      [defaultColDef]="{flex: 1, sortable: true, filter: true, resizable: true}"
+      [gridOptions]="gridOptions"
       >
   </ag-grid-angular>
 </div>
