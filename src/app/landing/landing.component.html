@@ -58,13 +58,7 @@
       <input type="text" name="venueName" placeholder="Venue Name" [(ngModel)]="venueOBJ.venueName" />
     </div>
     <div>
-      <input type="text" name="street" placeholder="Street Name & Number" [(ngModel)]="venueOBJ.location.street" /><br />
-      <input type="text" name="city" placeholder="City" [(ngModel)]="venueOBJ.location.city" /><br />
-      <input type="text" name="state" placeholder="State" [(ngModel)]="venueOBJ.location.state" /><br />
-      <input type="text" name="postcode" placeholder="Postcode" [(ngModel)]="venueOBJ.location.postcode" />
-    </div>
-    <div>
-      <input type="text" name="country" placeholder="Country" [(ngModel)]="venueOBJ.location.country" />
+      <input ngx-google-places-autocomplete #places="ngx-places" (onAddressChange)="onChange($event)" />
     </div>
     <div>
       <input type="text" name="industry" placeholder="Industry (Optional)" [(ngModel)]="venueOBJ.industry" />

@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+
+// Maps
+import { GooglePlaceDirective } from "ngx-google-places-autocomplete";
+import { Address } from "ngx-google-places-autocomplete/objects/address";
 
 // Firebase
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -11,12 +15,18 @@ import { AngularFireAuth } from '@angular/fire/auth';
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent implements OnInit {
+  @ViewChild("placesRef") placesRef : GooglePlaceDirective;
 
   showVenueAddModel : boolean;
   showVenueLoginModel : boolean;
   canShowPage : boolean;
 
   hasChecked : string;
+
+  // options : any = {
+  //   types: [],
+  //   componentRestrictions: { country: 'AU' }
+  // };
 
   venueACCOBJ : any = {
     email : '',
@@ -28,13 +38,7 @@ export class LandingComponent implements OnInit {
     email : '',
     uid : '',
     ph : '',
-    location : {
-      street : '',
-      city : '',
-      state : '',
-      postcode : '',
-      country : ''
-    },
+    location : '',
     industry : ''
   };
 
@@ -75,18 +79,22 @@ export class LandingComponent implements OnInit {
   submitVenue(){
     if(this.hasChecked){
       if(this.venueACCOBJ.email && this.venueACCOBJ.pass){
-        if(this.venueACCOBJ.pass.length >= 6){
+        if(this.venueOBJ.location){
+          if(this.venueACCOBJ.pass.length >= 6){
 
-          let scope = this;
+            let scope = this;
 
-          this.afAuth.createUserWithEmailAndPassword(this.venueACCOBJ.email, this.venueACCOBJ.pass).then(function() {
-            scope.checkUserStatus();
-          }).catch(function(error) {
-            alert(error.message);
-          });
+            this.afAuth.createUserWithEmailAndPassword(this.venueACCOBJ.email, this.venueACCOBJ.pass).then(function() {
+              scope.checkUserStatus();
+            }).catch(function(error) {
+              console.warn(error.message);
+            });
 
+          }else{
+            alert('Your password is too short!')
+          }
         }else{
-          alert('Your password is too short!')
+          alert('Please enter an address')
         }
       }else{
         alert('Please enter a password & email')
@@ -135,6 +143,16 @@ export class LandingComponent implements OnInit {
     this.triggerModel();
 
     this.router.navigate(['/myqr']);
+  }
+
+  onChange(address: Address) {
+    console.log(address);
+    this.venueOBJ.location = address.formatted_address;
+  }
+
+
+  goHome(){
+    this.router.navigate(['/']);
   }
 
 }

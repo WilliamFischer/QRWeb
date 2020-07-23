@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+
+// Maps
+import { GooglePlaceDirective } from "ngx-google-places-autocomplete";
+import { Address } from "ngx-google-places-autocomplete/objects/address";
 
 // Firebase
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -10,6 +14,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
   styleUrls: ['./venue.component.scss']
 })
 export class VenueComponent implements OnInit {
+  @ViewChild("placesRef") placesRef : GooglePlaceDirective;
+
   currentVenue : any;
   venueFound : boolean;
   showUserAddModel : boolean;
@@ -19,7 +25,8 @@ export class VenueComponent implements OnInit {
   userObj = {
     name : '',
     email : '',
-    postCode : '',
+    address : '',
+    guestCount: '',
     ph : '',
     date : ''
   }
@@ -76,15 +83,23 @@ export class VenueComponent implements OnInit {
   }
 
   submitUserDetails(){
-    console.log(this.userObj)
+    if(this.userObj.name){
+      if(this.userObj.address){
+        console.log(this.userObj)
 
-    this.userObj.date = new Date().toString();
+        this.userObj.date = new Date().toString();
 
-    this.fireStore.doc('Users/' + this.userObj.email).set(this.userObj,{
-      merge: true
-    });
+        this.fireStore.doc('Users/' + this.userObj.email).set(this.userObj,{
+          merge: true
+        });
 
-    this.signUserIn();
+        this.signUserIn();
+      }else{
+        alert('Please enter an address')
+      }
+    }else{
+      alert('Something is missing..')
+    }
   }
 
   submitSignInDetails(){
@@ -93,11 +108,20 @@ export class VenueComponent implements OnInit {
 
   signUserIn(){
     this.userObj.date = new Date().toString();
-    this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/SIGNINS/' + this.userObj.date).set(this.userObj,{
+    this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + this.userObj.date).set(this.userObj,{
       merge: true
     });
 
     this.router.navigateByUrl('/success')
+  }
+
+  goHome(){
+    this.router.navigate(['/']);
+  }
+
+  onChange(address: Address) {
+    console.log(address);
+    this.userObj.address = address.formatted_address;
   }
 
 }

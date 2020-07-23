@@ -20,10 +20,11 @@ export class VenuePanelComponent implements OnInit {
   gridOptions = {
     columnDefs: [
       {headerName: 'Check-in Date', field: 'date'},
-      {headerName: 'Name', field: 'name'},
+      {headerName: 'Full Name', field: 'name'},
       {headerName: 'Email Address', field: 'email'},
-      {headerName: 'Postcode', field: 'postCode'},
-      {headerName: 'Phone Number', field: 'ph'}
+      {headerName: 'Address', field: 'address'},
+      {headerName: 'Phone Number', field: 'ph'},
+      {headerName: '# Of Guests', field: 'guestCount'}
     ],
     defaultColDef : {
       flex: 1,
@@ -83,7 +84,7 @@ export class VenuePanelComponent implements OnInit {
           this.venue = venue;
           console.log(venue)
 
-          let userCollection = this.fireStore.collection('Venues/' + venue['venueURL']  + '/SIGNINS').valueChanges().subscribe(
+          let userCollection = this.fireStore.collection('Venues/' + venue['venueURL']  + '/guests').valueChanges().subscribe(
           users =>{
             console.log(users);
             this.rowData = users;

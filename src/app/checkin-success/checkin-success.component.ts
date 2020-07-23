@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,13 +9,17 @@ import { Router } from '@angular/router';
 })
 export class CheckinSuccessComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private location: Location) { }
 
   ngOnInit(): void {
   }
 
   goHome(){
     this.router.navigate(['/']);
+  }
+
+  checkInAgain (){
+    this.location.back();
   }
 
 }

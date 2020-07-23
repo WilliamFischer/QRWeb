@@ -1,5 +1,5 @@
 <div class="topHeader">
-  <div class="logo"><label>QR</label>Web</div>
+  <div class="logo" (click)="goHome()"><label>QR</label>Web</div>
 </div>
 
 <div class="coreWrapper venueCore">
@@ -9,13 +9,18 @@
       <h3>Please enter your details below to check in and then show your confirmed check in message to one of our team</h3>
 
       <div class="checkInList">
+
         <div class="slide">
           <input type="text" name="name" placeholder="First & Last Name" [(ngModel)]="userObj.name" />
-          <input type="text" name="postCode" placeholder="Post Code" [(ngModel)]="userObj.postCode" />
+          <input type="text" ngx-google-places-autocomplete #places="ngx-places" (onAddressChange)="onChange($event)"/>
         </div>
         <div class="slide">
           <input type="email" name="email" placeholder="Email Address" [(ngModel)]="userObj.email" />
           <input type="tel" name="ph" placeholder="Phone Number" [(ngModel)]="userObj.ph" />
+        </div>
+        
+        <div class="fullSide">
+          <input type="number" name="guests" placeholder="Number of guests from this address?" [(ngModel)]="userObj.guestCount" />
         </div>
 
         <div class="fullSide">

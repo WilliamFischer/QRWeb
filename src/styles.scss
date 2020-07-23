@@ -26,6 +26,10 @@ body, html, router-outlet{
   background: #fff;
 }
 
+.pac-container {
+  z-index: 10000 !important;
+}
+
 .coreWrapper{
   width: 80%;
 
@@ -147,6 +151,7 @@ footer{
     width: 90% !important;
     top: 5% !important;
   }
+
 }
 
 @media print {

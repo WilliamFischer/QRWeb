@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 // Our Pages
 import { LandingComponent } from './landing/landing.component';
 import { VenueComponent } from './venue/venue.component';
+import { CheckinSuccessComponent } from './checkin-success/checkin-success.component';
 
 // Firebase
 import { AngularFireModule } from '@angular/fire';
@@ -20,7 +21,9 @@ import { VenuePanelComponent } from './venue-panel/venue-panel.component';
 import { AgGridModule } from 'ag-grid-angular';
 import 'ag-grid-enterprise';
 
-import { CheckinSuccessComponent } from './checkin-success/checkin-success.component';
+// GOOGLE MAPS AUTOCOMPLETE
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+
 
 
 
@@ -59,6 +62,7 @@ export const environment = {
     AngularFireAuthModule,
     AgGridModule.withComponents([]),
     NgxQRCodeModule,
+    GooglePlaceModule,
     FormsModule,
     HttpClientModule
   ],
