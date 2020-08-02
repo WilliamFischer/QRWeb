@@ -56,7 +56,8 @@ export class LandingComponent implements OnInit {
   ngOnInit(): void {
     this.afAuth.authState.subscribe(user => {
       if (user){
-        this.router.navigate(['/venuepanel']);
+        // this.router.navigate(['/venuepanel']);
+        this.router.navigate(['/myqr']);
       }else{
         this.canShowPage = true;
       }
@@ -87,7 +88,7 @@ export class LandingComponent implements OnInit {
             this.afAuth.createUserWithEmailAndPassword(this.venueACCOBJ.email, this.venueACCOBJ.pass).then(function() {
               scope.checkUserStatus();
             }).catch(function(error) {
-              console.warn(error.message);
+              alert(error.message);
             });
 
           }else{
@@ -105,9 +106,11 @@ export class LandingComponent implements OnInit {
   }
 
   async login() {
+    let scope = this;
+
     if(this.venueShortOBJ.email && this.venueShortOBJ.password){
-      var result = await this.afAuth.signInWithEmailAndPassword(this.venueShortOBJ.email, this.venueShortOBJ.password).then(function() {
-        this.router.navigate(['/venuepanel']);
+      await this.afAuth.signInWithEmailAndPassword(this.venueShortOBJ.email, this.venueShortOBJ.password).then(function() {
+        scope.router.navigate(['/venuepanel']);
       }).catch(function(error) {
         console.log(error);
         alert(error.message);
@@ -150,9 +153,7 @@ export class LandingComponent implements OnInit {
     this.venueOBJ.location = address.formatted_address;
   }
 
-
   goHome(){
     this.router.navigate(['/']);
   }
-
 }

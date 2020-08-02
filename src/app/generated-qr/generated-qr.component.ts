@@ -64,4 +64,9 @@ export class GeneratedQRComponent implements OnInit {
     window.print();
   }
 
+  logout(){
+    this.afAuth.signOut();
+    this.router.navigate(['/']);
+  }
+
 }

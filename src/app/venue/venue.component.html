@@ -8,30 +8,75 @@
       <h1>Check-in to {{ currentVenue.venueName }}</h1>
       <h3>Please enter your details below to check in and then show your confirmed check in message to one of our team</h3>
 
-      <div class="checkInList">
-
-        <div class="slide">
-          <input type="text" name="name" placeholder="First & Last Name" [(ngModel)]="userObj.name" />
-          <input type="text" ngx-google-places-autocomplete #places="ngx-places" (onAddressChange)="onChange($event)"/>
-        </div>
-        <div class="slide">
-          <input type="email" name="email" placeholder="Email Address" [(ngModel)]="userObj.email" />
-          <input type="tel" name="ph" placeholder="Phone Number" [(ngModel)]="userObj.ph" />
-        </div>
-        
-        <div class="fullSide">
-          <input type="number" name="guests" placeholder="Number of guests from this address?" [(ngModel)]="userObj.guestCount" />
+      <div class="coreStyler">
+        <div *ngIf="!emailSignupMode && !emailSigninMode && !googleSigninMode">
+          <div class="fullSide">
+            <button type="button" name="name" (click)="googleSignin()">Check In With Google</button> <br /> <br />
+            <button type="button" name="name" (click)="triggerEmailSignup()">Create An Account With a New Email</button> <br />
+            <button type="button" name="name" (click)="triggerEmailSignin()">Check In With An Existing Email</button>
+          </div>
         </div>
 
-        <div class="fullSide">
-          <button type="button" name="name" (click)="submitUserDetails()">Check In</button>
+        <div *ngIf="googleSigninMode && googleResults.user.displayName">
+
+          <div class="slide">
+            <input type="text" placeholder="Your Address" ngx-google-places-autocomplete #places="ngx-places" (onAddressChange)="onChange($event)"/>
+          </div>
+          <div class="slide">
+            <input type="tel" name="ph" placeholder="Phone Number" [(ngModel)]="googleUserObj.ph" />
+          </div>
+
+          <div class="fullSide">
+            <button type="button" name="name" (click)="selectionHomeTrigger()" class="backBtn">Back</button>
+            <button type="button" name="name" (click)="saveNewGoogleUser()">Check In</button>
+          </div>
+        </div>
+
+        <div *ngIf="emailSigninMode">
+
+          <div class="slide">
+            <input type="email" name="email" placeholder="Email Address" [(ngModel)]="signinObj.email" /> <br />
+            <input type="password" name="password" placeholder="Password" [(ngModel)]="signinObj.password" />
+          </div>
+
+          <div class="fullSide">
+            <button type="button" name="name" (click)="selectionHomeTrigger()" class="backBtn">Back</button>
+            <button type="button" name="name" (click)="signUserIn()">Check In</button>
+          </div>
+        </div>
+
+        <div *ngIf="emailSignupMode">
+          <div class="slide">
+            <input type="text" name="name" placeholder="First & Last Name" [(ngModel)]="userObj.name" />
+            <input type="text" placeholder="Your Address" ngx-google-places-autocomplete #places="ngx-places" (onAddressChange)="onChange($event)"/>
+          </div>
+          <div class="slide">
+            <input type="email" name="email" placeholder="Email Address" [(ngModel)]="userObj.email" />
+            <input type="password" name="password" placeholder="Password" [(ngModel)]="userObj.password" />
+          </div>
+
+          <div class="slide">
+            <input type="tel" name="ph" placeholder="Phone Number" [(ngModel)]="userObj.ph" />
+            <!-- <input type="number" name="guests" placeholder="Number of guests from this address?" [(ngModel)]="userObj.guestCount" /> -->
+          </div>
+
+          <div class="fullSide">
+            <button type="button" name="name" (click)="selectionHomeTrigger()" class="backBtn">Back</button>
+            <button type="button" name="name" (click)="createUser()">Check In</button>
+          </div>
         </div>
       </div>
+
     </div>
 
     <div *ngIf="!venueFound">
-      <h1>Sorry! Venue not found :(</h1>
-      <button (click)="goToLanding()">Go Home</button>
+      <div class="coreStyler">
+        <h1>Sorry! Venue not found :(</h1>
+
+        <div class="fullSide">
+          <button type="button" name="name" (click)="goToLanding()">Go Home</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
