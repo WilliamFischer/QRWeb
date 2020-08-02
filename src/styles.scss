@@ -19,6 +19,12 @@
   transition: all 0s ease !important;
 }
 
+.ag-header-cell-text{
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+
 body, html, router-outlet{
   padding: 0;
   margin: 0;

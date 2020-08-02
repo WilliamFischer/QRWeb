@@ -7,6 +7,8 @@ import { Address } from "ngx-google-places-autocomplete/objects/address";
 
 // Firebase
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-venue',
@@ -21,19 +23,42 @@ export class VenueComponent implements OnInit {
   showUserAddModel : boolean;
   showUserSignInModel : boolean;
   venueLoaded : boolean;
+  emailSignupMode : boolean;
+  emailSigninMode : boolean;
+  googleSigninMode: boolean;
 
   userObj = {
     name : '',
     email : '',
+    password : '',
     address : '',
-    guestCount: '',
+    // guestCount: '',
     ph : '',
-    date : ''
+    date : '',
+    provider : 'email',
   }
+
+  googleUserObj = {
+    date : '',
+    email : '',
+    name : '',
+    uid : '',
+    address : '',
+    ph : '',
+    provider : 'google',
+  }
+
+  signinObj = {
+    email : '',
+    password : '',
+  }
+
+  googleResults : any;
 
   constructor(
     private fireStore: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private afAuth : AngularFireAuth,
   ) { }
 
   ngOnInit(): void {
@@ -82,6 +107,133 @@ export class VenueComponent implements OnInit {
     this.showUserSignInModel = false;
   }
 
+  submitSignInDetails(){
+    console.log(this.userObj);
+  }
+
+  goHome(){
+    this.router.navigate(['/']);
+  }
+
+  onChange(address: Address) {
+    console.log(address);
+    this.userObj.address = address.formatted_address;
+    this.googleUserObj.address = address.formatted_address;
+  }
+
+  triggerEmailSignup(){
+    this.emailSignupMode = true;
+  }
+
+  triggerEmailSignin() {
+    this.emailSigninMode = true;
+  }
+
+  selectionHomeTrigger() {
+    this.emailSignupMode = false;
+    this.emailSigninMode = false;
+  }
+
+  async googleSignin(){
+    let scope = this;
+    const provider = new firebase.auth.GoogleAuthProvider()
+
+    await this.afAuth.signInWithPopup(provider).then(function(results) {
+      scope.googleResults = results;
+      scope.checkForGoogleUser();
+    }).catch(function(error) {
+      console.log(error);
+      alert(error.message);
+    });
+  }
+
+  async signUserIn() {
+    let scope = this;
+    if(this.userObj.email && this.userObj.password){
+      await this.afAuth.signInWithEmailAndPassword(this.userObj.email, this.userObj.password).then(function() {
+        scope.router.navigateByUrl('/success');
+      }).catch(function(error) {
+        console.log(error);
+        alert(error.message);
+      });
+    }else{
+      alert('Something is missing...');
+    }
+  }
+
+  async createUser(){
+    let scope = this;
+    this.afAuth.createUserWithEmailAndPassword(this.signinObj.email, this.signinObj.password).then(function() {
+      scope.submitUserDetails();
+    }).catch(function(error) {
+      alert(error.message);
+    });
+  }
+
+  checkForGoogleUser(){
+    if(this.googleResults.user){
+
+      this.googleUserObj.date = new Date().toString();
+      this.googleUserObj.name = this.googleResults.user.displayName;
+      this.googleUserObj.email = this.googleResults.user.email;
+      this.googleUserObj.uid = this.googleResults.user.uid;
+
+      console.log(this.googleUserObj);
+
+      let guestCollection = this.fireStore.collection('Users').valueChanges().subscribe(
+      guests =>{
+        let guestObj = [];
+        let guestExists = false;
+
+        guestObj.push(guests);
+
+        guestObj[0].forEach(guest => {
+          if(this.googleResults.user.uid == guest.uid){
+            guestExists = true;
+            console.log(guest);
+
+            this.googleUserObj.ph = guest.ph;
+            this.googleUserObj.address = guest.address;
+          }
+        });
+
+        guestCollection.unsubscribe();
+
+        if(guestExists){
+          this.saveGoogleUser();
+        }else{
+          this.googleSigninMode = true;
+        }
+      });
+    }
+  }
+
+  saveGoogleUser(){
+    this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + this.googleUserObj.date).set(this.googleUserObj,{
+      merge: true
+    });
+
+    this.userAddedSuccess();
+  }
+
+  saveNewGoogleUser(){
+    this.fireStore.doc('Users/' + this.googleUserObj.email).set(this.googleUserObj,{
+      merge: true
+    });
+
+    this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + this.googleUserObj.date).set(this.googleUserObj,{
+      merge: true
+    });
+
+    this.userAddedSuccess();
+  }
+
+  userAddedSuccess(){
+    localStorage.setItem('guestUser', JSON.stringify(this.googleUserObj));
+    localStorage.setItem('exisitingVenue', JSON.stringify(this.currentVenue));
+    this.router.navigateByUrl('/success');
+  }
+
   submitUserDetails(){
     if(this.userObj.name){
       if(this.userObj.address){
@@ -93,7 +245,7 @@ export class VenueComponent implements OnInit {
           merge: true
         });
 
-        this.signUserIn();
+        this.saveUserData();
       }else{
         alert('Please enter an address')
       }
@@ -102,26 +254,14 @@ export class VenueComponent implements OnInit {
     }
   }
 
-  submitSignInDetails(){
-    console.log(this.userObj);
-  }
+  saveUserData() {
 
-  signUserIn(){
     this.userObj.date = new Date().toString();
     this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + this.userObj.date).set(this.userObj,{
       merge: true
     });
 
-    this.router.navigateByUrl('/success')
-  }
-
-  goHome(){
-    this.router.navigate(['/']);
-  }
-
-  onChange(address: Address) {
-    console.log(address);
-    this.userObj.address = address.formatted_address;
+    this.userAddedSuccess();
   }
 
 }

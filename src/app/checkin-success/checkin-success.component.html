@@ -2,11 +2,59 @@
   <div class="logo" (click)="goHome()"><label>QR</label>Web</div>
 </div>
 
-<div class="coreWrapper checkInSuccess">
-  <h1>Amazing! You're checked in... You can close this tab now :)</h1>
+<div class="coreWrapper">
 
-  <div class="fullSide">
-    <button type="button" class="registerVenueBtn" (click)="checkInAgain()">Check in another guest</button>
-    <div class="buffer"></div>
+  <div *ngIf="!isDiningAlone && !guestAdder">
+    <h1>Amazing! You're checked in... are you visting alone today?</h1>
+
+    <div class="fullSide coreStyler">
+      <button type="button" class="registerVenueBtn" (click)="diningAlone()">Yes</button>
+      <button type="button" class="registerVenueBtn" (click)="triggerGuestAdder()">Add Guests</button>
+      <div class="buffer"></div>
+    </div>
   </div>
+
+  <div *ngIf="isDiningAlone">
+    <h1>Cool! You can close this tab now :)</h1>
+  </div>
+
+  <div *ngIf="guestAdder && !newGuestForm && !isDiningAlone">
+
+    <div class="fullSide">
+      <button type="button" class="registerVenueBtn" (click)="addNewGuest()">+ New Guest</button>
+      <div class="buffer"></div>
+    </div>
+
+    <ag-grid-angular
+        style="width: 100%; height: 300px;"
+        class="ag-theme-alpine"
+        [rowData]="rowData"
+        [gridOptions]="gridOptions"
+        (gridReady)="onGridReady($event)" >
+    </ag-grid-angular>
+
+    <div class="fullSide coreStyler">
+      <button type="button" name="name" (click)="dontAddGuest()" class="backBtn">Back</button>
+      <button type="button" name="name" (click)="saveNewGuests()">Confirm Guests</button>
+    </div>
+  </div>
+
+  <div *ngIf="newGuestForm" class="coreStyler">
+    <div class="slide">
+      <input type="text" name="name" placeholder="First & Last Name" [(ngModel)]="guestUserObj.name" />
+      <input type="email" name="email" placeholder="Email Address" [(ngModel)]="guestUserObj.email" />
+    </div>
+    <div class="fullSide">
+      <input type="tel" name="ph" placeholder="Phone Number" [(ngModel)]="guestUserObj.ph" />
+    </div>
+    <div class="fullSide">
+      <input type="text" placeholder="Guest Address (if different)" ngx-google-places-autocomplete #places="ngx-places" (onAddressChange)="onChange($event)"/>
+    </div>
+
+    <div class="fullSide">
+      <button type="button" name="name" (click)="dontAddNewGuest()" class="backBtn">Back</button>
+      <button type="button" name="name" (click)="submitNewGuest()">Add to Guest List</button>
+    </div>
+  </div>
+
 </div>
