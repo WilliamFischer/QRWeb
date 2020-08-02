@@ -32,6 +32,7 @@ body, html, router-outlet{
 
 .coreWrapper{
   width: 80%;
+  height: fit-content;
 
   margin-left: auto;
   margin-right: auto;
@@ -51,6 +52,8 @@ body, html, router-outlet{
   padding-top: 20px;
   padding-bottom: 20px;
   text-align: center;
+  position: fixed;
+  top: 0;
 
   .logo{
     padding: 5px;
@@ -78,15 +81,18 @@ body, html, router-outlet{
   width: 250px;
 }
 
-footer{
-  width: 100%;
-  display: block;
-  bottom: 0;
-  height: 80px;
-  background: #FCFBFC;
-  position: absolute;
-}
+// footer{
+//   width: 100%;
+//   display: block;
+//   bottom: 0;
+//   height: 80px;
+//   background: #FCFBFC;
+//   position: fixed;
+// }
 
+footer{
+  display: none;
+}
 
 .miniCustomModel{
   width: 400px !important;
@@ -145,6 +151,10 @@ footer{
     width: 80% !important;
     margin-top: 10% !important;
     padding-top: 0 !important;
+
+    h1{
+      margin-top: 30% !important
+    }
   }
 
   .customModel{
@@ -152,6 +162,18 @@ footer{
     top: 5% !important;
   }
 
+  .genQRWrapper{
+    margin-top: 30%;
+  }
+
+  .venueCore{
+    margin-top: 30% !important;
+    margin-bottom: 50% !important;
+  }
+
+  .checkInSuccess h1{
+    margin-top: 50% !important;
+  }
 }
 
 @media print {

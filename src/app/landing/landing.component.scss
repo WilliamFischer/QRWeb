@@ -30,6 +30,8 @@
     overflow: hidden;
     display: inline-flex;
     background: #FCFBFC;
+    position: fixed;
+    top: 0;
 
     .logo{
       padding: 5px;
@@ -71,6 +73,9 @@
     flex-wrap: wrap;
     flex-direction: row;
 
+    padding-top: 10%;
+    margin-bottom: 10%;
+
     .side{
       width: 50%;
       height: 100%;
@@ -86,7 +91,7 @@
 
         margin-left: auto;
         margin-right: auto;
-        padding-top: 220px;
+        padding-top: 18vh;
 
         h1{
           font-size: 32px;

@@ -18,7 +18,7 @@
           <input type="email" name="email" placeholder="Email Address" [(ngModel)]="userObj.email" />
           <input type="tel" name="ph" placeholder="Phone Number" [(ngModel)]="userObj.ph" />
         </div>
-        
+
         <div class="fullSide">
           <input type="number" name="guests" placeholder="Number of guests from this address?" [(ngModel)]="userObj.guestCount" />
         </div>
@@ -30,8 +30,11 @@
     </div>
 
     <div *ngIf="!venueFound">
-      <h1>Sorry! Venue not found :(</h1>
-      <button (click)="goToLanding()">Go Home</button>
+      <h2>Sorry! Venue not found :(</h2>
+      <button type="button" class="registerVenueBtn" (click)="goToLanding()">Go Home</button>
     </div>
   </div>
 </div>
+
+<footer>
+</footer>

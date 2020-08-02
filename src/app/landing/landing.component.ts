@@ -23,11 +23,6 @@ export class LandingComponent implements OnInit {
 
   hasChecked : string;
 
-  // options : any = {
-  //   types: [],
-  //   componentRestrictions: { country: 'AU' }
-  // };
-
   venueACCOBJ : any = {
     email : '',
     pass : '',
@@ -76,25 +71,21 @@ export class LandingComponent implements OnInit {
     this.showVenueLoginModel = false;
   }
 
-  submitVenue(){
+  venueFormatChecker(){
     if(this.hasChecked){
       if(this.venueACCOBJ.email && this.venueACCOBJ.pass){
-        if(this.venueOBJ.location){
-          if(this.venueACCOBJ.pass.length >= 6){
-
-            let scope = this;
-
-            this.afAuth.createUserWithEmailAndPassword(this.venueACCOBJ.email, this.venueACCOBJ.pass).then(function() {
-              scope.checkUserStatus();
-            }).catch(function(error) {
-              console.warn(error.message);
-            });
-
+        if(this.venueOBJ.ph && (this.venueOBJ.ph.length == 9 || this.venueOBJ.ph.length == 10)){
+          if(this.venueOBJ.location){
+            if(this.venueACCOBJ.pass.length >= 6){
+              this.saveVenueUser();
+            }else{
+              alert('Your password is too short!')
+            }
           }else{
-            alert('Your password is too short!')
+            alert('Please enter an address')
           }
         }else{
-          alert('Please enter an address')
+          alert('Your phone number is incorrectly formatted')
         }
       }else{
         alert('Please enter a password & email')
@@ -104,13 +95,27 @@ export class LandingComponent implements OnInit {
     }
   }
 
+  saveVenueUser() {
+    let scope = this;
+
+    this.afAuth.createUserWithEmailAndPassword(this.venueACCOBJ.email, this.venueACCOBJ.pass).then(function() {
+      scope.checkUserStatus();
+    }).catch(function(error) {
+      console.warn(error);
+
+      if(error.code == 'auth/email-already-in-use'){
+        alert(error.message)
+      }
+
+    });
+  }
+
   async login() {
     if(this.venueShortOBJ.email && this.venueShortOBJ.password){
       var result = await this.afAuth.signInWithEmailAndPassword(this.venueShortOBJ.email, this.venueShortOBJ.password).then(function() {
         this.router.navigate(['/venuepanel']);
       }).catch(function(error) {
-        console.log(error);
-        alert(error.message);
+        console.warn(error);
       });
     }else{
       alert('Something is missing...')
@@ -147,9 +152,9 @@ export class LandingComponent implements OnInit {
 
   onChange(address: Address) {
     console.log(address);
+
     this.venueOBJ.location = address.formatted_address;
   }
-
 
   goHome(){
     this.router.navigate(['/']);

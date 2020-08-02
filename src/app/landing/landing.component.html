@@ -58,7 +58,7 @@
       <input type="text" name="venueName" placeholder="Venue Name" [(ngModel)]="venueOBJ.venueName" />
     </div>
     <div>
-      <input ngx-google-places-autocomplete #places="ngx-places" (onAddressChange)="onChange($event)" />
+      <input ngx-google-places-autocomplete #places="ngx-places" placeholder="Venue Address" (onAddressChange)="onChange($event)" />
     </div>
     <div>
       <input type="text" name="industry" placeholder="Industry (Optional)" [(ngModel)]="venueOBJ.industry" />
@@ -67,7 +67,7 @@
 
   <div class="fullSide">
     <div class="inlineLineCheckbox"><input type="checkbox" [(ngModel)]="hasChecked" [ngModelOptions]="{standalone: true}"/> I agree to the <a href="#">Terms & Conditions</a> & <a href="#">Privacy Policy</a></div>
-    <button type="button" class="registerVenueBtn" (click)="submitVenue()">Submit Venue</button>
+    <button type="button" class="registerVenueBtn" (click)="venueFormatChecker()">Submit Venue</button>
     <div class="buffer"></div>
   </div>
 
