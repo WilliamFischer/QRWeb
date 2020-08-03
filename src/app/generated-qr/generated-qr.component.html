@@ -1,5 +1,5 @@
 <div class="topHeader">
-  <div class="logo" (click)="goHome()"><label>QR</label>Web</div>
+  <div class="logo" (click)="goHome()"><label>Ezy</label>Checkin</div>
 </div>
 
 <div class="coreWrapper genQRWrapper" *ngIf="canShowPage">
@@ -20,8 +20,8 @@
   </ngx-qrcode>
 
   <div class="fullSide">
-    <button type="button" name="name" class="registerVenueBtn" (click)="logout()">Logout</button>
-    <!-- <button type="button" name="name" class="registerVenueBtn" (click)="goHome()">View Guests</button> -->
+    <!-- <button type="button" name="name" class="registerVenueBtn" (click)="logout()">Logout</button> -->
+    <button type="button" name="name" class="registerVenueBtn" (click)="goHome()">View Guests</button>
   </div>
 
 </div>

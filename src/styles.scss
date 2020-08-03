@@ -49,6 +49,10 @@ body, html, router-outlet{
   padding-top: 3%;
 }
 
+.logoutBtn{
+  background: #8e8e8e !important;
+}
+
 .topHeader{
   width: 100%;
   overflow: hidden;
@@ -140,6 +144,10 @@ footer{
     height: auto !important;
   }
 
+  .coreWrapper{
+    margin-top: 30% !important;
+  }
+
   h3{
     width: 90% !important;
   }
@@ -180,6 +188,12 @@ footer{
   .checkInSuccess h1{
     margin-top: 50% !important;
   }
+
+  .google-btn {
+    margin-top: 10% !important;
+    margin-bottom: 10% !important;
+  }
+
 }
 
 @media print {

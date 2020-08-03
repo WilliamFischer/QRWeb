@@ -20,11 +20,7 @@ export class VenuePanelComponent implements OnInit {
   gridOptions = {
     columnDefs: [
       {headerName: 'Check-in Date', field: 'date'},
-      {headerName: 'Full Name', field: 'name'},
-      {headerName: 'Email Address', field: 'email'},
-      {headerName: 'Address', field: 'address'},
-      {headerName: 'Phone Number', field: 'ph'},
-      {headerName: '# Of Guests', field: 'guestCount'}
+      {headerName: 'UID', field: 'guestId'},
     ],
     defaultColDef : {
       flex: 1,

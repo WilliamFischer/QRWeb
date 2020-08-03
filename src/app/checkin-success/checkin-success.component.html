@@ -1,5 +1,5 @@
 <div class="topHeader">
-  <div class="logo" (click)="goHome()"><label>QR</label>Web</div>
+  <div class="logo" (click)="goHome()"><label>Ezy</label>Checkin</div>
 </div>
 
 <div class="coreWrapper">
@@ -15,7 +15,7 @@
   </div>
 
   <div *ngIf="isDiningAlone">
-    <h1>Cool! You can close this tab now :)</h1>
+    <h1>You have successfully signed in to {{currentVenue.venueName}}, please show this page to a staff member</h1>
   </div>
 
   <div *ngIf="guestAdder && !newGuestForm && !isDiningAlone">
@@ -30,7 +30,7 @@
         class="ag-theme-alpine"
         [rowData]="rowData"
         [gridOptions]="gridOptions"
-        (gridReady)="onGridReady($event)" >
+        (gridReady)="onGridReady($event)">
     </ag-grid-angular>
 
     <div class="fullSide coreStyler">

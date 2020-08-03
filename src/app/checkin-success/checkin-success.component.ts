@@ -29,19 +29,25 @@ export class CheckinSuccessComponent implements OnInit {
     name: '',
     address : '',
     email : '',
-    ph : ''
+    ph : '',
+    date: ''
   }
 
   gridOptions = {
     columnDefs: [
-      { maxWidth: 30, headerName: '', checkboxSelection: true},
+      { maxWidth: 50, headerName: '', checkboxSelection: true},
       { headerName: 'Full Name', field: 'name'},
       { headerName: 'Address', field: 'address'},
     ],
     defaultColDef: {
       flex: 1,
+      editable: true,
+      sortable: true,
     },
-    rowSelection: 'mutliple',
+    rowSelection: 'multiple',
+    groupSelectsChildren: true,
+    suppressRowClickSelection: true,
+    suppressAggFuncInHeader: true,
   };
 
 
@@ -123,16 +129,20 @@ export class CheckinSuccessComponent implements OnInit {
 
     for(let i in selectedRows){
       let row = selectedRows[i];
-
-
       let date = new Date().toString();
-      this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + date).set(row,{
+      let guestId = this.fireStore.createId();
+
+      row['date'] = date;
+      row['guestId'] = guestId;
+
+      this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + guestId).set(row,{
         merge: true
       });
-
-      this.diningAlone();
     }
+
+    this.diningAlone();
   }
+
 
   onGridReady(params) {
     this.gridApi = params.api;

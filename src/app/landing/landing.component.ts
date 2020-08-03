@@ -56,8 +56,8 @@ export class LandingComponent implements OnInit {
   ngOnInit(): void {
     this.afAuth.authState.subscribe(user => {
       if (user){
-        // this.router.navigate(['/venuepanel']);
-        this.router.navigate(['/myqr']);
+        this.router.navigate(['/venuepanel']);
+        // this.router.navigate(['/myqr']);
       }else{
         this.canShowPage = true;
       }

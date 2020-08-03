@@ -1,5 +1,5 @@
 <div class="topHeader">
-  <div class="logo" (click)="goHome()"><label>QR</label>Web</div>
+  <div class="logo" (click)="goHome()"><label>Ezy</label>Checkin</div>
 </div>
 
 <div class="coreWrapper venueCore">
@@ -11,9 +11,17 @@
       <div class="coreStyler">
         <div *ngIf="!emailSignupMode && !emailSigninMode && !googleSigninMode">
           <div class="fullSide">
-            <button type="button" name="name" (click)="googleSignin()">Check In With Google</button> <br /> <br />
-            <button type="button" name="name" (click)="triggerEmailSignup()">Create An Account With a New Email</button> <br />
-            <button type="button" name="name" (click)="triggerEmailSignin()">Check In With An Existing Email</button>
+
+            <div class="google-btn" (click)="googleSignin()">
+              <div class="google-icon-wrapper">
+                <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+              </div>
+              <p class="btn-text"><b>Check in with google</b></p>
+            </div>
+
+            <!-- <button type="button" class="googleBtn" name="name">Check In With Google</button> <br /> <br /> -->
+            <button type="button" name="name" class="checkInEmail" (click)="triggerEmailSignin()">Check In With An Existing Email</button> <br /> <br />
+            <button type="button" name="name" (click)="triggerEmailSignup()">Create An Account With a New Email</button>
           </div>
         </div>
 

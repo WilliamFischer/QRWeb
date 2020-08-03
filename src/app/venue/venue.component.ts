@@ -35,6 +35,7 @@ export class VenueComponent implements OnInit {
     // guestCount: '',
     ph : '',
     date : '',
+    guestId : '',
     provider : 'email',
   }
 
@@ -45,6 +46,7 @@ export class VenueComponent implements OnInit {
     uid : '',
     address : '',
     ph : '',
+    guestId : '',
     provider : 'google',
   }
 
@@ -209,7 +211,8 @@ export class VenueComponent implements OnInit {
   }
 
   saveGoogleUser(){
-    this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + this.googleUserObj.date).set(this.googleUserObj,{
+    this.googleUserObj.guestId = this.fireStore.createId();
+    this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + this.googleUserObj.guestId).set(this.googleUserObj,{
       merge: true
     });
 
@@ -217,11 +220,13 @@ export class VenueComponent implements OnInit {
   }
 
   saveNewGoogleUser(){
+    this.googleUserObj.guestId = this.fireStore.createId();
+
     this.fireStore.doc('Users/' + this.googleUserObj.email).set(this.googleUserObj,{
       merge: true
     });
 
-    this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + this.googleUserObj.date).set(this.googleUserObj,{
+    this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + this.googleUserObj.guestId).set(this.googleUserObj,{
       merge: true
     });
 
@@ -255,9 +260,10 @@ export class VenueComponent implements OnInit {
   }
 
   saveUserData() {
-
     this.userObj.date = new Date().toString();
-    this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + this.userObj.date).set(this.userObj,{
+    this.userObj.guestId = this.fireStore.createId();
+      
+    this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + this.userObj.guestId).set(this.userObj,{
       merge: true
     });
 

@@ -42,6 +42,8 @@ export class GeneratedQRComponent implements OnInit {
       let venueObj = [];
       venueObj.push(venues);
 
+      let hasVenue = false;
+
       venueObj[0].forEach(venue => {
         if(this.user.uid == venue['uid']){
           console.log(venue)
@@ -50,7 +52,12 @@ export class GeneratedQRComponent implements OnInit {
           console.log('Generated URL is ' + this.qrCodeUrl)
 
           this.canShowPage = true;
+          hasVenue = true;
           venueCollection.unsubscribe();
+        }
+
+        if(!hasVenue){
+          this.logout();
         }
       });
     });
