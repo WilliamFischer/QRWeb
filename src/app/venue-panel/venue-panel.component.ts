@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 // Firebase
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireStorage } from '@angular/fire/storage';
+
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-venue-panel',
@@ -11,7 +14,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
   styleUrls: ['./venue-panel.component.scss']
 })
 export class VenuePanelComponent implements OnInit {
+
   canShowPage : boolean;
+  loadingImageUpload: boolean;
 
   user: any;
   venue : any;
@@ -46,6 +51,7 @@ export class VenuePanelComponent implements OnInit {
   constructor(
     private fireStore : AngularFirestore,
     private afAuth : AngularFireAuth,
+    private storage: AngularFireStorage,
     private router: Router
   ) { }
 
@@ -92,7 +98,7 @@ export class VenuePanelComponent implements OnInit {
       });
 
       if(!venueExists){
-        alert('Oops! We couldn\'t find any venues under your account, please login again.');
+        console.log('Oops! We couldn\'t find any venues under your account, please login again.');
         this.logout();
       }
 
@@ -104,7 +110,44 @@ export class VenuePanelComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  myQR(){this.router.navigateByUrl('/myqr')
+  myQR(){
+    this.router.navigateByUrl('/myqr')
+  }
+
+  uploadVenueImg(event) {
+    console.log('UPLOAD AN IMAGE');
+    this.loadingImageUpload = true;
+
+    const file = event.target.files[0];
+    let randomID = Math.floor(Math.random() * 1000);
+    const filePath = this.user['email'] + '/Tank Images/' + randomID;
+    const fileRef = this.storage.ref(filePath)
+    const task = this.storage.upload(filePath, file);
+
+    task.snapshotChanges().pipe(
+        finalize(() => {
+          const downloadURL = fileRef.getDownloadURL();
+
+          downloadURL.subscribe(url=>{
+             if(url){
+               this.loadingImageUpload = false;
+               console.log(url);
+               this.venue['venueImage'] = url;
+
+                this.fireStore.doc('Venues/' + this.venue['venueURL'])
+                .set({
+                  venueImage: url
+                },{
+                  merge: true
+                });
+
+                alert('Venue Photo Updated!')
+             }
+          })
+
+        })
+     )
+    .subscribe()
   }
 
 }

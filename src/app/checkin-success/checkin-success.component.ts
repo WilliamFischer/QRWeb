@@ -16,9 +16,12 @@ import { AngularFireAuth } from '@angular/fire/auth';
   styleUrls: ['./checkin-success.component.scss']
 })
 export class CheckinSuccessComponent implements OnInit {
+
   isDiningAlone:boolean;
   guestAdder:boolean;
   newGuestForm:boolean;
+  canConfirmGuests:boolean;
+  quickLogin : boolean;
 
   rowData : any;
   currentUser : any;
@@ -36,12 +39,11 @@ export class CheckinSuccessComponent implements OnInit {
   gridOptions = {
     columnDefs: [
       { maxWidth: 50, headerName: '', checkboxSelection: true},
-      { headerName: 'Full Name', field: 'name'},
-      { headerName: 'Address', field: 'address'},
+      { headerName: 'Full Name', editable: true, field: 'name'},
+      { headerName: 'Address', editable: true, field: 'address'},
     ],
     defaultColDef: {
       flex: 1,
-      editable: true,
       sortable: true,
     },
     rowSelection: 'multiple',
@@ -54,16 +56,20 @@ export class CheckinSuccessComponent implements OnInit {
   constructor(
     private router: Router,
     private fireStore : AngularFirestore,
+    private afAuth : AngularFireAuth,
     private location: Location
   ) { }
 
   ngOnInit(): void {
+
     this.currentUser = JSON.parse(localStorage.getItem('guestUser'));
     this.currentVenue = JSON.parse(localStorage.getItem('exisitingVenue'));
 
     if(!this.currentUser || !this.currentVenue){
       alert('Something went Wrong!')
       this.location.back();
+    }else if (this.currentVenue['venueURL'] == 'guestlogin'){
+      this.quickLogin = true;
     }
   }
 
@@ -76,8 +82,21 @@ export class CheckinSuccessComponent implements OnInit {
   }
 
   diningAlone(){
-    this.isDiningAlone = true;
+    if (this.currentVenue['venueURL'] == 'guestlogin'){
+      // alert('Thank you for creating an account!')
+      this.logout();
+    }else{
+      this.isDiningAlone = true;
+    }
   }
+
+  logout(){
+    this.router.navigate(['/']);
+    // this.afAuth.signOut().then(() => {
+    //   this.router.navigate(['/']);
+    // })
+  }
+
 
   triggerGuestAdder(){
     this.guestAdder = true;
@@ -127,20 +146,36 @@ export class CheckinSuccessComponent implements OnInit {
   saveNewGuests() {
     let selectedRows = this.gridApi.getSelectedRows();
 
-    for(let i in selectedRows){
-      let row = selectedRows[i];
-      let date = new Date().toString();
-      let guestId = this.fireStore.createId();
+    if(selectedRows.length){
+      for(let i in selectedRows){
+        let row = selectedRows[i];
+        let date = new Date().toString();
+        let guestId = this.fireStore.createId();
 
-      row['date'] = date;
-      row['guestId'] = guestId;
+        row['date'] = date;
+        row['guestId'] = guestId;
 
-      this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + guestId).set(row,{
-        merge: true
-      });
+        this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + guestId).set(row,{
+          merge: true
+        });
+      }
+
+      this.diningAlone();
+    }
+  }
+
+  onRowClicked(params){
+    let selectedRows = this.gridApi.getSelectedRows();
+
+    console.log(selectedRows.length)
+
+    if(!selectedRows.length){
+      this.canConfirmGuests = false;
+    }else{
+      this.canConfirmGuests = true;
     }
 
-    this.diningAlone();
+    console.log(this.canConfirmGuests)
   }
 
 

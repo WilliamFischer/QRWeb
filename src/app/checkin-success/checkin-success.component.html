@@ -4,17 +4,19 @@
 
 <div class="coreWrapper">
 
-  <div *ngIf="!isDiningAlone && !guestAdder">
-    <h1>Amazing! You're checked in... are you visting alone today?</h1>
+  <div *ngIf="!isDiningAlone && !guestAdder" >
+    <h1 *ngIf="!quickLogin">You're checked in! Are your with any other guests?</h1>
+    <h1 *ngIf="quickLogin">You're logged in! Would you like to add a guest?</h1>
 
     <div class="fullSide coreStyler">
-      <button type="button" class="registerVenueBtn" (click)="diningAlone()">Yes</button>
-      <button type="button" class="registerVenueBtn" (click)="triggerGuestAdder()">Add Guests</button>
+      <button type="button" class="registerVenueBtn logoutBtn" (click)="diningAlone()" *ngIf="!quickLogin">Visting Alone</button>
+      <button type="button" class="registerVenueBtn logoutBtn" (click)="diningAlone()" *ngIf="quickLogin">No</button>
+      <button type="button" class="registerVenueBtn" (click)="triggerGuestAdder()">Yes</button>
       <div class="buffer"></div>
     </div>
   </div>
 
-  <div *ngIf="isDiningAlone">
+  <div *ngIf="isDiningAlone && !quickLogin">
     <h1>You have successfully signed in to {{currentVenue.venueName}}, please show this page to a staff member</h1>
   </div>
 
@@ -30,12 +32,13 @@
         class="ag-theme-alpine"
         [rowData]="rowData"
         [gridOptions]="gridOptions"
-        (gridReady)="onGridReady($event)">
+        (gridReady)="onGridReady($event)"
+        (rowSelected)='onRowClicked($event)'>
     </ag-grid-angular>
 
     <div class="fullSide coreStyler">
       <button type="button" name="name" (click)="dontAddGuest()" class="backBtn">Back</button>
-      <button type="button" name="name" (click)="saveNewGuests()">Confirm Guests</button>
+      <button type="button" name="name" (click)="saveNewGuests()" [ngClass]="{'disabledBtn' : !canConfirmGuests }" [disabled]="!canConfirmGuests">Confirm Guests</button>
     </div>
   </div>
 

@@ -5,8 +5,13 @@
 <div class="coreWrapper venueCore">
   <div *ngIf="venueLoaded">
     <div *ngIf="venueFound">
-      <h1>Check-in to {{ currentVenue.venueName }}</h1>
-      <h3>Please enter your details below to check in and then show your confirmed check in message to one of our team</h3>
+
+      <img class="venueLogo" src="{{currentVenue.venueImage}}"  *ngIf="currentVenue.venueImage"/>
+      <h1 *ngIf="!quickLogin">Check-in to {{ currentVenue.venueName }}</h1>
+      <h3 *ngIf="!quickLogin">Please enter your details below to check in and then show your confirmed check in message to one of our team</h3>
+
+      <h1 *ngIf="quickLogin">Welcome to EzyCheckin, please login</h1>
+      <h3 *ngIf="quickLogin">Select a method below to procced</h3>
 
       <div class="coreStyler">
         <div *ngIf="!emailSignupMode && !emailSigninMode && !googleSigninMode">
@@ -16,12 +21,17 @@
               <div class="google-icon-wrapper">
                 <img class="google-icon" src="../assets/google.svg"/>
               </div>
-              <p class="btn-text"><b>Check in with google</b></p>
+              <p class="btn-text" *ngIf="!quickLogin"><b>Check in with Google</b></p>
+              <p class="btn-text" *ngIf="quickLogin"><b>Continue with Google</b></p>
             </div>
 
             <!-- <button type="button" class="googleBtn" name="name">Check In With Google</button> <br /> <br /> -->
-            <button type="button" name="name" class="checkInEmail" (click)="triggerEmailSignin()">Check In With An Existing Email</button> <br /> <br />
-            <button type="button" name="name" (click)="triggerEmailSignup()">Create An Account With a New Email</button>
+            <button type="button" name="name" class="checkInEmail" (click)="triggerEmailSignin()" *ngIf="!quickLogin">Check In With An Existing Email</button>
+            <button type="button" name="name" class="checkInEmail" (click)="triggerEmailSignin()" *ngIf="quickLogin">Login With An Existing Email</button>
+
+            <br /> <br />
+            <button type="button" name="name" (click)="triggerEmailSignup()" *ngIf="quickLogin">Create An Account With a New Email</button>
+
           </div>
         </div>
 

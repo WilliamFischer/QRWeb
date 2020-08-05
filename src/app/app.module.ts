@@ -21,11 +21,11 @@ import { VenuePanelComponent } from './venue-panel/venue-panel.component';
 import { AgGridModule } from 'ag-grid-angular';
 import 'ag-grid-enterprise';
 
+// Autocomplete Module
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+
 // GOOGLE MAPS AUTOCOMPLETE
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
-
-
-
 
 // QR Code
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
@@ -62,6 +62,7 @@ export const environment = {
     AngularFireAuthModule,
     AgGridModule.withComponents([]),
     NgxQRCodeModule,
+    AutocompleteLibModule,
     GooglePlaceModule,
     FormsModule,
     HttpClientModule

@@ -26,6 +26,7 @@ export class VenueComponent implements OnInit {
   emailSignupMode : boolean;
   emailSigninMode : boolean;
   googleSigninMode: boolean;
+  quickLogin : boolean;
 
   userObj = {
     name : '',
@@ -65,6 +66,10 @@ export class VenueComponent implements OnInit {
 
   ngOnInit(): void {
     let venueCode = window.location.pathname.replace('/', '');
+
+    if(venueCode == 'guestlogin'){
+      this.quickLogin = true;
+    }
 
     let venueCollection = this.fireStore.collection('Venues/').valueChanges().subscribe(
     venues =>{
@@ -151,8 +156,8 @@ export class VenueComponent implements OnInit {
 
   async signUserIn() {
     let scope = this;
-    if(this.userObj.email && this.userObj.password){
-      await this.afAuth.signInWithEmailAndPassword(this.userObj.email, this.userObj.password).then(function() {
+    if(this.signinObj.email && this.signinObj.password){
+      await this.afAuth.signInWithEmailAndPassword(this.signinObj.email, this.signinObj.password).then(function() {
         scope.router.navigateByUrl('/success');
       }).catch(function(error) {
         console.log(error);
@@ -165,7 +170,8 @@ export class VenueComponent implements OnInit {
 
   async createUser(){
     let scope = this;
-    this.afAuth.createUserWithEmailAndPassword(this.signinObj.email, this.signinObj.password).then(function() {
+    console.log(this.userObj)
+    this.afAuth.createUserWithEmailAndPassword(this.userObj.email, this.userObj.password).then(function() {
       scope.submitUserDetails();
     }).catch(function(error) {
       alert(error.message);
@@ -262,7 +268,7 @@ export class VenueComponent implements OnInit {
   saveUserData() {
     this.userObj.date = new Date().toString();
     this.userObj.guestId = this.fireStore.createId();
-      
+
     this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + this.userObj.guestId).set(this.userObj,{
       merge: true
     });

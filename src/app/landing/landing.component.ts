@@ -47,6 +47,10 @@ export class LandingComponent implements OnInit {
     password : ''
   };
 
+  venue = 'venueName';
+  autoCompleteData : any;
+
+
   constructor(
     private fireStore : AngularFirestore,
     private afAuth : AngularFireAuth,
@@ -60,6 +64,7 @@ export class LandingComponent implements OnInit {
         // this.router.navigate(['/myqr']);
       }else{
         this.canShowPage = true;
+        this.loadAutoCompleteData();
       }
     });
   }
@@ -155,5 +160,32 @@ export class LandingComponent implements OnInit {
 
   goHome(){
     this.router.navigate(['/']);
+  }
+
+  loadAutoCompleteData(){
+    let venueCollection = this.fireStore.collection('Venues').valueChanges().subscribe(
+    venues =>{
+
+      let cleanVenues = [];
+
+      for(let i in venues){
+        if(venues[i]['venueURL'] !== 'guestlogin'){
+          cleanVenues.push(venues[i])
+        }
+      }
+
+      this.autoCompleteData = cleanVenues;
+      venueCollection.unsubscribe();
+    });
+  }
+
+  openVenue(item){
+    console.log(item);
+    this.router.navigate(['/' + item.venueURL]);
+  }
+
+  guestSigninModel(){
+    console.log('Guest Login');
+    this.router.navigate(['/guestlogin']);
   }
 }

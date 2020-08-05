@@ -6,18 +6,59 @@
           <div class="logo"><label>Ezy</label>Checkin</div>
         </div>
         <div class="side">
-          <button class="signInFloatBtn" (click)="triggerSigninModel()">Venue Login</button>
+          <button class="signInFloatBtn " (click)="triggerSigninModel()">Venue Login</button>
+          <button class="signInFloatBtn blueSignIn" (click)="guestSigninModel()">Guest Login</button>
         </div>
       </div>
 
-      <div class="coreGrid">
+      <div class="coreGrid topSpace">
         <div class="side leftSide">
           <div class="contentWrap">
-            <h1>The simpler way to register guests during Covid-19 😮 </h1>
-            <button class="registerBtn" (click)="triggerModel()">Register Now</button>
+            <h1>👋 Ezy Checkin - The easy way to sign in during Covid-19 </h1>
+
+            <div class="dualMobileBtns">
+              <button class="registerBtn mobileBtn" (click)="guestSigninModel()">Login as a Venue</button>
+              <button class="registerBtn" (click)="triggerModel()">Register as a Guest</button>
+            </div>
+
           </div>
         </div>
         <div class="side rightSide">
+          <img src="https://image.freepik.com/free-vector/medical-illustration-team-health-consultation_1893-2379.jpg" />
+        </div>
+      </div>
+
+      <div class="divideGrid">
+        <div class="bigVenueSearch">
+          <ng-autocomplete
+            [data]="autoCompleteData"
+            placeHolder=" 🔎  Search for a venue to checkin..."
+            [searchKeyword]="venue"
+            [itemTemplate]="itemTemplate"
+            [notFoundTemplate]="notFoundTemplate">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.venueName" (click)="openVenue(item)"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="coreGrid lighter">
+        <div class="side rightSide">
+          <div class="contentWrap">
+            <h1>The simpler way to register guests during Covid-19 😮 </h1>
+            <div class="dualMobileBtns">
+              <button class="registerBtn" (click)="triggerModel()">Register as a Venue</button>
+              <button class="registerBtn mobileBtn" (click)="triggerModel()">Login as a Venue</button>
+            </div>
+          </div>
+        </div>
+        <div class="side leftSide">
           <img src="../assets/landing_header.png" />
         </div>
       </div>
@@ -58,7 +99,7 @@
       <input type="text" name="venueName" placeholder="Venue Name" [(ngModel)]="venueOBJ.venueName" />
     </div>
     <div>
-      <input ngx-google-places-autocomplete #places="ngx-places" placeholder="Venue Address" (onAddressChange)="onChange($event)" />
+      <input ngx-google-places-autocomplete #places="ngx-places" placeholder="Venue Address" name="other_address" (onAddressChange)="onChange($event)" />
     </div>
     <div>
       <input type="text" name="industry" placeholder="Industry (Optional)" [(ngModel)]="venueOBJ.industry" />
@@ -74,28 +115,25 @@
 </form>
 
 
-<form class="customModel miniCustomModel registerModel" *ngIf="showVenueLoginModel">
+<div class="customModel miniCustomModel registerModel" *ngIf="showVenueLoginModel">
   <div class="fullSide">
     <h1>Welcome Back! Login to view your guests.</h1>
   </div>
 
-  <div class="fullSide">
+  <form class="fullSide">
     <div>
       <input type="email" name="email" placeholder="Email Address"  [(ngModel)]="venueShortOBJ.email" />
     </div>
     <div>
       <input type="password" name="password" placeholder="Password" [(ngModel)]="venueShortOBJ.password" />
     </div>
-  </div>
+  </form>
 
   <div class="fullSide">
     <button type="button" class="registerVenueBtn" (click)="login()">Login As Venue</button>
     <div class="buffer"></div>
   </div>
 
-</form>
-
-<footer>
-</footer>
+</div>
 
 <div class="dimmer" *ngIf="showVenueAddModel || showVenueLoginModel" (click)="closeModals()"></div>

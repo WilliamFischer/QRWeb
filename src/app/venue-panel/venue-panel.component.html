@@ -5,8 +5,12 @@
         <div class="logo"><label>Ezy</label>Checkin</div>
       </div>
       <div class="side">
-        <button class="signInFloatBtn logoutBtn" (click)="logout()">Logout</button>
         <button class="signInFloatBtn" (click)="myQR()">MY QR</button>
+        <a class="deleteTitle specialInput">
+          <input type="file" (change)="uploadVenueImg($event)" />
+          <button class="signInFloatBtn">Upload Image</button>
+        </a>
+        <button class="signInFloatBtn logoutBtn" (click)="logout()">Logout</button>
       </div>
     </div>
 
@@ -14,16 +18,22 @@
 
 
 <div class="coreWrapper dataTableWrapper" *ngIf="canShowPage && venue">
-  <h1>{{venue.venueName}}'s Guests</h1>
 
-  <ag-grid-angular
-      style="width: 100%; height: 50vh;"
-      class="ag-theme-alpine"
-      [rowData]="rowData"
-      [gridOptions]="gridOptions"
-      >
-  </ag-grid-angular>
+  <div *ngIf="loadingImageUpload">
+    <img src="../assets/uploading.gif" />
+  </div>
+
+  <div *ngIf="!loadingImageUpload">
+    <h1>{{venue.venueName}}'s Guests</h1>
+
+    <ag-grid-angular
+        style="width: 100%; height: 50vh;"
+        class="ag-theme-alpine"
+        [rowData]="rowData"
+        [gridOptions]="gridOptions"
+        >
+    </ag-grid-angular>
+  </div>
+
+
 </div>
-
-<footer>
-</footer>

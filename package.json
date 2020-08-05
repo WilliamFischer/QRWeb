@@ -24,6 +24,7 @@
     "ag-grid-angular": "^23.2.1",
     "ag-grid-community": "^23.2.1",
     "ag-grid-enterprise": "^23.2.1",
+    "angular-ng-autocomplete": "^2.0.1",
     "core-js": "^3.6.5",
     "firebase": "^7.16.1",
     "ngx-google-places-autocomplete": "^2.0.4",

@@ -84,7 +84,7 @@ body, html, router-outlet{
   height: 100%;
   top: 0;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 0;
+  z-index: 900;
 }
 
 .qrCode img{
@@ -92,17 +92,8 @@ body, html, router-outlet{
 }
 
 // footer{
-//   width: 100%;
-//   display: block;
-//   bottom: 0;
-//   height: 80px;
-//   background: #FCFBFC;
-//   position: fixed;
+//   display: none;
 // }
-
-footer{
-  display: none;
-}
 
 .miniCustomModel{
   width: 400px !important;
@@ -111,8 +102,8 @@ footer{
 
 .customModel{
   width: 800px;
-  height: 600px;
-  top: 10%;
+  height: 650px;
+  top: 5%;
   position: absolute;
   display: flex;
   flex-wrap: wrap;
@@ -194,6 +185,25 @@ footer{
     margin-bottom: 10% !important;
   }
 
+  .simpleWrapper .topSection .side{
+    width: 100% !important;
+  }
+
+  .simpleWrapper .side:last-child{
+    display: none !important;
+  }
+
+  .simpleWrapper .logo{
+    text-align: center;
+  }
+
+  .bigVenueSearch{
+    width: 280px !important;
+  }
+
+  .mobileBtn{
+    display: inline-flex !important;
+  }
 }
 
 @media print {
