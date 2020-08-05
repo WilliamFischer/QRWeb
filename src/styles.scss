@@ -154,12 +154,15 @@ body, html, router-outlet{
   .contentWrap{
     text-align: center;
     width: 80% !important;
-    margin-top: 10% !important;
-    padding-top: 0 !important;
+    margin-top: 0% !important;
+  }
 
-    h1{
-      margin-top: 30% !important
-    }
+  .topSpace  h1{
+    margin-top: 20% !important;
+  }
+
+  .lighter .contentWrap{
+    padding-top: 0vh !important;
   }
 
   .customModel{
@@ -189,7 +192,7 @@ body, html, router-outlet{
     width: 100% !important;
   }
 
-  .simpleWrapper .side:last-child{
+  .simpleWrapper .headerSection .topSection .side:last-child{
     display: none !important;
   }
 
