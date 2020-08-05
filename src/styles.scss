@@ -209,6 +209,14 @@ body, html, router-outlet{
   }
 }
 
+
+// BIG MODE
+@media (min-width: 1400px) {
+  .contentWrap{
+    padding-top: 20vh !important;
+  }
+}
+
 @media print {
  .genQRWrapper .qrCode img{
    margin-top: 30% !important;
