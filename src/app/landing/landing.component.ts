@@ -49,6 +49,7 @@ export class LandingComponent implements OnInit {
 
   venue = 'venueName';
   autoCompleteData : any;
+  guestUser : any;
 
 
   constructor(
@@ -60,7 +61,33 @@ export class LandingComponent implements OnInit {
   ngOnInit(): void {
     this.afAuth.authState.subscribe(user => {
       if (user){
-        this.router.navigate(['/venuepanel']);
+
+        let venueCollection = this.fireStore.collection('Venues/').valueChanges().subscribe(
+        venues =>{
+          let venueObj = [];
+          let venueExists = false;
+
+          venueObj.push(venues);
+
+          venueObj[0].forEach(venue => {
+            if(user['email'] == venue.email){
+              venueCollection.unsubscribe();
+              venueExists = true;
+              this.guestUser = null;
+              this.router.navigate(['/venuepanel']);
+            }
+          });
+
+          if(!venueExists){
+            this.guestUser = user;
+            this.canShowPage = true;
+            venueCollection.unsubscribe();
+          }
+
+          console.log(this.guestUser)
+
+        });
+
         // this.router.navigate(['/myqr']);
       }else{
         this.canShowPage = true;
@@ -185,7 +212,10 @@ export class LandingComponent implements OnInit {
   }
 
   guestSigninModel(){
-    console.log('Guest Login');
     this.router.navigate(['/guestlogin']);
+  }
+
+  directSuccess(){
+    this.router.navigate(['/success']);
   }
 }
