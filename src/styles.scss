@@ -6,8 +6,11 @@
 @import "../node_modules/ag-grid-community/src/styles/ag-grid.scss";
 @import "../node_modules/ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin.scss";
 
-.ag-theme-alpine {
-    @include ag-theme-alpine();
+body, html, router-outlet{
+  padding: 0;
+  margin: 0;
+
+  background: #fff;
 }
 
 *{
@@ -15,22 +18,20 @@
   transition: all 1s ease;
 }
 
+// AG Grid Styles
 .ag-theme-alpine *{
   transition: all 0s ease !important;
+}
+
+.ag-theme-alpine {
+    @include ag-theme-alpine();
 }
 
 .ag-header-cell-text{
   margin-left: auto !important;
   margin-right: auto !important;
 }
-
-
-body, html, router-outlet{
-  padding: 0;
-  margin: 0;
-
-  background: #fff;
-}
+// End Grid Styles
 
 .pac-container {
   z-index: 10000 !important;
@@ -51,6 +52,17 @@ body, html, router-outlet{
 
 .logoutBtn{
   background: #8e8e8e !important;
+}
+
+.venueLogo{
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  background: black;
+  box-shadow: 0px 0px 10px #e8e8e8;
+
+  margin-top: 40px;
+  border-radius: 4px;
 }
 
 .topHeader{
@@ -133,6 +145,7 @@ body, html, router-outlet{
   .side{
     width: 100% !important;
     height: auto !important;
+    display: block !important;
   }
 
   .coreWrapper{

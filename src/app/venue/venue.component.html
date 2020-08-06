@@ -30,7 +30,7 @@
             <button type="button" name="name" class="checkInEmail" (click)="triggerEmailSignin()" *ngIf="quickLogin">Login With An Existing Email</button>
 
             <br /> <br />
-            <button type="button" name="name" (click)="triggerEmailSignup()" *ngIf="quickLogin">Create An Account With a New Email</button>
+            <button type="button" name="name" (click)="triggerEmailSignup()" *ngIf="!quickLogin">Create An Account With a New Email</button>
 
           </div>
         </div>

@@ -5,6 +5,8 @@
 <div class="coreWrapper">
 
   <div *ngIf="!isDiningAlone && !guestAdder" >
+    <img class="venueLogo" src="{{currentVenue.venueImage}}"  *ngIf="currentVenue.venueImage"/>
+
     <h1 *ngIf="!quickLogin">You're checked in! Are your with any other guests?</h1>
     <h1 *ngIf="quickLogin">You're logged in! Would you like to add a guest?</h1>
 
@@ -17,6 +19,7 @@
   </div>
 
   <div *ngIf="isDiningAlone && !quickLogin">
+    <img class="venueLogo" src="{{currentVenue.venueImage}}"  *ngIf="currentVenue.venueImage"/>
     <h1>You have successfully signed in to {{currentVenue.venueName}}, please show this page to a staff member</h1>
   </div>
 
@@ -38,7 +41,7 @@
 
     <div class="fullSide coreStyler">
       <button type="button" name="name" (click)="dontAddGuest()" class="backBtn">Back</button>
-      <button type="button" name="name" (click)="saveNewGuests()" [ngClass]="{'disabledBtn' : !canConfirmGuests }" [disabled]="!canConfirmGuests">Confirm Guests</button>
+      <button type="button" name="name" (click)="saveNewGuests()" [ngClass]="{'disabledBtn' : !canConfirmGuests }" [disabled]="!canConfirmGuests" *ngIf="!quickLogin">Confirm Guests</button>
     </div>
   </div>
 
