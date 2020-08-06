@@ -10,7 +10,8 @@
           <button class="signInFloatBtn blueSignIn" (click)="guestSigninModel()">Guest Login</button>
         </div>
         <div class="side" *ngIf="guestUser">
-          <button class="signInFloatBtn" (click)="directSuccess()">{{guestUser.displayName}}</button>
+          <button class="signInFloatBtn logoutBtn" (click)="logout()">Logout</button>
+          <button class="signInFloatBtn blueSignIn" (click)="directSuccess()">{{guestUser.displayName}}</button>
         </div>
       </div>
 

@@ -84,17 +84,16 @@ export class CheckinSuccessComponent implements OnInit {
   diningAlone(){
     if (this.currentVenue['venueURL'] == 'guestlogin'){
       // alert('Thank you for creating an account!')
-      this.logout();
+      this.router.navigate(['/']);
     }else{
       this.isDiningAlone = true;
     }
   }
 
   logout(){
-    this.router.navigate(['/']);
-    // this.afAuth.signOut().then(() => {
-    //   this.router.navigate(['/']);
-    // })
+    this.afAuth.signOut().then(() => {
+      this.router.navigate(['/']);
+    })
   }
 
 

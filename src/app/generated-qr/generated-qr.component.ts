@@ -55,11 +55,11 @@ export class GeneratedQRComponent implements OnInit {
           hasVenue = true;
           venueCollection.unsubscribe();
         }
-
-        if(!hasVenue){
-          this.logout();
-        }
       });
+
+      if(!hasVenue){
+        this.logout();
+      }
     });
   }
 

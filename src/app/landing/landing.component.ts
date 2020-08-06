@@ -218,4 +218,10 @@ export class LandingComponent implements OnInit {
   directSuccess(){
     this.router.navigate(['/success']);
   }
+
+  logout(){
+    this.afAuth.signOut().then(() => {
+      location.reload();
+    })
+  }
 }
