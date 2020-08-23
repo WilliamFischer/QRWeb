@@ -7,13 +7,18 @@
   <div *ngIf="!isDiningAlone && !guestAdder" >
     <img class="venueLogo" src="{{currentVenue.venueImage}}"  *ngIf="currentVenue.venueImage"/>
 
-    <h1 *ngIf="!quickLogin">You're checked in! Are your with any other guests?</h1>
+    <h1 *ngIf="!quickLogin">
+      You're checked in!
+    </h1>
+    <h3 *ngIf="!quickLogin">
+      Are you with any other guests?
+    </h3>
     <h1 *ngIf="quickLogin">You're logged in! Would you like to add a guest?</h1>
 
     <div class="fullSide coreStyler">
-      <button type="button" class="registerVenueBtn logoutBtn" (click)="diningAlone()" *ngIf="!quickLogin">Visting Alone</button>
+      <button type="button" class="registerVenueBtn logoutBtn" (click)="diningAlone()" *ngIf="!quickLogin">Dining Alone</button>
       <button type="button" class="registerVenueBtn logoutBtn" (click)="diningAlone()" *ngIf="quickLogin">No</button>
-      <button type="button" class="registerVenueBtn" (click)="triggerGuestAdder()">Yes</button>
+      <button type="button" class="registerVenueBtn" (click)="triggerGuestAdder()">Dining with a group</button>
       <div class="buffer"></div>
     </div>
   </div>
