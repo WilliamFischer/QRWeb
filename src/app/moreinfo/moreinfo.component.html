@@ -1,0 +1,19 @@
+<div class="basicWrapper">
+  <div class="regoForm">
+    <h1>Enter your details to procced</h1>
+
+    <form class="manualEnterForm">
+      <div>
+        <input type="tel" name="Phone Number" placeholder="Phone Number"  [(ngModel)]="moreDetailsObj.phone" />
+      </div>
+      <div>
+        <input ngx-google-places-autocomplete #places="ngx-places" placeholder="Address" name="other_address" (onAddressChange)="onChange($event)" />
+      </div>
+    </form>
+
+    <div class="proccedRow">
+      <button>Finish ></button>
+    </div>
+
+  </div>
+</div>

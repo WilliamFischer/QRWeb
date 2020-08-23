@@ -1,7 +1,7 @@
 <div class="simpleWrapper" *ngIf="canShowPage">
   <div class="headerSection">
 
-      <div class="topSection">
+      <!-- <div class="topSection">
         <div class="side">
           <div class="logo"><label>Ezy</label>Checkin</div>
         </div>
@@ -13,26 +13,150 @@
           <button class="signInFloatBtn logoutBtn" (click)="logout()">Logout</button>
           <button class="signInFloatBtn blueSignIn" (click)="directSuccess()">{{guestUser.displayName}}</button>
         </div>
-      </div>
+      </div> -->
 
       <div class="coreGrid topSpace">
         <div class="side leftSide">
           <div class="contentWrap">
-            <h1>👋 Ezy Checkin - The easy way to sign in during Covid-19 </h1>
+            <h1>Welcome to the <br /><label>easist</label> and <label>safest</label><br /> way to check-in</h1>
 
-            <div class="dualMobileBtns">
+            <!-- <div class="dualMobileBtns">
               <button class="registerBtn mobileBtn" (click)="guestSigninModel()">Login as a Guest</button>
               <button class="registerBtn" (click)="guestSigninModel()">Register as a Guest</button>
-            </div>
+            </div> -->
 
           </div>
         </div>
         <div class="side rightSide">
-          <img src="https://image.freepik.com/free-vector/medical-illustration-team-health-consultation_1893-2379.jpg" />
+
+          <div class="regoForm">
+            <h1>Register & Check-in as <label>Guest</label></h1>
+
+            <div class="google-btn" (click)="googleSignin()">
+              <div class="google-icon-wrapper">
+                <img class="google-icon" src="../assets/google.svg"/>
+              </div>
+              <p class="btn-text"><b>Register with Google</b></p>
+            </div>
+
+            <label class="orText">OR Enter Details Below</label>
+
+            <form class="manualEnterForm">
+              <div>
+                <input type="text" name="fname" placeholder="First Name"  [(ngModel)]="venueShortOBJ.email" />
+                <input type="text" name="lname" placeholder="Last Name" [(ngModel)]="venueShortOBJ.password" />
+              </div>
+              <div>
+                <input type="email" name="email" placeholder="Email"  [(ngModel)]="venueShortOBJ.email" />
+                <input type="tel" name="phone" placeholder="Phone" [(ngModel)]="venueShortOBJ.password" />
+              </div>
+              <div>
+                <input ngx-google-places-autocomplete #places="ngx-places" class="fullSpanInput" placeholder="Address" name="other_address" (onAddressChange)="onChange($event)" />
+              </div>
+              <div>
+                <input type="password" name="password" placeholder="Create Password"  [(ngModel)]="venueShortOBJ.email" />
+                <input type="password" name="confpassword" placeholder="Confirm Password" [(ngModel)]="venueShortOBJ.password" />
+              </div>
+            </form>
+
+            <div class="proccedRow">
+              Already have an account? <label (click)="goToPage('guest-login')">Login</label>
+              <button>Next ></button>
+            </div>
+
+            <div class="ppRow">
+              By checking-in you agree to Tempsafe's <label (click)="goToPage('terms')">Terms of Sevice</label><br />
+              View our <label (click)="goToPage('pp')">Privacy Policy</label> or <label (click)="goToPage('data')">Data & Security Statement</label>
+            </div>
+
+          </div>
+          <!-- <img src="https://image.freepik.com/free-vector/medical-illustration-team-health-consultation_1893-2379.jpg" /> -->
         </div>
       </div>
 
-      <div class="divideGrid">
+
+      <div class="coreGrid lightEvenSection">
+        <div class="side leftSide">
+          <img class="sideImage" src="https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg" />
+        </div>
+        <div class="side rightSide midRegoSec">
+          <h1>Check your guests in the zero fuss. <br /> Ezy Checkin is made simplicity.</h1>
+          <button class="registerBtn" (click)="goToPage('venue-login')">Register as a venue</button>
+        </div>
+      </div>
+
+      <div class="coreGrid">
+        <div class="fullSide">
+          <h1>Four Ezy Steps To Set Up</h1>
+          <div class="sidewaysGrid">
+            <div class="gridSec">
+              <div class="block"></div>
+              <label>Quickly Register your business <a href='#'>here</a></label>
+            </div>
+            <div class="gridSec">
+              <div class="block"></div>
+              <label>Print your personalised QR code</label>
+            </div>
+            <div class="gridSec">
+              <div class="block"></div>
+              <label>Customers scan your code and check in quickly</label>
+            </div>
+            <div class="gridSec">
+              <div class="block"></div>
+              <label>Customer shows check in confirmation</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="coreGrid lightEvenSection">
+        <div class="longBlockWrapper">
+          <h1>Why use EzyCheckin over other check-in methods</h1>
+          <div class="longBlock">
+            <h3>Easy & Fast</h3>
+            <p>
+              One touch check-in for customers with the option to <br />
+              add a group in one go = faster entry procedure.
+            </p>
+          </div>
+          <div class="longBlock">
+            <h3>Secure</h3>
+            <p>
+              We store all data securely in encrypted form, available <br />
+              upon request
+            </p>
+          </div>
+          <div class="longBlock">
+            <h3>Safe</h3>
+            <p>
+              Customer uses their own device, meaning no touch <br />
+              points or contamination
+            </p>
+          </div>
+        </div>
+        <div class="side rightSide">
+          <img class="sideImage" src="https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg" />
+        </div>
+      </div>
+
+      <div class="coreGrid blueBack">
+        <div class="fullSide midRegoSec">
+          <h1>Register your business as an EzyCheckin venue today</h1>
+          <button class="registerBtn" (click)="goToPage('venue-login')">Register as a Venue</button>
+        </div>
+      </div>
+
+      <div class="coreGrid lightEvenSection">
+        <div class="side rightSide">
+          <img class="sideImage" src="https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg" />
+        </div>
+        <div class="side leftSide">
+          <h1>EzyCheckin is most effective when used together with Tempsafe devices</h1>
+
+        </div>
+      </div>
+
+      <!-- <div class="divideGrid">
         <div class="bigVenueSearch">
           <ng-autocomplete
             [data]="autoCompleteData"
@@ -50,9 +174,9 @@
             <div [innerHTML]="notFound"></div>
           </ng-template>
         </div>
-      </div>
+      </div> -->
 
-      <div class="coreGrid lighter">
+      <!-- <div class="coreGrid lighter">
         <div class="side rightSide">
           <div class="contentWrap">
             <h1>The simpler way to register guests during Covid-19 😮 </h1>
@@ -65,7 +189,7 @@
         <div class="side leftSide">
           <img src="../assets/landing_header.png" />
         </div>
-      </div>
+      </div> -->
 
   </div>
 

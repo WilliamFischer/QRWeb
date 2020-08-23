@@ -1,0 +1,25 @@
+<div class="basicWrapper">
+  <div class="regoForm">
+    <h1>Guest Login</h1>
+
+    <div class="google-btn" (click)="googleSignin()">
+      <div class="google-icon-wrapper">
+        <img class="google-icon" src="../assets/google.svg"/>
+      </div>
+      <p class="btn-text"><b>Login with Google</b></p>
+    </div>
+
+    <label class="orText">OR Enter Details Below</label>
+
+    <form class="manualEnterForm">
+        <input type="email" name="email" placeholder="Email"  [(ngModel)]="guestObj.email" />
+        <input type="password" name="password" placeholder="Password" [(ngModel)]="guestObj.password" />
+    </form>
+
+    <div class="proccedRow">
+      <label (click)="goToPage('forgot-pass')">Forgotten your Password?</label>
+      <button>Next ></button>
+    </div>
+
+  </div>
+</div>

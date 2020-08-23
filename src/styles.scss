@@ -1,6 +1,6 @@
 
 // Font Imports
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
 // AG Grid Import
 @import "../node_modules/ag-grid-community/src/styles/ag-grid.scss";
@@ -14,7 +14,7 @@ body, html, router-outlet{
 }
 
 *{
-  font-family: 'Mulish', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   transition: all 1s ease;
 }
 
@@ -37,6 +37,12 @@ body, html, router-outlet{
   z-index: 10000 !important;
 }
 
+.basicWrapper{
+  margin-top: 20%;
+  text-align: center;
+  color:#131446;
+}
+
 .coreWrapper{
   width: 80%;
   height: fit-content;
@@ -52,6 +58,142 @@ body, html, router-outlet{
 
 .logoutBtn{
   background: #8e8e8e !important;
+}
+
+.google-btn {
+  width: 250px;
+  height: 42px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+
+  margin-left: auto;
+  margin-right: auto;
+
+  margin-bottom: 5%;
+}
+
+.google-btn .google-icon-wrapper {
+  position: absolute;
+  margin-top: 1px;
+  margin-left: 1px;
+  width: 60px;
+  height: 40px;
+  border-radius: 2px;
+  background-color: #fff;
+}
+.google-btn .google-icon {
+  position: absolute;
+  margin-top: 11px;
+  margin-left: -10px;
+  width: 18px;
+  height: 18px;
+}
+.google-btn .btn-text {
+  float: right;
+  margin: 11px 25px 0 0;
+  color: #7F7F7F;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  font-family: "Roboto";
+}
+
+
+.regoForm{
+  float: right;
+  padding-right: 80px;
+
+
+  h1{
+    text-align: center;
+    color: #4C555A;
+    white-space: nowrap;
+    font-size: 24px;
+    padding-bottom: 10px;
+
+    label{
+      color: #4db757;
+    }
+  }
+
+  .orText{
+    text-align: center;
+    width: 100%;
+    display: block;
+    color: #6E6E70;
+
+    margin-bottom: 5%;
+  }
+
+  .manualEnterForm{
+    width: 350px;
+    display: block;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    input{
+      background: #E6E7E9;
+      border-radius: 4px;
+      color: grey;
+      border: none;
+      padding: 10px;
+      margin: 4px;
+      color : #747577;
+    }
+
+    .fullSpanInput{
+      width: 92%;
+      max-width: 100%;
+    }
+  }
+
+  .proccedRow{
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    display: block;
+    text-align: center;
+    color: #4C555A;
+    font-size: 14px;
+    margin-top: 5%;
+
+    label{
+      color: #4db757;
+    }
+
+    button{
+      background: #4DB657;
+      border: none;
+      color: #fff;
+      padding: 10px;
+      padding-left: 20px;
+      padding-right: 20px;
+      border-radius: 10px;
+
+      margin-right: 5%;
+      margin-left: 5%;
+    }
+  }
+
+  .ppRow{
+    color: #4C555A;
+    text-align: left;
+    font-size: 12px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    margin-top: 5%;
+    line-height: 20px;
+
+    label{
+      color: #3B97D6;
+    }
+  }
 }
 
 .venueLogo{

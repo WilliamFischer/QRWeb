@@ -74,6 +74,7 @@ export class LandingComponent implements OnInit {
               venueCollection.unsubscribe();
               venueExists = true;
               this.guestUser = null;
+              this.canShowPage = false;
               this.router.navigate(['/venuepanel']);
             }
           });
@@ -170,6 +171,8 @@ export class LandingComponent implements OnInit {
     console.log(this.venueOBJ);
 
     this.venueOBJ.venueURL = this.venueOBJ.venueName.toLowerCase().replace(/ /g, '');
+    this.venueOBJ.venueDate = new Date().toString();
+
     this.fireStore.doc('Venues/' + this.venueOBJ.venueURL).set(this.venueOBJ,{
       merge: true
     });
@@ -223,5 +226,9 @@ export class LandingComponent implements OnInit {
     this.afAuth.signOut().then(() => {
       location.reload();
     })
+  }
+
+  goToPage(page){
+    this.router.navigateByUrl(page)
   }
 }
