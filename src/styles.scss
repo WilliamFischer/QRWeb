@@ -18,6 +18,10 @@ body, html, router-outlet{
   transition: all 1s ease;
 }
 
+button{
+  cursor: pointer !important;
+}
+
 // AG Grid Styles
 .ag-theme-alpine *{
   transition: all 0s ease !important;

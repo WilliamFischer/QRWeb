@@ -45,14 +45,13 @@ import { MoreinfoComponent } from './moreinfo/moreinfo.component';
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyCR1tXABEbyc2kpc-0E95TW2Y52Iu9QtNs",
-    authDomain: "dinesafe-5f15a.firebaseapp.com",
-    databaseURL: "https://dinesafe-5f15a.firebaseio.com",
-    projectId: "dinesafe-5f15a",
-    storageBucket: "dinesafe-5f15a.appspot.com",
-    messagingSenderId: "641810368179",
-    appId: "1:641810368179:web:3743a91c06c62abc91d2c6",
-    measurementId: "G-NZ096R000V"
+    apiKey: "AIzaSyDox4vAMJNnJUqVx2GCvnhu75QcTTrVG_8",
+    authDomain: "tempsafe-701d4.firebaseapp.com",
+    databaseURL: "https://tempsafe-701d4.firebaseio.com",
+    projectId: "tempsafe-701d4",
+    storageBucket: "tempsafe-701d4.appspot.com",
+    messagingSenderId: "446981905424",
+    appId: "1:446981905424:web:94383288350928bb883e95"
   }
 };
 
