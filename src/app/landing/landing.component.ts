@@ -62,7 +62,7 @@ export class LandingComponent implements OnInit {
     this.afAuth.authState.subscribe(user => {
       if (user){
 
-        let venueCollection = this.fireStore.collection('Venues/').valueChanges().subscribe(
+        let venueCollection = this.fireStore.collection('Users/').valueChanges().subscribe(
         venues =>{
           let venueObj = [];
           let venueExists = false;
@@ -70,7 +70,8 @@ export class LandingComponent implements OnInit {
           venueObj.push(venues);
 
           venueObj[0].forEach(venue => {
-            if(user['email'] == venue.email){
+            console.log(user['email'] +' vs '+ venue.email)
+            if(user['email'] == venue.email && venue.accountType == 'venue'){
               venueCollection.unsubscribe();
               venueExists = true;
               this.guestUser = null;
@@ -91,6 +92,7 @@ export class LandingComponent implements OnInit {
 
         // this.router.navigate(['/myqr']);
       }else{
+        console.log('NO USER')
         this.canShowPage = true;
         this.loadAutoCompleteData();
       }
