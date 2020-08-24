@@ -25,4 +25,10 @@ export class AppComponent {
     this.router.navigateByUrl(page)
   }
 
+  logout(){
+    this.afAuth.signOut().then(() => {
+      location.reload();
+    })
+  }
+
 }

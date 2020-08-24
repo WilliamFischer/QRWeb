@@ -37,7 +37,7 @@ export class GuestLoginComponent implements OnInit {
     const provider = new firebase.auth.GoogleAuthProvider()
 
     await this.afAuth.signInWithPopup(provider).then(function(results) {
-      scope.googleResults = results;
+      scope.googleResults = results.user;
       scope.userAddedSuccess();
     }).catch(function(error) {
       console.log(error);
@@ -46,6 +46,7 @@ export class GuestLoginComponent implements OnInit {
   }
 
   userAddedSuccess(){
+    localStorage.setItem('accountType', 'guest');
     localStorage.setItem('guestUser', JSON.stringify(this.googleResults));
     this.router.navigateByUrl('/moreinfo');
   }

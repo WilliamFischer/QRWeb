@@ -14,6 +14,11 @@ import * as firebase from 'firebase';
 export class VenueLoginComponent implements OnInit {
   googleResults: any;
 
+  guestObj : any = {
+    email: '',
+    password : ''
+  }
+
   constructor(
     private fireStore: AngularFirestore,
     private router: Router,
@@ -32,7 +37,7 @@ export class VenueLoginComponent implements OnInit {
     const provider = new firebase.auth.GoogleAuthProvider()
 
     await this.afAuth.signInWithPopup(provider).then(function(results) {
-      scope.googleResults = results;
+      scope.googleResults = results.user;
       scope.userAddedSuccess();
     }).catch(function(error) {
       console.log(error);
@@ -41,8 +46,8 @@ export class VenueLoginComponent implements OnInit {
   }
 
   userAddedSuccess(){
+    localStorage.setItem('accountType', 'venue');
     localStorage.setItem('guestUser', JSON.stringify(this.googleResults));
     this.router.navigateByUrl('/moreinfo');
   }
-
 }

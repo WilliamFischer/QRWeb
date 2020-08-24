@@ -27,9 +27,13 @@ export class MoreinfoComponent implements OnInit {
     accountType : ''
   }
 
+  accountType: string;
+
   constructor(private fireStore : AngularFirestore, private router: Router) {}
 
   ngOnInit(): void {
+    this.accountType = localStorage.getItem('accountType');
+    console.log(this.accountType);
   }
 
   onChange(address: Address) {
@@ -41,19 +45,24 @@ export class MoreinfoComponent implements OnInit {
     let otherUserDetails = JSON.parse(localStorage.getItem('guestUser'));
     // otherUserDetails.address = this.moreDetailsObj.address;
     // otherUserDetails.phone = this.moreDetailsObj.phone;
-    this.moreDetailsObj.accountType = 'guest';
-    this.moreDetailsObj.email = otherUserDetails.user.email;
-    this.moreDetailsObj.name = otherUserDetails.user.displayName;
-    this.moreDetailsObj.uid = otherUserDetails.user.uid;
-    this.moreDetailsObj.photoURL = otherUserDetails.user.photoURL;
+    this.moreDetailsObj.accountType = this.accountType;
+    this.moreDetailsObj.email = otherUserDetails.email;
+    this.moreDetailsObj.name = otherUserDetails.displayName;
+    this.moreDetailsObj.uid = otherUserDetails.uid;
+    this.moreDetailsObj.photoURL = otherUserDetails.photoURL;
 
+        console.log(otherUserDetails)
     console.log(this.moreDetailsObj)
 
     this.fireStore.doc('Users/' + this.moreDetailsObj.uid).set(this.moreDetailsObj, {
       merge: true
     });
 
-    this.router.navigate(['/success']);
+    if(this.accountType == 'venue'){
+      this.router.navigate(['/venuepanel']);
+    }else{
+      this.router.navigate(['/member']);
+    }
   }
 
 

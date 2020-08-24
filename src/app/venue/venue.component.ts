@@ -158,7 +158,7 @@ export class VenueComponent implements OnInit {
     let scope = this;
     if(this.signinObj.email && this.signinObj.password){
       await this.afAuth.signInWithEmailAndPassword(this.signinObj.email, this.signinObj.password).then(function() {
-        scope.router.navigateByUrl('/success');
+        scope.router.navigateByUrl('/member');
       }).catch(function(error) {
         console.log(error);
         alert(error.message);
@@ -242,7 +242,7 @@ export class VenueComponent implements OnInit {
   userAddedSuccess(){
     localStorage.setItem('guestUser', JSON.stringify(this.googleUserObj));
     localStorage.setItem('exisitingVenue', JSON.stringify(this.currentVenue));
-    this.router.navigateByUrl('/success');
+    this.router.navigateByUrl('/member');
   }
 
   submitUserDetails(){

@@ -5,6 +5,7 @@
   <li (click)="goToPage('resources')">Resources</li>
   <li (click)="goToPage('contact')">Contact</li> -->
   <div class="logins" *ngIf="user">
+    <li class="loginBtn" (click)="logout()"><button>Logout</button></li>
     <li class="loginText" (click)="goToPage('success')">{{user.displayName}}</li>
   </div>
   <div class="logins" *ngIf="!user">

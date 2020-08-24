@@ -41,7 +41,6 @@ import { ForgotPassComponent } from './forgot-pass/forgot-pass.component';
 import { GuestLoginComponent } from './guest-login/guest-login.component';
 import { VenueLoginComponent } from './venue-login/venue-login.component';
 import { MoreinfoComponent } from './moreinfo/moreinfo.component';
-import { MemberComponent } from './member/member.component';
 
 export const environment = {
   production: false,
@@ -74,8 +73,7 @@ export const environment = {
     ForgotPassComponent,
     GuestLoginComponent,
     VenueLoginComponent,
-    MoreinfoComponent,
-    MemberComponent
+    MoreinfoComponent
   ],
   imports: [
     BrowserModule,

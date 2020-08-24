@@ -221,7 +221,7 @@ export class LandingComponent implements OnInit {
   }
 
   directSuccess(){
-    this.router.navigate(['/success']);
+    this.router.navigate(['/member']);
   }
 
   logout(){
