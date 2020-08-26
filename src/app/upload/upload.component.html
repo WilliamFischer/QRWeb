@@ -1,0 +1,13 @@
+<div class="basicWrapper">
+
+  <div *ngIf="!loadingImageUpload">
+    <a class="deleteTitle specialInput">
+      <input type="file" (change)="uploadVenueImg($event)" />
+      <button class="registerBtn">Upload Image</button>
+    </a>
+  </div>
+
+  <div *ngIf="loadingImageUpload">
+    <img src="../assets/uploading.gif" />
+  </div>
+</div>

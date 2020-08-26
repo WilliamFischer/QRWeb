@@ -204,53 +204,6 @@
 
 </div>
 
-<form class="customModel registerModel" *ngIf="showVenueAddModel">
-  <div class="fullSide">
-    <h1>Sign-up below to activate your venue’s guest registry.</h1>
-  </div>
-
-  <div class="side">
-    <h2>OWNER DETAILS</h2>
-    <div>
-      <input type="text" name="name" placeholder="First & Last Name" [(ngModel)]="venueOBJ.userName" />
-    </div>
-    <div>
-      <input type="email" name="email" placeholder="Email"  [(ngModel)]="venueACCOBJ.email" />
-    </div>
-    <div>
-      <input type="tel" name="ph" placeholder="Phone" [(ngModel)]="venueOBJ.ph" />
-    </div>
-
-    <h2>ACCOUNT DETAILS</h2>
-    <div>
-      <input type="password" name="pass" placeholder="Password" [(ngModel)]="venueACCOBJ.pass" />
-    </div>
-    <div>
-      <input type="password" name="confirmPass" placeholder="Confirm Password" [(ngModel)]="venueACCOBJ.confirmPass" />
-    </div>
-  </div>
-
-  <div class="side">
-    <h2>VENUE DETAILS</h2>
-    <div>
-      <input type="text" name="venueName" placeholder="Venue Name" [(ngModel)]="venueOBJ.venueName" />
-    </div>
-    <div>
-      <input ngx-google-places-autocomplete #places="ngx-places" placeholder="Venue Address" name="other_address" (onAddressChange)="onChange($event)" />
-    </div>
-    <div>
-      <input type="text" name="industry" placeholder="Industry (Optional)" [(ngModel)]="venueOBJ.industry" />
-    </div>
-  </div>
-
-  <div class="fullSide">
-    <div class="inlineLineCheckbox"><input type="checkbox" [(ngModel)]="hasChecked" [ngModelOptions]="{standalone: true}"/> I agree to the <a href="#">Terms & Conditions</a> & <a href="#">Privacy Policy</a></div>
-    <button type="button" class="registerVenueBtn" (click)="submitVenue()">Submit Venue</button>
-    <div class="buffer"></div>
-  </div>
-
-</form>
-
 
 <div class="customModel miniCustomModel registerModel" *ngIf="showVenueLoginModel">
   <div class="fullSide">

@@ -29,11 +29,42 @@ export class MoreinfoComponent implements OnInit {
 
   accountType: string;
 
-  constructor(private fireStore : AngularFirestore, private router: Router) {}
+  constructor(private fireStore : AngularFirestore, private router: Router, private afAuth : AngularFireAuth) {}
 
   ngOnInit(): void {
-    this.accountType = localStorage.getItem('accountType');
-    console.log(this.accountType);
+    this.afAuth.authState.subscribe(user => {
+      if (user){
+        console.log(user.uid)
+
+        let venueCollection = this.fireStore.collection('Users/').valueChanges().subscribe(
+        venues =>{
+          let userArr = [];
+          let venueExists = false;
+
+          userArr.push(venues);
+
+          userArr[0].forEach(user => {
+            if(user['uid'] == user.uid){
+              this.accountType = user.accountType;
+
+
+              if(user.address && user.phone){
+                if(this.accountType == 'venue'){
+                  this.router.navigate(['/venue']);
+                }else{
+                  this.router.navigate(['/member']);
+                }
+              }
+
+              venueCollection.unsubscribe();
+            }
+          });
+        });
+
+      } else {
+        this.router.navigate(['/']);
+      }
+    });
   }
 
   onChange(address: Address) {
@@ -59,7 +90,7 @@ export class MoreinfoComponent implements OnInit {
     });
 
     if(this.accountType == 'venue'){
-      this.router.navigate(['/venuepanel']);
+      this.router.navigate(['/venue']);
     }else{
       this.router.navigate(['/member']);
     }

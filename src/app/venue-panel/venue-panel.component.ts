@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+// Maps
+import { GooglePlaceDirective } from "ngx-google-places-autocomplete";
+import { Address } from "ngx-google-places-autocomplete/objects/address";
+
 // Firebase
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireStorage } from '@angular/fire/storage';
 
-import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-venue-panel',
@@ -16,11 +18,23 @@ import { finalize } from 'rxjs/operators';
 export class VenuePanelComponent implements OnInit {
 
   canShowPage : boolean;
+  hasNoVenue: boolean;
+  showVenueAddModel: boolean;
   loadingImageUpload: boolean;
+  hasChecked: boolean;
 
   user: any;
   venue : any;
   rowData : any;
+
+  venueOBJ: any = {
+    name : '',
+    location : '',
+    industry : '',
+    url : '',
+    date : '',
+    createdBy : ''
+  }
 
   gridOptions = {
     columnDefs: [
@@ -51,7 +65,6 @@ export class VenuePanelComponent implements OnInit {
   constructor(
     private fireStore : AngularFirestore,
     private afAuth : AngularFireAuth,
-    private storage: AngularFireStorage,
     private router: Router
   ) { }
 
@@ -80,16 +93,18 @@ export class VenuePanelComponent implements OnInit {
       venueObj.push(venues);
 
       venueObj[0].forEach(venue => {
-        console.log(this.user.email +' vs '+ venue['email'])
-        if(this.user.email == venue['email']){
+        console.log(this.user.uid +' vs '+ venue['createdBy'])
+        if(this.user.uid == venue['createdBy']){
           venueExists = true;
           this.venue = venue;
+          localStorage.setItem('venue', JSON.stringify(venue));
           console.log(venue)
 
-          let userCollection = this.fireStore.collection('Venues/' + venue['venueURL']  + '/guests').valueChanges().subscribe(
+          let userCollection = this.fireStore.collection('Venues/' + venue['url']  + '/guests').valueChanges().subscribe(
           users =>{
             console.log(users);
             this.rowData = users;
+            this.hasNoVenue = false;
 
             venueCollection.unsubscribe();
             userCollection.unsubscribe();
@@ -99,7 +114,8 @@ export class VenuePanelComponent implements OnInit {
 
       if(!venueExists){
         console.log('Oops! We couldn\'t find any venues under your account, please login again.');
-        this.logout();
+        // this.logout();
+        this.hasNoVenue = true;
       }
 
     });
@@ -110,44 +126,46 @@ export class VenuePanelComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  myQR(){
-    this.router.navigateByUrl('/myqr')
+
+  submitVenue(){
+    if(this.hasChecked){
+      console.log(this.venueOBJ);
+
+      this.venueOBJ.url = this.venueOBJ.name.toLowerCase().replace(/ /g, '');
+      this.venueOBJ.date = new Date().toString();
+      this.venueOBJ.createdBy = this.user.uid;
+
+      if(!this.venueOBJ.industry){
+        this.venueOBJ.industry = 'N/A'
+      }
+
+      this.fireStore.doc('Venues/' + this.venueOBJ.url).set(this.venueOBJ,{
+        merge: true
+      });
+
+      alert('Welcome to QRWeb! You will now be taken to your QR Code');
+      this.triggerModel();
+
+      this.router.navigate(['/myqr']);
+    }else{
+      alert('Please agree to the terms')
+    }
+
   }
 
-  uploadVenueImg(event) {
-    console.log('UPLOAD AN IMAGE');
-    this.loadingImageUpload = true;
+  onChange(address: Address) {
+    console.log(address);
+    this.venueOBJ.location = address.formatted_address;
+  }
 
-    const file = event.target.files[0];
-    let randomID = Math.floor(Math.random() * 1000);
-    const filePath = this.user['email'] + '/Tank Images/' + randomID;
-    const fileRef = this.storage.ref(filePath)
-    const task = this.storage.upload(filePath, file);
 
-    task.snapshotChanges().pipe(
-        finalize(() => {
-          const downloadURL = fileRef.getDownloadURL();
 
-          downloadURL.subscribe(url=>{
-             if(url){
-               this.loadingImageUpload = false;
-               console.log(url);
-               this.venue['venueImage'] = url;
+  triggerModel() {
+    this.showVenueAddModel = true;
+  }
 
-                this.fireStore.doc('Venues/' + this.venue['venueURL'])
-                .set({
-                  venueImage: url
-                },{
-                  merge: true
-                });
-
-                alert('Venue Photo Updated!')
-             }
-          })
-
-        })
-     )
-    .subscribe()
+  closeModals() {
+    this.showVenueAddModel = false;
   }
 
 }

@@ -18,11 +18,15 @@ import { ForgotPassComponent } from './forgot-pass/forgot-pass.component';
 import { GuestLoginComponent } from './guest-login/guest-login.component';
 import { VenueLoginComponent } from './venue-login/venue-login.component';
 import { MoreinfoComponent } from './moreinfo/moreinfo.component';
+import { UploadComponent } from './upload/upload.component';
+import { MemberComponent } from './member/member.component';
+
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
-  { path: 'venuepanel', component: VenuePanelComponent },
-  { path: 'member', component: CheckinSuccessComponent },
+  { path: 'venue', component: VenuePanelComponent },
+  { path: 'success', component: CheckinSuccessComponent },
+  { path: 'member', component: MemberComponent },
   { path: 'myqr', component: GeneratedQRComponent },
   { path: 'about', component: AboutComponent },
   { path: 'faq', component: FaqComponent },
@@ -35,6 +39,7 @@ const routes: Routes = [
   { path: 'guest-login', component: GuestLoginComponent },
   { path: 'venue-login', component: VenueLoginComponent },
   { path: 'moreinfo', component: MoreinfoComponent },
+  { path: 'upload', component: UploadComponent },
   { path: ':id', component: VenueComponent },
 ];
 

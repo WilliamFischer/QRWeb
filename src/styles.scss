@@ -57,11 +57,23 @@ button{
   right: 0;
 
   text-align: center;
-  padding-top: 3%;
+  padding-top: 10%;
 }
 
 .logoutBtn{
   background: #8e8e8e !important;
+}
+
+.registerBtn{
+  padding: 10px;
+  width: 150px;
+  border: none;
+  background: #4DB657 !important;
+  color: #fff;
+  border-radius: 10px;
+  width: fit-content;
+  white-space: nowrap;
+  font-weight: 900;
 }
 
 .google-btn {
@@ -368,6 +380,19 @@ button{
   }
 }
 
+// MEDUIM MODE
+@media (max-width: 1500px) {
+  .topSpace{
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .sidewaysGrid{
+    width: 100% !important;
+    padding-left: 0% !important;
+    padding-right: 0% !important;
+  }
+}
 
 // BIG MODE
 @media (min-width: 1400px) {

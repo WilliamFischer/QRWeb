@@ -8,6 +8,7 @@ import { Address } from "ngx-google-places-autocomplete/objects/address";
 // Firebase
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-landing',
@@ -50,6 +51,7 @@ export class LandingComponent implements OnInit {
   venue = 'venueName';
   autoCompleteData : any;
   guestUser : any;
+  googleResults: any;
 
 
   constructor(
@@ -61,43 +63,64 @@ export class LandingComponent implements OnInit {
   ngOnInit(): void {
     this.afAuth.authState.subscribe(user => {
       if (user){
+        this.canShowPage = true;
 
-        let venueCollection = this.fireStore.collection('Users/').valueChanges().subscribe(
-        venues =>{
-          let venueObj = [];
-          let venueExists = false;
-
-          venueObj.push(venues);
-
-          venueObj[0].forEach(venue => {
-            console.log(user['email'] +' vs '+ venue.email)
-            if(user['email'] == venue.email && venue.accountType == 'venue'){
-              venueCollection.unsubscribe();
-              venueExists = true;
-              this.guestUser = null;
-              this.canShowPage = false;
-              this.router.navigate(['/venuepanel']);
-            }
-          });
-
-          if(!venueExists){
-            this.guestUser = user;
-            this.canShowPage = true;
-            venueCollection.unsubscribe();
-          }
-
-          console.log(this.guestUser)
-
-        });
+        // let venueCollection = this.fireStore.collection('Users/').valueChanges().subscribe(
+        // venues =>{
+        //   let venueObj = [];
+        //   let venueExists = false;
+        //
+        //   venueObj.push(venues);
+        //
+        //   venueObj[0].forEach(venue => {
+        //     console.log(user['email'] +' vs '+ venue.email)
+        //     if(user['email'] == venue.email && venue.accountType == 'venue'){
+        //       venueCollection.unsubscribe();
+        //       venueExists = true;
+        //       this.guestUser = null;
+        //       this.canShowPage = false;
+        //       this.router.navigate(['/venue']);
+        //     }
+        //   });
+        //
+        //   if(!venueExists){
+        //     this.guestUser = user;
+        //     this.canShowPage = true;
+        //     venueCollection.unsubscribe();
+        //   }
+        //
+        //   console.log(this.guestUser)
+        //
+        // });
 
         // this.router.navigate(['/myqr']);
       }else{
         console.log('NO USER')
         this.canShowPage = true;
-        this.loadAutoCompleteData();
       }
     });
   }
+
+  async googleSignin(){
+    let scope = this;
+    const provider = new firebase.auth.GoogleAuthProvider()
+
+    await this.afAuth.signInWithPopup(provider).then(function(results) {
+      scope.googleResults = results.user;
+      scope.userAddedSuccess();
+    }).catch(function(error) {
+      console.log(error);
+      alert(error.message);
+    });
+  }
+
+  userAddedSuccess(){
+    localStorage.removeItem('guestUser');
+
+    localStorage.setItem('guestUser', JSON.stringify(this.googleResults));
+    this.router.navigateByUrl('/moreinfo');
+  }
+
 
   triggerModel() {
     this.showVenueAddModel = true;
@@ -145,7 +168,7 @@ export class LandingComponent implements OnInit {
 
     if(this.venueShortOBJ.email && this.venueShortOBJ.password){
       await this.afAuth.signInWithEmailAndPassword(this.venueShortOBJ.email, this.venueShortOBJ.password).then(function() {
-        scope.router.navigate(['/venuepanel']);
+        scope.router.navigate(['/venue']);
       }).catch(function(error) {
         console.log(error);
         alert(error.message);
@@ -192,28 +215,6 @@ export class LandingComponent implements OnInit {
 
   goHome(){
     this.router.navigate(['/']);
-  }
-
-  loadAutoCompleteData(){
-    let venueCollection = this.fireStore.collection('Venues').valueChanges().subscribe(
-    venues =>{
-
-      let cleanVenues = [];
-
-      for(let i in venues){
-        if(venues[i]['venueURL'] !== 'guestlogin'){
-          cleanVenues.push(venues[i])
-        }
-      }
-
-      this.autoCompleteData = cleanVenues;
-      venueCollection.unsubscribe();
-    });
-  }
-
-  openVenue(item){
-    console.log(item);
-    this.router.navigate(['/' + item.venueURL]);
   }
 
   guestSigninModel(){

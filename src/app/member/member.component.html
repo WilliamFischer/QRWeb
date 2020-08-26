@@ -1,0 +1,42 @@
+<div class="topHeader">
+  <div class="logo" (click)="goHome()"><label>Ezy</label>Checkin</div>
+</div>
+
+<div class="coreWrapper">
+
+  <img class="venueLogo" src="{{currentUser.photoURL}}"  *ngIf="currentUser.photoURL"/>
+
+  <h1>Welcome {{currentUser.displayName}}</h1>
+
+  <div class="divideGrid">
+    <div class="bigVenueSearch">
+      <ng-autocomplete
+        [data]="autoCompleteData"
+        placeHolder=" 🔎  Search for a venue to checkin..."
+        [searchKeyword]="searchBy"
+        [itemTemplate]="itemTemplate"
+        [notFoundTemplate]="notFoundTemplate">
+      </ng-autocomplete>
+
+      <ng-template #itemTemplate let-item>
+        <a [innerHTML]="item.name" (click)="openVenue(item)"></a>
+      </ng-template>
+
+      <ng-template #notFoundTemplate let-notFound>
+        <div [innerHTML]="notFound"></div>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="buffer"></div>
+
+  <h3 *ngIf="!quickLogin">
+    === OR ===
+  </h3>
+
+  <div class="fullSide coreStyler">
+    <button type="button" class="registerVenueBtn" (click)="triggerGuestAdder()">Add Guests</button>
+    <div class="buffer"></div>
+  </div>
+
+</div>

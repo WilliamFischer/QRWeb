@@ -57,6 +57,7 @@ export class VenueComponent implements OnInit {
   }
 
   googleResults : any;
+  currentUser : any;
 
   constructor(
     private fireStore: AngularFirestore,
@@ -71,6 +72,15 @@ export class VenueComponent implements OnInit {
       this.quickLogin = true;
     }
 
+
+    this.afAuth.authState.subscribe(user => {
+      if (!user){
+        this.router.navigate(['/']);
+      }else{
+        this.getDbInfo(user);
+      }
+    });
+
     let venueCollection = this.fireStore.collection('Venues/').valueChanges().subscribe(
     venues =>{
       let venueObj = [];
@@ -79,7 +89,7 @@ export class VenueComponent implements OnInit {
       venueObj.push(venues);
 
       venueObj[0].forEach(venue => {
-        if(venueCode == venue.venueURL){
+        if(venueCode == venue.url){
           this.currentVenue = venue;
           this.venueFound = true;
           venueExists = true;
@@ -96,6 +106,26 @@ export class VenueComponent implements OnInit {
       this.venueLoaded = true;
     });
   }
+
+  getDbInfo(user) {
+    // GET USER FROM FIREBASE
+    let usersCollection = this.fireStore.collection('Users/').valueChanges().subscribe(
+    users =>{
+      let userArr = [];
+      let venueExists = false;
+
+      userArr.push(users);
+
+      userArr[0].forEach(userObj => {
+        if(user['uid'] == userObj.uid){
+          this.currentUser = userObj;
+          usersCollection.unsubscribe();
+        }
+      });
+
+    });
+  }
+
 
   goToLanding(){
     this.router.navigateByUrl('/')
@@ -158,7 +188,7 @@ export class VenueComponent implements OnInit {
     let scope = this;
     if(this.signinObj.email && this.signinObj.password){
       await this.afAuth.signInWithEmailAndPassword(this.signinObj.email, this.signinObj.password).then(function() {
-        scope.router.navigateByUrl('/member');
+        scope.router.navigateByUrl('/success');
       }).catch(function(error) {
         console.log(error);
         alert(error.message);
@@ -200,7 +230,7 @@ export class VenueComponent implements OnInit {
             guestExists = true;
             console.log(guest);
 
-            this.googleUserObj.ph = guest.ph;
+            this.googleUserObj.ph = guest.phone;
             this.googleUserObj.address = guest.address;
           }
         });
@@ -218,7 +248,7 @@ export class VenueComponent implements OnInit {
 
   saveGoogleUser(){
     this.googleUserObj.guestId = this.fireStore.createId();
-    this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + this.googleUserObj.guestId).set(this.googleUserObj,{
+    this.fireStore.doc('Venues/' + this.currentVenue.url + '/guests/' + this.googleUserObj.guestId).set(this.googleUserObj,{
       merge: true
     });
 
@@ -226,15 +256,25 @@ export class VenueComponent implements OnInit {
   }
 
   saveNewGoogleUser(){
-    this.googleUserObj.guestId = this.fireStore.createId();
+    if(this.currentUser.uid){
+      console.log(this.currentUser)
+      this.currentUser.guestId = this.fireStore.createId();
 
-    this.fireStore.doc('Users/' + this.googleUserObj.email).set(this.googleUserObj,{
-      merge: true
-    });
+      this.fireStore.doc('Venues/' + this.currentVenue.url + '/guests/' + this.currentUser.guestId).set(this.currentUser,{
+        merge: true
+      });
+    }else{
+      this.googleUserObj.guestId = this.fireStore.createId();
 
-    this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + this.googleUserObj.guestId).set(this.googleUserObj,{
-      merge: true
-    });
+      this.fireStore.doc('Users/' + this.googleUserObj.email).set(this.googleUserObj,{
+        merge: true
+      });
+
+      this.fireStore.doc('Venues/' + this.currentVenue.url + '/guests/' + this.googleUserObj.guestId).set(this.googleUserObj,{
+        merge: true
+      });
+    }
+
 
     this.userAddedSuccess();
   }
@@ -242,7 +282,7 @@ export class VenueComponent implements OnInit {
   userAddedSuccess(){
     localStorage.setItem('guestUser', JSON.stringify(this.googleUserObj));
     localStorage.setItem('exisitingVenue', JSON.stringify(this.currentVenue));
-    this.router.navigateByUrl('/member');
+    this.router.navigateByUrl('/success');
   }
 
   submitUserDetails(){
@@ -269,7 +309,7 @@ export class VenueComponent implements OnInit {
     this.userObj.date = new Date().toString();
     this.userObj.guestId = this.fireStore.createId();
 
-    this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + this.userObj.guestId).set(this.userObj,{
+    this.fireStore.doc('Venues/' + this.currentVenue.url + '/guests/' + this.userObj.guestId).set(this.userObj,{
       merge: true
     });
 

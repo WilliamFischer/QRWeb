@@ -6,15 +6,15 @@
   <div *ngIf="venueLoaded">
     <div *ngIf="venueFound">
 
-      <img class="venueLogo" src="{{currentVenue.venueImage}}"  *ngIf="currentVenue.venueImage"/>
-      <h1 *ngIf="!quickLogin">Check-in to {{ currentVenue.venueName }}</h1>
+      <img class="venueLogo" src="{{currentVenue.image}}"  *ngIf="currentVenue.image"/>
+      <h1 *ngIf="!quickLogin">Check-in to {{ currentVenue.name }}</h1>
       <h3 *ngIf="!quickLogin">Please enter your details below to check in and then show your confirmed check in message to one of our team</h3>
 
       <h1 *ngIf="quickLogin">Welcome to EzyCheckin, please login</h1>
       <h3 *ngIf="quickLogin">Select a method below to procced</h3>
 
       <div class="coreStyler">
-        <div *ngIf="!emailSignupMode && !emailSigninMode && !googleSigninMode">
+        <div *ngIf="!emailSignupMode && !emailSigninMode && !googleSigninMode && !currentUser">
           <div class="fullSide">
 
             <div class="google-btn" (click)="googleSignin()">
@@ -32,6 +32,14 @@
             <br /> <br />
             <button type="button" name="name" (click)="triggerEmailSignup()" *ngIf="!quickLogin">Create An Account With a New Email</button>
 
+          </div>
+        </div>
+
+
+        <div *ngIf="currentUser">
+          <div class="fullSide">
+            <button type="button" name="name" (click)="selectionHomeTrigger()" class="backBtn">Back</button>
+            <button type="button" name="name" (click)="saveNewGoogleUser()">Check In</button>
           </div>
         </div>
 

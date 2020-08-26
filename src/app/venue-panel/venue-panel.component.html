@@ -1,4 +1,4 @@
-<div class="headerSection">
+<!-- <div class="headerSection">
 
     <div class="topSection">
       <div class="side">
@@ -14,17 +14,17 @@
       </div>
     </div>
 
-</div>
+</div> -->
 
 
-<div class="coreWrapper dataTableWrapper" *ngIf="canShowPage && venue">
+<div class="coreWrapper dataTableWrapper" *ngIf="canShowPage && !hasNoVenue && venue">
 
   <div *ngIf="loadingImageUpload">
     <img src="../assets/uploading.gif" />
   </div>
 
   <div *ngIf="!loadingImageUpload">
-    <h1>{{venue.venueName}}'s Guests</h1>
+    <h1>{{venue.name}}'s Guests</h1>
 
     <ag-grid-angular
         style="width: 100%; height: 50vh;"
@@ -35,5 +35,43 @@
     </ag-grid-angular>
   </div>
 
+</div>
+
+<div class="coreWrapper dataTableWrapper" *ngIf="canShowPage && hasNoVenue">
+
+  <h1>Welcome {{ user.displayName }} <br /> Create a venue to begin</h1>
+  <button class="registerBtn" (click)="triggerModel()"> + Add Venue</button>
 
 </div>
+
+
+<form class="customModel registerModel" *ngIf="showVenueAddModel">
+
+  <div class="paddedInputs">
+    <div class="side">
+      <div>
+        <input type="text" name="name" placeholder="Venue Name" [(ngModel)]="venueOBJ.name" />
+      </div>
+    </div>
+
+    <div class="side">
+      <div>
+        <input ngx-google-places-autocomplete #places="ngx-places" placeholder="Venue Address" name="other_address" (onAddressChange)="onChange($event)" />
+      </div>
+    </div>
+
+    <div class="fullSide">
+      <div>
+        <input type="text" name="industry" placeholder="Industry (Optional)" [(ngModel)]="venueOBJ.industry" />
+      </div>
+    </div>
+  </div>
+
+
+  <div class="fullSide">
+    <div class="inlineLineCheckbox"><input type="checkbox" [(ngModel)]="hasChecked" [ngModelOptions]="{standalone: true}"/> I agree to the <a href="#">Terms & Conditions</a> & <a href="#">Privacy Policy</a></div>
+    <button type="button" class="registerVenueBtn" (click)="submitVenue()">Submit Venue</button>
+    <div class="buffer"></div>
+  </div>
+
+</form>

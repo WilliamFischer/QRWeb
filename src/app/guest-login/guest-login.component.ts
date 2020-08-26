@@ -46,7 +46,8 @@ export class GuestLoginComponent implements OnInit {
   }
 
   userAddedSuccess(){
-    localStorage.setItem('accountType', 'guest');
+    localStorage.removeItem('guestUser');
+
     localStorage.setItem('guestUser', JSON.stringify(this.googleResults));
     this.router.navigateByUrl('/moreinfo');
   }

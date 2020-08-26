@@ -1,12 +1,27 @@
 <header>
   <li class="logo" (click)="goToPage('/')">EzyCheckin</li>
-  <!-- <li (click)="goToPage('about')">About Us</li>
+
+  <!--
+  ADDITONAL PAGES
+  <li (click)="goToPage('about')">About Us</li>
   <li (click)="goToPage('faq')">FAQs</li>
   <li (click)="goToPage('resources')">Resources</li>
-  <li (click)="goToPage('contact')">Contact</li> -->
-  <div class="logins" *ngIf="user">
+  <li (click)="goToPage('contact')">Contact</li>
+
+  -->
+
+  <div class="logins" *ngIf="user && moreUserInfo">
+
     <li class="loginBtn" (click)="logout()"><button>Logout</button></li>
-    <li class="loginText" (click)="goToPage('success')">{{user.displayName}}</li>
+
+    <!-- VENUE BUTTONS -->
+    <li class="loginBtn" (click)="goToPage('upload')" *ngIf="moreUserInfo.accountType == 'venue'"><button>Upload</button></li>
+    <li class="loginBtn" (click)="goToPage('myqr')" *ngIf="moreUserInfo.accountType == 'venue'"><button>My QR</button></li>
+    <li class="loginText" *ngIf="moreUserInfo.accountType == 'venue'" (click)="goToPage('venue')">{{ user.displayName }}</li>
+
+    <!-- GUEST BUTTONS -->
+    <li class="loginText" *ngIf="moreUserInfo.accountType == 'guest'" (click)="goToPage('member')">{{ user.displayName }}</li>
+
   </div>
   <div class="logins" *ngIf="!user">
     <li class="loginBtn" (click)="goToPage('guest-login')"><button>Guest Login</button></li>
