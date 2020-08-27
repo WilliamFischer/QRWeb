@@ -97,11 +97,11 @@ export class MemberComponent implements OnInit {
     this.guestAdder = true;
     this.newGuestForm = false;
 
-    console.log(this.currentUser)
     let userCollection = this.fireStore.collection('Users/' + this.currentUser['uid'] + '/companions').valueChanges().subscribe(
     users =>{
       console.log(users);
       this.rowData = users;
+      this.gridApi.setRowData(this.rowData);
       userCollection.unsubscribe();
     });
   }
@@ -170,7 +170,7 @@ export class MemberComponent implements OnInit {
         row['date'] = date;
         row['guestId'] = guestId;
 
-        this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + guestId).set(row,{
+        this.fireStore.doc('Venues/' + this.currentVenue.url + '/guests/' + guestId).set(row,{
           merge: true
         });
       }
@@ -179,8 +179,21 @@ export class MemberComponent implements OnInit {
     }
   }
 
+  deleteGuests() {
+    let selectedRows = this.gridApi.getSelectedRows();
+    console.log('DELETE : ')
+    console.log(selectedRows)
+
+
+    for(let i in selectedRows){
+      this.fireStore.doc('Users/' + this.currentUser.uid + '/companions/' + selectedRows[i].email).delete();
+    }
+
+    this.triggerGuestAdder()
+  }
+
   diningAlone(){
-    if (this.currentVenue['venueURL'] == 'guestlogin'){
+    if (this.currentVenue['url'] == 'test'){
       // alert('Thank you for creating an account!')
       this.router.navigate(['/']);
     }else{

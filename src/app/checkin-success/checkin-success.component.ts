@@ -79,6 +79,19 @@ export class CheckinSuccessComponent implements OnInit {
     console.log(this.currentUser)
   }
 
+  deleteGuests() {
+    let selectedRows = this.gridApi.getSelectedRows();
+    console.log('DELETE : ')
+    console.log(selectedRows)
+
+
+    for(let i in selectedRows){
+      this.fireStore.doc('Users/' + this.currentUser.uid + '/companions/' + selectedRows[i].email).delete();
+    }
+
+    this.triggerGuestAdder()
+  }
+
   getDbInfo(user) {
     // GET USER FROM FIREBASE
     let usersCollection = this.fireStore.collection('Users/').valueChanges().subscribe(
@@ -131,6 +144,7 @@ export class CheckinSuccessComponent implements OnInit {
     users =>{
       console.log(users);
       this.rowData = users;
+      this.gridApi.setRowData(this.rowData);
       userCollection.unsubscribe();
     });
   }

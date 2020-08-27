@@ -61,6 +61,7 @@
 
     <div class="fullSide coreStyler">
       <button type="button" name="name" (click)="dontAddGuest()" class="backBtn">Back</button>
+      <button type="button" name="name" (click)="deleteGuests()" [ngClass]="{'disabledBtn' : !canConfirmGuests }" [disabled]="!canConfirmGuests" class="deleteBtn">Delete Guests</button>
     </div>
   </div>
 
