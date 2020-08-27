@@ -4,39 +4,83 @@
 
 <div class="coreWrapper">
 
-  <img class="venueLogo" src="{{currentUser.photoURL}}"  *ngIf="currentUser.photoURL"/>
+  <div *ngIf="!guestAdder">
 
-  <h1>Welcome {{currentUser.displayName}}</h1>
+    <img class="venueLogo" src="{{currentUser.photoURL}}"  *ngIf="currentUser.photoURL"/>
 
-  <div class="divideGrid">
-    <div class="bigVenueSearch">
-      <ng-autocomplete
-        [data]="autoCompleteData"
-        placeHolder=" 🔎  Search for a venue to checkin..."
-        [searchKeyword]="searchBy"
-        [itemTemplate]="itemTemplate"
-        [notFoundTemplate]="notFoundTemplate">
-      </ng-autocomplete>
+    <h1 *ngIf="!currentUser.displayName">Welcome {{currentUser.name}}</h1>
+    <h1 *ngIf="currentUser.displayName">Welcome {{currentUser.displayName}}</h1>
 
-      <ng-template #itemTemplate let-item>
-        <a [innerHTML]="item.name" (click)="openVenue(item)"></a>
-      </ng-template>
+    <div class="divideGrid">
+      <div class="bigVenueSearch">
+        <ng-autocomplete
+          [data]="autoCompleteData"
+          placeHolder=" 🔎  Search for a venue to checkin..."
+          [searchKeyword]="searchBy"
+          [itemTemplate]="itemTemplate"
+          [notFoundTemplate]="notFoundTemplate">
+        </ng-autocomplete>
 
-      <ng-template #notFoundTemplate let-notFound>
-        <div [innerHTML]="notFound"></div>
-      </ng-template>
+        <ng-template #itemTemplate let-item>
+          <a [innerHTML]="item.name" (click)="openVenue(item)"></a>
+        </ng-template>
+
+        <ng-template #notFoundTemplate let-notFound>
+          <div [innerHTML]="notFound"></div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="buffer"></div>
+
+    <h3 *ngIf="!quickLogin">
+      === OR ===
+    </h3>
+
+    <div class="fullSide coreStyler">
+      <button type="button" class="registerVenueBtn" (click)="triggerGuestAdder()">My Guests</button>
+      <div class="buffer"></div>
     </div>
   </div>
 
-  <div class="buffer"></div>
+  <div *ngIf="guestAdder && !newGuestForm && !isDiningAlone">
 
-  <h3 *ngIf="!quickLogin">
-    === OR ===
-  </h3>
+    <div class="fullSide">
+      <button type="button" class="registerVenueBtn" (click)="addNewGuest()">+ New Guest</button>
+      <div class="buffer"></div>
+    </div>
 
-  <div class="fullSide coreStyler">
-    <button type="button" class="registerVenueBtn" (click)="triggerGuestAdder()">Add Guests</button>
-    <div class="buffer"></div>
+    <ag-grid-angular
+        style="width: 100%; height: 300px;"
+        class="ag-theme-alpine"
+        [rowData]="rowData"
+        [gridOptions]="gridOptions"
+        (gridReady)="onGridReady($event)"
+        (rowSelected)='onRowClicked($event)'>
+    </ag-grid-angular>
+
+    <div class="fullSide coreStyler">
+      <button type="button" name="name" (click)="dontAddGuest()" class="backBtn">Back</button>
+    </div>
   </div>
+
+  <div *ngIf="newGuestForm" class="coreStyler">
+    <div class="slide">
+      <input type="text" name="name" placeholder="First & Last Name" [(ngModel)]="guestUserObj.name" />
+      <input type="email" name="email" placeholder="Email Address" [(ngModel)]="guestUserObj.email" />
+    </div>
+    <div class="fullSide">
+      <input type="tel" name="ph" placeholder="Phone Number" [(ngModel)]="guestUserObj.ph" />
+    </div>
+    <div class="fullSide">
+      <input type="text" placeholder="Guest Address (if different)" ngx-google-places-autocomplete #places="ngx-places" (onAddressChange)="onChange($event)"/>
+    </div>
+
+    <div class="fullSide">
+      <button type="button" name="name" (click)="dontAddNewGuest()" class="backBtn">Back</button>
+      <button type="button" name="name" (click)="submitNewGuest()">Add to Guest List</button>
+    </div>
+  </div>
+
 
 </div>

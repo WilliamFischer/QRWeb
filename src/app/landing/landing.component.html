@@ -43,25 +43,25 @@
 
             <form class="manualEnterForm">
               <div>
-                <input type="text" name="fname" placeholder="First Name"  [(ngModel)]="venueShortOBJ.email" />
-                <input type="text" name="lname" placeholder="Last Name" [(ngModel)]="venueShortOBJ.password" />
+                <input type="text" name="first_name" placeholder="First Name"  [(ngModel)]="quickGuest.first_name" />
+                <input type="text" name="last_name" placeholder="Last Name" [(ngModel)]="quickGuest.last_name" />
               </div>
               <div>
-                <input type="email" name="email" placeholder="Email"  [(ngModel)]="venueShortOBJ.email" />
-                <input type="tel" name="phone" placeholder="Phone" [(ngModel)]="venueShortOBJ.password" />
+                <input type="email" name="email" placeholder="Email"  [(ngModel)]="quickGuest.email" />
+                <input type="tel" name="phone" placeholder="Phone" [(ngModel)]="quickGuest.phone" />
               </div>
               <div>
                 <input ngx-google-places-autocomplete #places="ngx-places" class="fullSpanInput" placeholder="Address" name="other_address" (onAddressChange)="onChange($event)" />
               </div>
               <div>
-                <input type="password" name="password" placeholder="Create Password"  [(ngModel)]="venueShortOBJ.email" />
-                <input type="password" name="confpassword" placeholder="Confirm Password" [(ngModel)]="venueShortOBJ.password" />
+                <input type="password" name="password" placeholder="Create Password"  [(ngModel)]="quickGuest.password" />
+                <input type="password" name="confpassword" placeholder="Confirm Password" [(ngModel)]="quickGuest.confPass" />
               </div>
             </form>
 
             <div class="proccedRow">
               Already have an account? <label (click)="goToPage('guest-login')">Login</label>
-              <button>Next ></button>
+              <button (click)="submitQuickGuest()">Next ></button>
             </div>
 
             <div class="ppRow">

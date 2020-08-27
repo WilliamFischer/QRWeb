@@ -45,6 +45,24 @@ export class VenueLoginComponent implements OnInit {
     });
   }
 
+  async login() {
+    let scope = this;
+
+    if(this.guestObj.email && this.guestObj.password){
+      await this.afAuth.signInWithEmailAndPassword(this.guestObj.email, this.guestObj.password).then(function(result) {
+        localStorage.removeItem('guestUser');
+        localStorage.setItem('guestUser', JSON.stringify(result.user));
+        scope.router.navigate(['/venue']);
+      }).catch(function(error) {
+        console.log(error);
+        alert(error.message);
+      });
+    }else{
+      alert('Something is missing...')
+    }
+  }
+
+
   userAddedSuccess(){
     localStorage.setItem('accountType', 'venue');
     localStorage.setItem('guestUser', JSON.stringify(this.googleResults));

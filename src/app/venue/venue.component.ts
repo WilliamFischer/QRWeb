@@ -280,7 +280,12 @@ export class VenueComponent implements OnInit {
   }
 
   userAddedSuccess(){
-    localStorage.setItem('guestUser', JSON.stringify(this.googleUserObj));
+    if(this.googleUserObj.uid){
+      localStorage.setItem('guestUser', JSON.stringify(this.googleUserObj));
+    }else{
+      localStorage.setItem('guestUser', JSON.stringify(this.currentUser));
+    }
+
     localStorage.setItem('exisitingVenue', JSON.stringify(this.currentVenue));
     this.router.navigateByUrl('/success');
   }

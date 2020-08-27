@@ -25,7 +25,7 @@
 
   <div *ngIf="isDiningAlone && !quickLogin">
     <img class="venueLogo" src="{{currentVenue.venueImage}}"  *ngIf="currentVenue.venueImage"/>
-    <h1>You have successfully signed in to {{currentVenue.venueName}}, please show this page to a staff member</h1>
+    <h1>You have successfully signed in to {{currentVenue.name}}, please show this page to a staff member</h1>
   </div>
 
   <div *ngIf="guestAdder && !newGuestForm && !isDiningAlone">

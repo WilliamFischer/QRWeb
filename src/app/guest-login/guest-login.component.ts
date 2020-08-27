@@ -52,4 +52,21 @@ export class GuestLoginComponent implements OnInit {
     this.router.navigateByUrl('/moreinfo');
   }
 
+  async login() {
+    let scope = this;
+
+    if(this.guestObj.email && this.guestObj.password){
+      await this.afAuth.signInWithEmailAndPassword(this.guestObj.email, this.guestObj.password).then(function(result) {
+        localStorage.removeItem('guestUser');
+        localStorage.setItem('guestUser', JSON.stringify(result.user));
+        scope.router.navigate(['/member']);
+      }).catch(function(error) {
+        console.log(error);
+        alert(error.message);
+      });
+    }else{
+      alert('Something is missing...')
+    }
+  }
+
 }

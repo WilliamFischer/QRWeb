@@ -1,22 +1,3 @@
-<!-- <div class="headerSection">
-
-    <div class="topSection">
-      <div class="side">
-        <div class="logo"><label>Ezy</label>Checkin</div>
-      </div>
-      <div class="side">
-        <button class="signInFloatBtn" (click)="myQR()">MY QR</button>
-        <a class="deleteTitle specialInput">
-          <input type="file" (change)="uploadVenueImg($event)" />
-          <button class="signInFloatBtn">Upload Image</button>
-        </a>
-        <button class="signInFloatBtn logoutBtn" (click)="logout()">Logout</button>
-      </div>
-    </div>
-
-</div> -->
-
-
 <div class="coreWrapper dataTableWrapper" *ngIf="canShowPage && !hasNoVenue && venue">
 
   <div *ngIf="loadingImageUpload">
@@ -75,3 +56,5 @@
   </div>
 
 </form>
+
+<div class="dimmer" *ngIf="showVenueAddModel || showVenueLoginModel" (click)="closeModals()"></div>

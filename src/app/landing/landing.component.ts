@@ -48,6 +48,16 @@ export class LandingComponent implements OnInit {
     password : ''
   };
 
+  quickGuest : any = {
+    first_name : '',
+    last_name : '',
+    email : '',
+    phone : '',
+    address : '',
+    password : '',
+    confPass : ''
+  }
+
   venue = 'venueName';
   autoCompleteData : any;
   guestUser : any;
@@ -135,6 +145,42 @@ export class LandingComponent implements OnInit {
     this.showVenueLoginModel = false;
   }
 
+  submitQuickGuest(){
+    console.log(this.quickGuest);
+
+    let scope = this;
+
+    this.afAuth.createUserWithEmailAndPassword(this.quickGuest.email, this.quickGuest.password).then(function() {
+
+      // alert('Welcome to Ezy Checkin! You will now be taken to your QR Code');
+      // this.triggerModel();
+      //
+      // this.router.navigate(['/myqr']);
+
+      scope.afAuth.authState.subscribe(user => {
+
+        let cleanUser = {
+          accountType : 'guest',
+          address : scope.quickGuest.address,
+          email : scope.quickGuest.email,
+          name : scope.quickGuest.first_name + ' ' + scope.quickGuest.last_name,
+          phone : scope.quickGuest.phone,
+          photoURL : 'https://mcdowellhomes.com.au/wp-content/uploads/2016/09/no-user-image-300x300.gif',
+          uid : user.uid,
+        }
+        scope.fireStore.doc('Users/' + user.uid).set(cleanUser, {
+          merge: true
+        });
+
+        localStorage.setItem('guestUser', JSON.stringify(cleanUser));
+        scope.router.navigateByUrl('/member');
+      });
+
+    }).catch(function(error) {
+      alert(error.message);
+    });
+  }
+
   submitVenue(){
     if(this.hasChecked){
       if(this.venueACCOBJ.email && this.venueACCOBJ.pass){
@@ -202,7 +248,7 @@ export class LandingComponent implements OnInit {
       merge: true
     });
 
-    alert('Welcome to QRWeb! You will now be taken to your QR Code');
+    alert('Welcome to Ezy Checkin! You will now be taken to your QR Code');
     this.triggerModel();
 
     this.router.navigate(['/myqr']);
@@ -211,6 +257,7 @@ export class LandingComponent implements OnInit {
   onChange(address: Address) {
     console.log(address);
     this.venueOBJ.location = address.formatted_address;
+    this.quickGuest['address'] = address.formatted_address;
   }
 
   goHome(){

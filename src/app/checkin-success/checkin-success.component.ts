@@ -71,6 +71,31 @@ export class CheckinSuccessComponent implements OnInit {
     }else if (this.currentVenue['venueURL'] == 'guestlogin'){
       this.quickLogin = true;
     }
+
+    if(!this.currentUser.phone){
+      this.getDbInfo(this.currentUser)
+    }
+
+    console.log(this.currentUser)
+  }
+
+  getDbInfo(user) {
+    // GET USER FROM FIREBASE
+    let usersCollection = this.fireStore.collection('Users/').valueChanges().subscribe(
+    users =>{
+      let userArr = [];
+      let venueExists = false;
+
+      userArr.push(users);
+
+      userArr[0].forEach(userObj => {
+        if(user['uid'] == userObj.uid){
+          this.currentUser = userObj;
+          usersCollection.unsubscribe();
+        }
+      });
+
+    });
   }
 
   goHome(){
@@ -101,7 +126,8 @@ export class CheckinSuccessComponent implements OnInit {
     this.guestAdder = true;
     this.newGuestForm = false;
 
-    let userCollection = this.fireStore.collection('Users/' + this.currentUser['email'] + '/companions').valueChanges().subscribe(
+    console.log(this.currentUser)
+    let userCollection = this.fireStore.collection('Users/' + this.currentUser['uid'] + '/companions').valueChanges().subscribe(
     users =>{
       console.log(users);
       this.rowData = users;
@@ -133,7 +159,7 @@ export class CheckinSuccessComponent implements OnInit {
       this.guestUserObj.address = this.currentUser['address'];
     }
 
-    this.fireStore.doc('Users/' + this.currentUser['email'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
+    this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
       merge: true
     });
 
@@ -154,7 +180,7 @@ export class CheckinSuccessComponent implements OnInit {
         row['date'] = date;
         row['guestId'] = guestId;
 
-        this.fireStore.doc('Venues/' + this.currentVenue.venueURL + '/guests/' + guestId).set(row,{
+        this.fireStore.doc('Venues/' + this.currentVenue.url + '/guests/' + guestId).set(row,{
           merge: true
         });
       }
