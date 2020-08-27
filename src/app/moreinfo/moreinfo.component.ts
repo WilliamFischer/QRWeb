@@ -34,7 +34,7 @@ export class MoreinfoComponent implements OnInit {
   ngOnInit(): void {
     this.afAuth.authState.subscribe(user => {
       if (user){
-        console.log(user.uid)
+        // console.log(user.uid)
 
         let venueCollection = this.fireStore.collection('Users/').valueChanges().subscribe(
         venues =>{
@@ -68,7 +68,7 @@ export class MoreinfoComponent implements OnInit {
   }
 
   onChange(address: Address) {
-    console.log(address);
+    // console.log(address);
     this.moreDetailsObj.address = address.formatted_address;
   }
 
@@ -82,8 +82,8 @@ export class MoreinfoComponent implements OnInit {
     this.moreDetailsObj.uid = otherUserDetails.uid;
     this.moreDetailsObj.photoURL = otherUserDetails.photoURL;
 
-        console.log(otherUserDetails)
-    console.log(this.moreDetailsObj)
+    //     console.log(otherUserDetails)
+    // console.log(this.moreDetailsObj)
 
     this.fireStore.doc('Users/' + this.moreDetailsObj.uid).set(this.moreDetailsObj, {
       merge: true

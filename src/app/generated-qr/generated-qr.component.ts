@@ -46,10 +46,10 @@ export class GeneratedQRComponent implements OnInit {
 
       venueObj[0].forEach(venue => {
         if(this.user.uid == venue['createdBy']){
-          console.log(venue)
+          // console.log(venue)
 
           this.qrCodeUrl = window.location.href.replace('/myqr', '/' + venue.url);
-          console.log('Generated URL is ' + this.qrCodeUrl)
+          // console.log('Generated URL is ' + this.qrCodeUrl)
 
           this.canShowPage = true;
           hasVenue = true;

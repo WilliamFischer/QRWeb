@@ -119,7 +119,7 @@ export class LandingComponent implements OnInit {
       scope.googleResults = results.user;
       scope.userAddedSuccess();
     }).catch(function(error) {
-      console.log(error);
+      // console.log(error);
       alert(error.message);
     });
   }
@@ -146,7 +146,7 @@ export class LandingComponent implements OnInit {
   }
 
   submitQuickGuest(){
-    console.log(this.quickGuest);
+    // console.log(this.quickGuest);
 
     let scope = this;
 
@@ -216,7 +216,7 @@ export class LandingComponent implements OnInit {
       await this.afAuth.signInWithEmailAndPassword(this.venueShortOBJ.email, this.venueShortOBJ.password).then(function() {
         scope.router.navigate(['/venue']);
       }).catch(function(error) {
-        console.log(error);
+        console.warn(error);
         alert(error.message);
       });
     }else{
@@ -255,7 +255,7 @@ export class LandingComponent implements OnInit {
   }
 
   onChange(address: Address) {
-    console.log(address);
+    // console.log(address);
     this.venueOBJ.location = address.formatted_address;
     this.quickGuest['address'] = address.formatted_address;
   }

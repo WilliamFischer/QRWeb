@@ -81,8 +81,8 @@ export class CheckinSuccessComponent implements OnInit {
 
   deleteGuests() {
     let selectedRows = this.gridApi.getSelectedRows();
-    console.log('DELETE : ')
-    console.log(selectedRows)
+    // console.log('DELETE : ')
+    // console.log(selectedRows)
 
 
     for(let i in selectedRows){
@@ -142,7 +142,7 @@ export class CheckinSuccessComponent implements OnInit {
     console.log(this.currentUser)
     let userCollection = this.fireStore.collection('Users/' + this.currentUser['uid'] + '/companions').valueChanges().subscribe(
     users =>{
-      console.log(users);
+      // console.log(users);
       this.rowData = users;
       this.gridApi.setRowData(this.rowData);
       userCollection.unsubscribe();
@@ -150,7 +150,7 @@ export class CheckinSuccessComponent implements OnInit {
   }
 
   onChange(address: Address) {
-    console.log(address);
+    // console.log(address);
     this.guestUserObj.address = address.formatted_address;
   }
 
@@ -169,16 +169,23 @@ export class CheckinSuccessComponent implements OnInit {
 
   submitNewGuest(){
 
-    if(!this.guestUserObj.address){
-      this.guestUserObj.address = this.currentUser['address'];
+    if(!this.guestUserObj){
+      if(!this.guestUserObj.address){
+        this.guestUserObj.address = this.currentUser['address'];
+
+        this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
+          merge: true
+        });
+
+        // console.log(this.guestUserObj);
+        this.triggerGuestAdder()
+      }else{
+        alert('An address is missing!')
+      }
+    }else{
+      alert('Something is missing!')
     }
 
-    this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
-      merge: true
-    });
-
-    console.log(this.guestUserObj);
-    this.triggerGuestAdder()
 
   }
 
@@ -200,13 +207,15 @@ export class CheckinSuccessComponent implements OnInit {
       }
 
       this.diningAlone();
+    }else{
+      alert('No rows selected')
     }
   }
 
   onRowClicked(params){
     let selectedRows = this.gridApi.getSelectedRows();
 
-    console.log(selectedRows.length)
+    // console.log(selectedRows.length)
 
     if(!selectedRows.length){
       this.canConfirmGuests = false;
@@ -214,7 +223,7 @@ export class CheckinSuccessComponent implements OnInit {
       this.canConfirmGuests = true;
     }
 
-    console.log(this.canConfirmGuests)
+    // console.log(this.canConfirmGuests)
   }
 
 

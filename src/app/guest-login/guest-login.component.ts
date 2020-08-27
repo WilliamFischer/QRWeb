@@ -40,7 +40,7 @@ export class GuestLoginComponent implements OnInit {
       scope.googleResults = results.user;
       scope.userAddedSuccess();
     }).catch(function(error) {
-      console.log(error);
+      console.warn(error);
       alert(error.message);
     });
   }
@@ -61,7 +61,7 @@ export class GuestLoginComponent implements OnInit {
         localStorage.setItem('guestUser', JSON.stringify(result.user));
         scope.router.navigate(['/member']);
       }).catch(function(error) {
-        console.log(error);
+        console.warn(error);
         alert(error.message);
       });
     }else{

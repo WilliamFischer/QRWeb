@@ -99,7 +99,7 @@ export class MemberComponent implements OnInit {
 
     let userCollection = this.fireStore.collection('Users/' + this.currentUser['uid'] + '/companions').valueChanges().subscribe(
     users =>{
-      console.log(users);
+      // console.log(users);
       this.rowData = users;
       this.gridApi.setRowData(this.rowData);
       userCollection.unsubscribe();
@@ -118,7 +118,7 @@ export class MemberComponent implements OnInit {
         }
       }
 
-      console.log(cleanVenues);
+      // console.log(cleanVenues);
 
       this.autoCompleteData = cleanVenues;
       venueCollection.unsubscribe();
@@ -126,7 +126,7 @@ export class MemberComponent implements OnInit {
   }
 
   openVenue(item){
-    console.log(item);
+    // console.log(item);
     this.router.navigate(['/' + item.url]);
   }
 
@@ -153,7 +153,7 @@ export class MemberComponent implements OnInit {
       merge: true
     });
 
-    console.log(this.guestUserObj);
+    // console.log(this.guestUserObj);
     this.triggerGuestAdder()
 
   }
@@ -181,8 +181,8 @@ export class MemberComponent implements OnInit {
 
   deleteGuests() {
     let selectedRows = this.gridApi.getSelectedRows();
-    console.log('DELETE : ')
-    console.log(selectedRows)
+    // console.log('DELETE : ')
+    // console.log(selectedRows)
 
 
     for(let i in selectedRows){
@@ -204,7 +204,7 @@ export class MemberComponent implements OnInit {
   onRowClicked(params){
     let selectedRows = this.gridApi.getSelectedRows();
 
-    console.log(selectedRows.length)
+    // console.log(selectedRows.length)
 
     if(!selectedRows.length){
       this.canConfirmGuests = false;
@@ -212,7 +212,7 @@ export class MemberComponent implements OnInit {
       this.canConfirmGuests = true;
     }
 
-    console.log(this.canConfirmGuests)
+    // console.log(this.canConfirmGuests)
   }
 
 
@@ -221,7 +221,7 @@ export class MemberComponent implements OnInit {
   }
 
   onChange(address: Address) {
-    console.log(address);
+    // console.log(address);
     this.guestUserObj.address = address.formatted_address;
   }
 

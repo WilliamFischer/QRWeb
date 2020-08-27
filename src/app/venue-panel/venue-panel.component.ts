@@ -83,7 +83,7 @@ export class VenuePanelComponent implements OnInit {
 
   getRowData() {
 
-    console.log(this.user);
+    // console.log(this.user);
 
     let venueCollection = this.fireStore.collection('Venues/').valueChanges().subscribe(
     venues =>{
@@ -93,16 +93,16 @@ export class VenuePanelComponent implements OnInit {
       venueObj.push(venues);
 
       venueObj[0].forEach(venue => {
-        console.log(this.user.uid +' vs '+ venue['createdBy'])
+        // console.log(this.user.uid +' vs '+ venue['createdBy'])
         if(this.user.uid == venue['createdBy']){
           venueExists = true;
           this.venue = venue;
           localStorage.setItem('venue', JSON.stringify(venue));
-          console.log(venue)
+          // console.log(venue)
 
           let userCollection = this.fireStore.collection('Venues/' + venue['url']  + '/guests').valueChanges().subscribe(
           users =>{
-            console.log(users);
+            // console.log(users);
             this.rowData = users;
             this.hasNoVenue = false;
 
@@ -113,7 +113,7 @@ export class VenuePanelComponent implements OnInit {
       });
 
       if(!venueExists){
-        console.log('Oops! We couldn\'t find any venues under your account, please login again.');
+        // console.log('Oops! We couldn\'t find any venues under your account, please login again.');
         // this.logout();
         this.hasNoVenue = true;
       }
@@ -129,7 +129,7 @@ export class VenuePanelComponent implements OnInit {
 
   submitVenue(){
     if(this.hasChecked){
-      console.log(this.venueOBJ);
+      // console.log(this.venueOBJ);
 
       this.venueOBJ.url = this.venueOBJ.name.toLowerCase().replace(/ /g, '');
       this.venueOBJ.date = new Date().toString();
@@ -154,7 +154,7 @@ export class VenuePanelComponent implements OnInit {
   }
 
   onChange(address: Address) {
-    console.log(address);
+    // console.log(address);
     this.venueOBJ.location = address.formatted_address;
   }
 

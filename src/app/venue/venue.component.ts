@@ -145,7 +145,7 @@ export class VenueComponent implements OnInit {
   }
 
   submitSignInDetails(){
-    console.log(this.userObj);
+    // console.log(this.userObj);
   }
 
   goHome(){
@@ -179,7 +179,7 @@ export class VenueComponent implements OnInit {
       scope.googleResults = results;
       scope.checkForGoogleUser();
     }).catch(function(error) {
-      console.log(error);
+      // console.log(error);
       alert(error.message);
     });
   }
@@ -190,7 +190,7 @@ export class VenueComponent implements OnInit {
       await this.afAuth.signInWithEmailAndPassword(this.signinObj.email, this.signinObj.password).then(function() {
         scope.router.navigateByUrl('/success');
       }).catch(function(error) {
-        console.log(error);
+        // console.log(error);
         alert(error.message);
       });
     }else{
@@ -200,7 +200,7 @@ export class VenueComponent implements OnInit {
 
   async createUser(){
     let scope = this;
-    console.log(this.userObj)
+    // console.log(this.userObj)
     this.afAuth.createUserWithEmailAndPassword(this.userObj.email, this.userObj.password).then(function() {
       scope.submitUserDetails();
     }).catch(function(error) {
@@ -216,7 +216,7 @@ export class VenueComponent implements OnInit {
       this.googleUserObj.email = this.googleResults.user.email;
       this.googleUserObj.uid = this.googleResults.user.uid;
 
-      console.log(this.googleUserObj);
+      // console.log(this.googleUserObj);
 
       let guestCollection = this.fireStore.collection('Users').valueChanges().subscribe(
       guests =>{
@@ -228,7 +228,7 @@ export class VenueComponent implements OnInit {
         guestObj[0].forEach(guest => {
           if(this.googleResults.user.uid == guest.uid){
             guestExists = true;
-            console.log(guest);
+            // console.log(guest);
 
             this.googleUserObj.ph = guest.phone;
             this.googleUserObj.address = guest.address;
@@ -257,7 +257,7 @@ export class VenueComponent implements OnInit {
 
   saveNewGoogleUser(){
     if(this.currentUser.uid){
-      console.log(this.currentUser)
+      // console.log(this.currentUser)
       this.currentUser.guestId = this.fireStore.createId();
 
       this.fireStore.doc('Venues/' + this.currentVenue.url + '/guests/' + this.currentUser.guestId).set(this.currentUser,{
@@ -293,7 +293,7 @@ export class VenueComponent implements OnInit {
   submitUserDetails(){
     if(this.userObj.name){
       if(this.userObj.address){
-        console.log(this.userObj)
+        // console.log(this.userObj)
 
         this.userObj.date = new Date().toString();
 

@@ -35,14 +35,14 @@ export class UploadComponent implements OnInit {
         let venue = localStorage.getItem('venue');
         if(venue){
           this.venue = JSON.parse(venue);
-          console.log(venue)
+          // console.log(venue)
         }
       }
     });
   }
 
   uploadVenueImg(event) {
-    console.log('UPLOAD AN IMAGE');
+    // console.log('UPLOAD AN IMAGE');
     this.loadingImageUpload = true;
 
     const file = event.target.files[0];
@@ -58,7 +58,7 @@ export class UploadComponent implements OnInit {
           downloadURL.subscribe(url=>{
              if(url){
                this.loadingImageUpload = false;
-               console.log(url);
+               // console.log(url);
                this.venue['image'] = url;
 
                 this.fireStore.doc('Venues/' + this.venue['url'])
