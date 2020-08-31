@@ -22,7 +22,7 @@
 
   <h1>Welcome
     <label *ngIf="user.displayName">{{ user.displayName }} </label>
-      <label *ngIf="!user.displayName">{{ moreUserInfo.name }} </label>
+    <label *ngIf="!user.displayName">{{ moreUserInfo.name }} </label>
     <br /> Create a venue to begin
   </h1>
   <button class="registerBtn" (click)="triggerModel()"> + Add Venue</button>
@@ -61,4 +61,4 @@
 
 </form>
 
-<div class="dimmer" *ngIf="showVenueAddModel || showVenueLoginModel" (click)="closeModals()"></div>
+<div class="dimmer" *ngIf="showVenueAddModel" (click)="closeModals()"></div>
