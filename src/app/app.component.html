@@ -15,9 +15,11 @@
     <li class="loginBtn" (click)="logout()"><button>Logout</button></li>
 
     <!-- VENUE BUTTONS -->
-    <li class="loginBtn" (click)="goToPage('upload')" *ngIf="moreUserInfo.accountType == 'venue'"><button>Upload</button></li>
-    <li class="loginBtn" (click)="goToPage('myqr')" *ngIf="moreUserInfo.accountType == 'venue'"><button>My QR</button></li>
-    <li class="loginText" *ngIf="moreUserInfo.accountType == 'venue'" (click)="goToPage('venue')">{{ user.displayName }}</li>
+    <li class="loginBtn" (click)="goToPage('upload')" *ngIf="moreUserInfo.accountType == 'venue' && hasVenues"><button>Upload</button></li>
+    <li class="loginBtn" (click)="goToPage('myqr')" *ngIf="moreUserInfo.accountType == 'venue' && hasVenues"><button>My QR</button></li>
+
+    <li class="loginText" *ngIf="moreUserInfo.accountType == 'venue' && !user.displayName" (click)="goToPage('venue')">{{ moreUserInfo.name }}</li>
+    <li class="loginText" *ngIf="moreUserInfo.accountType == 'venue' && user.displayName" (click)="goToPage('venue')">{{ user.displayName }}</li>
 
     <!-- GUEST BUTTONS -->
     <li class="loginText" *ngIf="moreUserInfo.accountType == 'guest' && !user.displayName" (click)="goToPage('member')">{{ moreUserInfo.name }}</li>

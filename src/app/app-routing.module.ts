@@ -20,6 +20,7 @@ import { VenueLoginComponent } from './venue-login/venue-login.component';
 import { MoreinfoComponent } from './moreinfo/moreinfo.component';
 import { UploadComponent } from './upload/upload.component';
 import { MemberComponent } from './member/member.component';
+import { VenueRegisterComponent } from './venue-register/venue-register.component';
 
 
 const routes: Routes = [
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'forgot-pass', component: ForgotPassComponent },
   { path: 'guest-login', component: GuestLoginComponent },
   { path: 'venue-login', component: VenueLoginComponent },
+  { path: 'venue-register', component: VenueRegisterComponent },
   { path: 'moreinfo', component: MoreinfoComponent },
   { path: 'upload', component: UploadComponent },
   { path: ':id', component: VenueComponent },

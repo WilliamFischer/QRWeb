@@ -1,0 +1,28 @@
+<div class="basicWrapper">
+  <div class="regoForm">
+    <h1>Venue Register</h1>
+
+    <div class="google-btn" (click)="googleSignin()">
+      <div class="google-icon-wrapper">
+        <img class="google-icon" src="../assets/google.svg"/>
+      </div>
+      <p class="btn-text"><b>Register with Google</b></p>
+    </div>
+
+    <label class="orText">OR Enter Details Below</label>
+
+
+    <form class="manualEnterForm">
+        <input type="text" name="name" placeholder="Name"  [(ngModel)]="userObj.name" />
+        <input type="email" name="email" placeholder="Email"  [(ngModel)]="userObj.email" />
+        <input type="password" name="password" placeholder="Password"  [(ngModel)]="tempPasswords.password" />
+        <input type="password" name="conf_password" placeholder="Confirm Password" [(ngModel)]="tempPasswords.confirm_password" />
+    </form>
+
+    <div class="proccedRow">
+      <button (click)="register()">Register ></button> <br /><br /><br />
+        Already have an account? <label (click)="goToPage('venue-login')">Login</label>
+    </div>
+
+  </div>
+</div>

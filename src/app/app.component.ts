@@ -16,6 +16,7 @@ export class AppComponent {
   moreUserInfo: any;
 
   loadingImageUpload: boolean;
+  hasVenues: boolean;
 
   constructor(
     private router: Router,
@@ -52,7 +53,25 @@ export class AppComponent {
       userArr[0].forEach(userObj => {
         if(user['uid'] == userObj.uid){
           this.moreUserInfo = userObj;
+          this.checkiIfUserHasVenue();
           usersCollection.unsubscribe();
+        }
+      });
+
+    });
+  }
+
+  checkiIfUserHasVenue(){
+    // CHECK IF USER HAS VENUES
+    let usersCollection = this.fireStore.collection('Venues/').valueChanges().subscribe(
+    venue =>{
+      let venueArr = [];
+
+      venueArr.push(venue);
+
+      venueArr[0].forEach(userObj => {
+        if(this.moreUserInfo['uid'] == userObj.createdBy){
+          this.hasVenues = true;
         }
       });
 

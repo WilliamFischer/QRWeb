@@ -20,7 +20,11 @@
 
 <div class="coreWrapper dataTableWrapper" *ngIf="canShowPage && hasNoVenue">
 
-  <h1>Welcome {{ user.displayName }} <br /> Create a venue to begin</h1>
+  <h1>Welcome
+    <label *ngIf="user.displayName">{{ user.displayName }} </label>
+      <label *ngIf="!user.displayName">{{ moreUserInfo.name }} </label>
+    <br /> Create a venue to begin
+  </h1>
   <button class="registerBtn" (click)="triggerModel()"> + Add Venue</button>
 
 </div>

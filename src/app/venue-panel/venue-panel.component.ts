@@ -26,6 +26,7 @@ export class VenuePanelComponent implements OnInit {
   user: any;
   venue : any;
   rowData : any;
+  moreUserInfo: any;
 
   venueOBJ: any = {
     name : '',
@@ -76,6 +77,7 @@ export class VenuePanelComponent implements OnInit {
         this.user = user;
         this.canShowPage = true;
 
+        this.getDbInfo(user);
         this.getRowData()
       }
     });
@@ -124,6 +126,25 @@ export class VenuePanelComponent implements OnInit {
   logout(){
     this.afAuth.signOut();
     this.router.navigate(['/']);
+  }
+
+  getDbInfo(user) {
+    // GET USER FROM FIREBASE
+    let usersCollection = this.fireStore.collection('Users/').valueChanges().subscribe(
+    users =>{
+      let userArr = [];
+      let venueExists = false;
+
+      userArr.push(users);
+
+      userArr[0].forEach(userObj => {
+        if(user['uid'] == userObj.uid){
+          this.moreUserInfo = userObj;
+          usersCollection.unsubscribe();
+        }
+      });
+
+    });
   }
 
 

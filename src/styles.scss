@@ -79,6 +79,7 @@ button{
   width: fit-content;
   white-space: nowrap;
   font-weight: 900;
+  cursor: pointer;
 }
 
 .google-btn {
@@ -92,6 +93,7 @@ button{
   margin-right: auto;
 
   margin-bottom: 5%;
+  cursor: pointer;
 }
 
 .google-btn .google-icon-wrapper {
@@ -184,6 +186,7 @@ button{
 
     label{
       color: #4db757;
+      cursor: pointer;
     }
 
     button{
@@ -253,6 +256,14 @@ button{
   }
 }
 
+
+.blueLabel{
+  label{
+    color: #3A97D2;
+    cursor: pointer;
+  }
+}
+
 .dimmer{
   position: absolute;
   width: 100%;
@@ -313,6 +324,46 @@ button{
 
   .coreWrapper{
     margin-top: 30% !important;
+  }
+
+  .fullSide .gridSec{
+    width: 100% !important;
+
+    .block{
+      margin-top: 10%;
+    }
+  }
+
+  .longBlockWrapper{
+    width: 60% !important;
+
+    .longBlock{
+      width: auto !important;
+    }
+  }
+
+  .regoForm{
+    width: 100%!important;
+    float: none !important;
+    padding: 0px !important;
+  }
+
+  .basicWrapper .regoForm .manualEnterForm{
+    width: 60% !important;
+    display: grid !important;
+  }
+
+  .basicWrapper .regoForm h1{
+    margin-top: 40% !important;
+  }
+
+  .leftRegoSec{
+    width: 90% !important;
+    text-align: center;
+  }
+
+  .coreGrid{
+    padding-bottom: 30% !important;
   }
 
   // h3{
@@ -396,6 +447,11 @@ button{
     width: 100% !important;
     padding-left: 0% !important;
     padding-right: 0% !important;
+  }
+
+  .leftRegoSec{
+    width: 42%!important;
+    text-align: left!important;
   }
 }
 

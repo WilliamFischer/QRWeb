@@ -43,6 +43,7 @@ import { VenueLoginComponent } from './venue-login/venue-login.component';
 import { MoreinfoComponent } from './moreinfo/moreinfo.component';
 import { UploadComponent } from './upload/upload.component';
 import { MemberComponent } from './member/member.component';
+import { VenueRegisterComponent } from './venue-register/venue-register.component';
 
 export const environment = {
   production: false,
@@ -77,7 +78,8 @@ export const environment = {
     VenueLoginComponent,
     MoreinfoComponent,
     UploadComponent,
-    MemberComponent
+    MemberComponent,
+    VenueRegisterComponent
   ],
   imports: [
     BrowserModule,
