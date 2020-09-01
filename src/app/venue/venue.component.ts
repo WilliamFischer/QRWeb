@@ -259,6 +259,7 @@ export class VenueComponent implements OnInit {
     if(this.currentUser.uid){
       // console.log(this.currentUser)
       this.currentUser.guestId = this.fireStore.createId();
+      this.currentUser.date = new Date().toString();
 
       this.fireStore.doc('Venues/' + this.currentVenue.url + '/guests/' + this.currentUser.guestId).set(this.currentUser,{
         merge: true
