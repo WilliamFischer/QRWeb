@@ -145,16 +145,17 @@ export class MemberComponent implements OnInit {
 
   submitNewGuest(){
 
-    if(!this.guestUserObj.address){
+    if(!this.guestUserObj.address && this.currentUser['address']){
       this.guestUserObj.address = this.currentUser['address'];
+
+      this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
+        merge: true
+      });
+
+      this.triggerGuestAdder()
+    }else{
+      alert('Address not found. please login again.')
     }
-
-    this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
-      merge: true
-    });
-
-    // console.log(this.guestUserObj);
-    this.triggerGuestAdder()
 
   }
 

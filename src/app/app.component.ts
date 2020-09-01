@@ -32,12 +32,18 @@ export class AppComponent {
   }
 
   goToPage(page){
-    this.router.navigateByUrl(page)
+
+     var x = document.getElementById("burgerLinks");
+     if (x.style.display === "block") {
+       x.style.display = "none";
+     }
+
+    this.router.navigateByUrl(page);
   }
 
   logout(){
     this.afAuth.signOut().then(() => {
-      location.reload();
+      this.router.navigate(['/']);
     })
   }
 
@@ -76,6 +82,14 @@ export class AppComponent {
       });
 
     });
+  }
+  triggerBurgerMenu(){
+     var x = document.getElementById("burgerLinks");
+     if (x.style.display === "block") {
+       x.style.display = "none";
+     } else {
+       x.style.display = "block";
+     }
   }
 
 }

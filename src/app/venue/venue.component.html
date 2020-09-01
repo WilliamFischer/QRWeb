@@ -8,7 +8,7 @@
 
       <img class="venueLogo" src="{{currentVenue.image}}"  *ngIf="currentVenue.image"/>
       <h1 *ngIf="!quickLogin">Check-in to {{ currentVenue.name }}</h1>
-      <h3 *ngIf="!quickLogin">Please enter your details below to check in and then show your confirmed check in message to one of our team</h3>
+      <h3 *ngIf="!quickLogin">Check-in and show your confirmed check in message to one of our team to dine in.</h3>
 
       <h1 *ngIf="quickLogin">Welcome to EzyCheckin, please login</h1>
       <h3 *ngIf="quickLogin">Select a method below to procced</h3>

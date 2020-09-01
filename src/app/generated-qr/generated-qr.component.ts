@@ -67,6 +67,10 @@ export class GeneratedQRComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  goToVenuePanel(){
+    this.router.navigate(['/venue']);
+  }
+
   printTrigger(){
     window.print();
   }

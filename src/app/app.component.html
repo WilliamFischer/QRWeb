@@ -31,7 +31,39 @@
     <li class="loginText" (click)="goToPage('venue-login')">Venue Login</li>
   </div>
 
-  <li class="burgerMenu">☰</li>
+  <!-- MOBILE STUFF -->
+  <li class="burgerMenu" (click)="triggerBurgerMenu()">☰</li>
+
+  <div class="topnav" id="burgerLinks">
+    <div *ngIf="user && moreUserInfo">
+        <li class="bolder" *ngIf="moreUserInfo.accountType == 'venue'" (click)="goToPage('venue')">Venue Panel</li>
+        <li class="bolder" *ngIf="moreUserInfo.accountType == 'guest'" (click)="goToPage('member')">My Profile</li>
+    </div>
+    <li (click)="goToPage('about')" class="bolder">About Us</li>
+    <li (click)="goToPage('faq')" class="bolder">FAQs</li>
+    <li (click)="goToPage('resources')" class="bolder">Resources</li>
+    <li (click)="goToPage('contact')" class="bolder">Contact</li>
+
+    <div class="logins" *ngIf="user && moreUserInfo">
+      <li class="loginBtn" (click)="logout()"><button>Logout</button></li>
+
+      <!-- VENUE BUTTONS -->
+      <li class="loginBtn" (click)="goToPage('upload')" *ngIf="moreUserInfo.accountType == 'venue' && hasVenues"><button>Upload</button></li>
+      <li class="loginBtn" (click)="goToPage('myqr')" *ngIf="moreUserInfo.accountType == 'venue' && hasVenues"><button>My QR</button></li>
+
+    </div>
+
+    <div class="logins" *ngIf="!user">
+      <li class="loginBtn" (click)="goToPage('guest-login')"><button>Guest Login</button></li>
+      <li class="loginText" (click)="goToPage('venue-login')"><button>Venue Login</button></li>
+    </div>
+
+    <li (click)="goToPage('terms')" class="little">Terms & Conditions</li>
+    <li (click)="goToPage('pp')" class="little">Privacy Policy</li>
+    <li (click)="goToPage('data')" class="little">Data Security Statement</li>
+    <li (click)="goToPage('/')" class="little bolder">Check our Tempsafe ></li>
+  </div>
+
 </header>
 
 <router-outlet></router-outlet>

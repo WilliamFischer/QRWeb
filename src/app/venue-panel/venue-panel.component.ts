@@ -164,7 +164,7 @@ export class VenuePanelComponent implements OnInit {
         merge: true
       });
 
-      alert('Welcome to QRWeb! You will now be taken to your QR Code');
+      alert('You\'re venue has been created! You will now be taken to it\'s QR Code');
       this.triggerModel();
 
       this.router.navigate(['/myqr']);
