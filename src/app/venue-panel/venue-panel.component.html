@@ -41,7 +41,7 @@
 
     <div class="side">
       <div>
-        <input ngx-google-places-autocomplete #places="ngx-places" placeholder="Venue Address" name="other_address" (onAddressChange)="onChange($event)" />
+        <input ngx-google-places-autocomplete readonly onfocus="this.removeAttribute('readonly');" #places="ngx-places" placeholder="Venue Location" name="other_address" (onAddressChange)="onChange($event)" />
       </div>
     </div>
 

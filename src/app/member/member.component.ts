@@ -145,7 +145,7 @@ export class MemberComponent implements OnInit {
 
   submitNewGuest(){
 
-    if(!this.guestUserObj.address && this.currentUser['address']){
+    if(this.guestUserObj.address && this.currentUser['address']){
       this.guestUserObj.address = this.currentUser['address'];
 
       this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{

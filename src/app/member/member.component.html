@@ -74,7 +74,7 @@
       <input type="tel" name="ph" placeholder="Phone Number" [(ngModel)]="guestUserObj.ph" />
     </div>
     <div class="fullSide">
-      <input type="text" placeholder="Guest Address (if different)" ngx-google-places-autocomplete #places="ngx-places" (onAddressChange)="onChange($event)"/>
+      <input type="text" placeholder="Guest Location (if different)" readonly onfocus="this.removeAttribute('readonly');" ngx-google-places-autocomplete #places="ngx-places" (onAddressChange)="onChange($event)"/>
     </div>
 
     <div class="fullSide">

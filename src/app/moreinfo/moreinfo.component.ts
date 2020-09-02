@@ -43,12 +43,12 @@ export class MoreinfoComponent implements OnInit {
 
           userArr.push(venues);
 
-          userArr[0].forEach(user => {
-            if(user['uid'] == user.uid){
-              this.accountType = user.accountType;
+          userArr[0].forEach(oneUser => {
+            if(user['uid'] == oneUser.uid){
+              this.accountType = oneUser.accountType;
 
 
-              if(user.address && user.phone){
+              if(oneUser.address && oneUser.phone){
                 if(this.accountType == 'venue'){
                   this.router.navigate(['/venue']);
                 }else{
@@ -73,26 +73,37 @@ export class MoreinfoComponent implements OnInit {
   }
 
   saveUser(){
-    let otherUserDetails = JSON.parse(localStorage.getItem('guestUser'));
-    // otherUserDetails.address = this.moreDetailsObj.address;
-    // otherUserDetails.phone = this.moreDetailsObj.phone;
-    this.moreDetailsObj.accountType = this.accountType;
-    this.moreDetailsObj.email = otherUserDetails.email;
-    this.moreDetailsObj.name = otherUserDetails.displayName;
-    this.moreDetailsObj.uid = otherUserDetails.uid;
-    this.moreDetailsObj.photoURL = otherUserDetails.photoURL;
+    if(this.moreDetailsObj.phone){
+      if(this.moreDetailsObj.address){
+        let otherUserDetails = JSON.parse(localStorage.getItem('guestUser'));
 
-    //     console.log(otherUserDetails)
-    // console.log(this.moreDetailsObj)
+        if(this.accountType){
+          this.moreDetailsObj.accountType = this.accountType;
+        }else if(this.accountType){
+          this.accountType = localStorage.getItem('accountType')
+        }else{
+          this.accountType = 'guest';
+        }
 
-    this.fireStore.doc('Users/' + this.moreDetailsObj.uid).set(this.moreDetailsObj, {
-      merge: true
-    });
+        this.moreDetailsObj.email = otherUserDetails.email;
+        this.moreDetailsObj.name = otherUserDetails.displayName;
+        this.moreDetailsObj.uid = otherUserDetails.uid;
+        this.moreDetailsObj.photoURL = otherUserDetails.photoURL;
 
-    if(this.accountType == 'venue'){
-      this.router.navigate(['/venue']);
+        this.fireStore.doc('Users/' + this.moreDetailsObj.uid).set(this.moreDetailsObj, {
+          merge: true
+        });
+
+        if(this.accountType == 'venue'){
+          this.router.navigate(['/venue']);
+        }else{
+          this.router.navigate(['/member']);
+        }
+      }else{
+        alert('Invalid Address')
+      }
     }else{
-      this.router.navigate(['/member']);
+      alert('Invalid Phone Number')
     }
   }
 

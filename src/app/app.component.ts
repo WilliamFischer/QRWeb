@@ -42,8 +42,12 @@ export class AppComponent {
   }
 
   logout(){
+    this.router.navigate(['/']);
+
     this.afAuth.signOut().then(() => {
-      this.router.navigate(['/']);
+      location.reload();
+      localStorage.removeItem('guestUser')
+      localStorage.removeItem('accountType')
     })
   }
 
