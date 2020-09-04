@@ -75,6 +75,7 @@ export class VenueComponent implements OnInit {
 
     this.afAuth.authState.subscribe(user => {
       if (!user){
+        localStorage.setItem('viewingVenue', venueCode);
         this.router.navigate(['/guest-login']);
       }else{
         this.getDbInfo(user);

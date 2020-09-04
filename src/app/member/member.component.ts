@@ -94,6 +94,7 @@ export class MemberComponent implements OnInit {
   }
 
   triggerGuestAdder(){
+    this.rowData = [];
     this.guestAdder = true;
     this.newGuestForm = false;
 
@@ -144,19 +145,25 @@ export class MemberComponent implements OnInit {
   }
 
   submitNewGuest(){
+    console.log(this.currentUser['address']);
 
-    if(this.guestUserObj.address && this.currentUser['address']){
+    if(this.guestUserObj.address){
+      this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
+        merge: true
+      });
+    }else if(this.currentUser['address']){
       this.guestUserObj.address = this.currentUser['address'];
 
       this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
         merge: true
       });
-
-      this.triggerGuestAdder()
     }else{
       alert('Address not found. please login again.')
     }
-
+    let scope = this;
+    setTimeout(function(){
+      scope.triggerGuestAdder();
+    }, 1000);
   }
 
   saveNewGuests() {
@@ -175,7 +182,6 @@ export class MemberComponent implements OnInit {
           merge: true
         });
       }
-
       this.diningAlone();
     }
   }

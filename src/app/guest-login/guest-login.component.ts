@@ -49,7 +49,15 @@ export class GuestLoginComponent implements OnInit {
     localStorage.removeItem('guestUser');
 
     localStorage.setItem('guestUser', JSON.stringify(this.googleResults));
-    this.router.navigateByUrl('/moreinfo');
+
+    let vewingVenue = localStorage.getItem('viewingVenue');
+    console.log(vewingVenue)
+
+    if(vewingVenue){
+      this.router.navigate(['/' + vewingVenue]);
+    }else{
+      this.router.navigateByUrl('/moreinfo');
+    }
   }
 
   async login() {
@@ -59,7 +67,15 @@ export class GuestLoginComponent implements OnInit {
       await this.afAuth.signInWithEmailAndPassword(this.guestObj.email, this.guestObj.password).then(function(result) {
         localStorage.removeItem('guestUser');
         localStorage.setItem('guestUser', JSON.stringify(result.user));
-        scope.router.navigate(['/member']);
+
+        let vewingVenue = localStorage.getItem('viewingVenue');
+        console.log(vewingVenue)
+
+        if(vewingVenue){
+          scope.router.navigate(['/' + vewingVenue]);
+        }else{
+          scope.router.navigate(['/member']);
+        }
       }).catch(function(error) {
         console.warn(error);
         alert(error.message);
