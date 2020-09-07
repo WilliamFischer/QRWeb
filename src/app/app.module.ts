@@ -44,6 +44,7 @@ import { MoreinfoComponent } from './moreinfo/moreinfo.component';
 import { UploadComponent } from './upload/upload.component';
 import { MemberComponent } from './member/member.component';
 import { VenueRegisterComponent } from './venue-register/venue-register.component';
+import { GuestRegisterComponent } from './guest-register/guest-register.component';
 
 export const environment = {
   production: false,
@@ -79,7 +80,8 @@ export const environment = {
     MoreinfoComponent,
     UploadComponent,
     MemberComponent,
-    VenueRegisterComponent
+    VenueRegisterComponent,
+    GuestRegisterComponent
   ],
   imports: [
     BrowserModule,

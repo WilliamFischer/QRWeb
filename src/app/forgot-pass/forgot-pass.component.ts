@@ -33,4 +33,12 @@ export class ForgotPassComponent implements OnInit {
     }
   }
 
+  goToPage(page){
+    this.router.navigateByUrl(page)
+  }
+
+  goBack(){
+    window.history.back();
+  }
+
 }

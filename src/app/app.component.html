@@ -55,13 +55,13 @@
 
     <div class="logins" *ngIf="!user">
       <li class="loginBtn" (click)="goToPage('guest-login')"><button>Guest Login</button></li>
-      <li class="loginText" (click)="goToPage('venue-login')"><button>Venue Login</button></li>
+      <li class="loginBtn blueBtn" (click)="goToPage('venue-login')"><button>Venue Login</button></li>
     </div>
 
     <li (click)="goToPage('terms')" class="little">Terms & Conditions</li>
     <li (click)="goToPage('pp')" class="little">Privacy Policy</li>
     <li (click)="goToPage('data')" class="little">Data Security Statement</li>
-    <li (click)="goToPage('/')" class="little bolder">Check our Tempsafe ></li>
+    <li class="little bolder"><a target="_blank" href="https://www.tempsafesolutions.com/">Check our Tempsafe ></a></li>
   </div>
 
 </header>

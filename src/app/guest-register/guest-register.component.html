@@ -1,0 +1,45 @@
+<div class="simpleWrapper">
+  <div class="coreGrid topSpace">
+    <div class="regoForm">
+      <h1>Register & Check-in as <label>Guest</label></h1>
+
+      <div class="google-btn" (click)="googleSignin()">
+        <div class="google-icon-wrapper">
+          <img class="google-icon" src="../assets/google.svg"/>
+        </div>
+        <p class="btn-text"><b>Register with Google</b></p>
+      </div>
+
+      <label class="orText">OR Enter Details Below</label>
+
+      <form class="manualEnterForm">
+        <div>
+          <input type="text" name="first_name" placeholder="First Name"  [(ngModel)]="quickGuest.first_name" />
+          <input type="text" name="last_name" placeholder="Last Name" [(ngModel)]="quickGuest.last_name" />
+        </div>
+        <div>
+          <input type="email" name="email" placeholder="Email"  [(ngModel)]="quickGuest.email" />
+          <input type="tel" name="phone" placeholder="Phone" [(ngModel)]="quickGuest.phone" />
+        </div>
+        <div>
+          <input ngx-google-places-autocomplete readonly onfocus="this.removeAttribute('readonly');" #places="ngx-places" class="fullSpanInput" (onAddressChange)="onChange($event)"/>
+        </div>
+        <div>
+          <input type="password" name="password" placeholder="Create Password"  [(ngModel)]="quickGuest.password" />
+          <input type="password" name="confpassword" placeholder="Confirm Password" [(ngModel)]="quickGuest.confPass" />
+        </div>
+      </form>
+
+      <div class="proccedRow">
+        Already have an account? <label (click)="goToPage('guest-login')">Login</label>
+        <button (click)="submitQuickGuest()">Next ></button>
+      </div>
+
+      <div class="ppRow largePPRow">
+        By checking-in you agree to Tempsafe's <label (click)="goToPage('terms')">Terms of Sevice</label><br />
+        View our <label (click)="goToPage('pp')">Privacy Policy</label> or <label (click)="goToPage('data')">Data & Security Statement</label>
+      </div>
+
+    </div>
+  </div>
+</div>

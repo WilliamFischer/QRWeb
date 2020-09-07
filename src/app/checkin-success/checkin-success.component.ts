@@ -24,9 +24,11 @@ export class CheckinSuccessComponent implements OnInit {
   quickLogin : boolean;
 
   rowData : any;
+  signedInUsers : any = [];
   currentUser : any;
   currentVenue : any;
-  gridApi : any;;
+  gridApi : any;
+  selectedRows : any;
 
   guestUserObj = {
     name: '',
@@ -37,11 +39,6 @@ export class CheckinSuccessComponent implements OnInit {
   }
 
   gridOptions = {
-    columnDefs: [
-      { maxWidth: 50, headerName: '', checkboxSelection: true},
-      { headerName: 'Full Name', editable: true, field: 'name'},
-      { headerName: 'Address', editable: true, field: 'address'},
-    ],
     defaultColDef: {
       flex: 1,
       sortable: true,
@@ -51,6 +48,26 @@ export class CheckinSuccessComponent implements OnInit {
     suppressRowClickSelection: true,
     suppressAggFuncInHeader: true,
   };
+
+  guestGridOptions = {
+    defaultColDef: {
+      flex: 1,
+      sortable: true,
+    },
+  };
+
+  usersGuestColumns = [
+    { maxWidth: 50, headerName: '', checkboxSelection: true},
+    { headerName: 'Full Name', editable: true, field: 'name'},
+    { headerName: 'Address', editable: true, field: 'address'},
+  ];
+
+  signedInGuests = [
+    { headerName: 'Full Name', editable: true, field: 'name'},
+    { headerName: 'Email', editable: true, field: 'email'},
+    { headerName: 'Phone Number', editable: true, field: 'ph'},
+    { headerName: 'Address', editable: true, field: 'address'},
+  ];
 
 
   constructor(
@@ -120,6 +137,8 @@ export class CheckinSuccessComponent implements OnInit {
   }
 
   diningAlone(){
+    this.generateSignInTable();
+
     if (this.currentVenue['venueURL'] == 'guestlogin'){
       // alert('Thank you for creating an account!')
       this.router.navigate(['/']);
@@ -128,12 +147,27 @@ export class CheckinSuccessComponent implements OnInit {
     }
   }
 
+  generateSignInTable(){
+    this.currentUser.ph = this.currentUser.phone;
+
+    if(this.rowData){
+      this.signedInUsers.push(this.currentUser);
+
+      for (var i = 0; i < this.selectedRows.length; i++) {
+        this.signedInUsers.push(this.selectedRows[i]);
+      }
+    }else{
+      this.signedInUsers.push(this.currentUser);
+    }
+
+    console.log(this.signedInUsers);
+  }
+
   logout(){
     this.afAuth.signOut().then(() => {
       this.router.navigate(['/']);
     })
   }
-
 
   triggerGuestAdder(){
     this.guestAdder = true;
@@ -190,11 +224,9 @@ export class CheckinSuccessComponent implements OnInit {
   }
 
   saveNewGuests() {
-    let selectedRows = this.gridApi.getSelectedRows();
-
-    if(selectedRows.length){
-      for(let i in selectedRows){
-        let row = selectedRows[i];
+    if(this.selectedRows.length){
+      for(let i in this.selectedRows){
+        let row = this.selectedRows[i];
         let date = new Date().toString();
         let guestId = this.fireStore.createId();
 
@@ -213,11 +245,11 @@ export class CheckinSuccessComponent implements OnInit {
   }
 
   onRowClicked(params){
-    let selectedRows = this.gridApi.getSelectedRows();
+    this.selectedRows = this.gridApi.getSelectedRows();
 
     // console.log(selectedRows.length)
 
-    if(!selectedRows.length){
+    if(!this.selectedRows.length){
       this.canConfirmGuests = false;
     }else{
       this.canConfirmGuests = true;

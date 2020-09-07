@@ -66,14 +66,21 @@
   </div>
 
   <div *ngIf="newGuestForm" class="coreStyler">
-    <div class="slide">
+    <div class="fullSide">
       <input type="text" name="name" placeholder="First & Last Name" [(ngModel)]="guestUserObj.name" />
+    </div>
+    <div class="fullSide">
+      <div class="inlineCheck">
+        <input type="checkbox" name="isFamily" placeholder="First & Last Name" [(ngModel)]="guestUserObj.isFamily" /> This guest is a family member
+      </div>
+    </div>
+    <div class="fullSide" *ngIf="!guestUserObj.isFamily">
       <input type="email" name="email" placeholder="Email Address" [(ngModel)]="guestUserObj.email" />
     </div>
-    <div class="fullSide">
+    <div class="fullSide" *ngIf="!guestUserObj.isFamily">
       <input type="tel" name="ph" placeholder="Phone Number" [(ngModel)]="guestUserObj.ph" />
     </div>
-    <div class="fullSide">
+    <div class="fullSide" *ngIf="!guestUserObj.isFamily">
       <input type="text" placeholder="Guest Location (if different)" readonly onfocus="this.removeAttribute('readonly');" ngx-google-places-autocomplete #places="ngx-places" (onAddressChange)="onChange($event)"/>
     </div>
 

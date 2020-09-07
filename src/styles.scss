@@ -213,7 +213,8 @@ button{
 
     margin-top: 5%;
     line-height: 20px;
-    width: 50%;
+    width: 70%;
+    text-align: center;
 
     label{
       color: #3B97D6;
@@ -259,8 +260,9 @@ button{
 
 
 .blueLabel{
-  label{
+  a{
     color: #3A97D2;
+    text-decoration: none;
     cursor: pointer;
   }
 }
@@ -370,10 +372,23 @@ button{
 
   .regoForm .proccedRow button{
     margin-top: 5%;
+    width: 60%;
   }
 
+  .regoForm .google-btn .google-icon{
+    margin-left: 0px !important;
+  }
+
+
   .regoForm .ppRow{
-    width: 100%;
+    width: 90%;
+    text-align: left;
+    margin-top: 10%;
+
+  }
+
+  .longBlockWrapper h1{
+    text-align: center;
   }
 
   .leftSide .contentWrap h1{

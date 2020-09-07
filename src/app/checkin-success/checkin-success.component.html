@@ -8,7 +8,7 @@
     <img class="venueLogo" src="{{currentVenue.venueImage}}"  *ngIf="currentVenue.venueImage"/>
 
     <h1 *ngIf="!quickLogin">
-      You're checked in!
+      Thanks {{currentUser.name}}, <br /> You're checked in!
     </h1>
     <h3 *ngIf="!quickLogin">
       Are you with any other guests?
@@ -25,7 +25,15 @@
 
   <div *ngIf="isDiningAlone && !quickLogin">
     <img class="venueLogo" src="{{currentVenue.venueImage}}"  *ngIf="currentVenue.venueImage"/>
-    <h1>You have successfully signed in to {{currentVenue.name}}, please show this page to a staff member</h1>
+    <h1>The following guests have successfully signed in to {{currentVenue.name}}, please show this page to a staff member</h1>
+    <br  />
+    <ag-grid-angular
+        style="width: 100%; height: 300px;"
+        class="ag-theme-alpine"
+        [rowData]="signedInUsers"
+        [columnDefs]="signedInGuests"
+        [gridOptions]="guestGridOptions">
+    </ag-grid-angular>
   </div>
 
   <div *ngIf="guestAdder && !newGuestForm && !isDiningAlone">
@@ -40,6 +48,7 @@
         class="ag-theme-alpine"
         [rowData]="rowData"
         [gridOptions]="gridOptions"
+        [columnDefs]="usersGuestColumns"
         (gridReady)="onGridReady($event)"
         (rowSelected)='onRowClicked($event)'>
     </ag-grid-angular>

@@ -21,6 +21,7 @@ import { MoreinfoComponent } from './moreinfo/moreinfo.component';
 import { UploadComponent } from './upload/upload.component';
 import { MemberComponent } from './member/member.component';
 import { VenueRegisterComponent } from './venue-register/venue-register.component';
+import { GuestRegisterComponent } from './guest-register/guest-register.component';
 
 
 const routes: Routes = [
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'terms', component: TermsComponent },
   { path: 'forgot-pass', component: ForgotPassComponent },
   { path: 'guest-login', component: GuestLoginComponent },
+  { path: 'guest-register', component: GuestRegisterComponent },
   { path: 'venue-login', component: VenueLoginComponent },
   { path: 'venue-register', component: VenueRegisterComponent },
   { path: 'moreinfo', component: MoreinfoComponent },

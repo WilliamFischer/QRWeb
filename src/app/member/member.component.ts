@@ -48,6 +48,7 @@ export class MemberComponent implements OnInit {
 
   guestUserObj = {
     name: '',
+    isFamily: '',
     address : '',
     email : '',
     ph : '',
@@ -145,21 +146,33 @@ export class MemberComponent implements OnInit {
   }
 
   submitNewGuest(){
-    console.log(this.currentUser['address']);
+    console.log(this.currentUser);
 
-    if(this.guestUserObj.address){
-      this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
-        merge: true
-      });
-    }else if(this.currentUser['address']){
+    if(this.guestUserObj.isFamily){
+      this.guestUserObj.email = this.currentUser['email'];
       this.guestUserObj.address = this.currentUser['address'];
+      this.guestUserObj.ph = this.currentUser['phone'];
 
-      this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
+      this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['name']).set(this.guestUserObj,{
         merge: true
       });
+
     }else{
-      alert('Address not found. please login again.')
+      if(this.guestUserObj.address){
+        this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
+          merge: true
+        });
+      }else if(this.currentUser['address']){
+        this.guestUserObj.address = this.currentUser['address'];
+
+        this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
+          merge: true
+        });
+      }else{
+        alert('Address not found. please login again.')
+      }
     }
+
     let scope = this;
     setTimeout(function(){
       scope.triggerGuestAdder();
