@@ -317,6 +317,15 @@ button{
   display: none !important;
 }
 
+.inlineCheck{
+ white-space: nowrap;
+
+ input{
+   width: 20px !important;
+   transform: scale(1.5);
+ }
+}
+
 // LIL MODE
 @media (max-width: 750px) {
   .side{

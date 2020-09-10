@@ -31,11 +31,13 @@ export class CheckinSuccessComponent implements OnInit {
   selectedRows : any;
 
   guestUserObj = {
-    name: '',
+    fName: '',
+    lName: '',
     address : '',
     email : '',
     ph : '',
-    date: ''
+    date: '',
+    isFamily: ''
   }
 
   gridOptions = {
@@ -58,12 +60,14 @@ export class CheckinSuccessComponent implements OnInit {
 
   usersGuestColumns = [
     { maxWidth: 50, headerName: '', checkboxSelection: true},
-    { headerName: 'Full Name', editable: true, field: 'name'},
+    { headerName: 'First Name', editable: true, field: 'fName'},
+    { headerName: 'Last Name', editable: true, field: 'lName'},
     { headerName: 'Address', editable: true, field: 'address'},
   ];
 
   signedInGuests = [
-    { headerName: 'Full Name', editable: true, field: 'name'},
+    { headerName: 'First Name', editable: true, field: 'fName'},
+    { headerName: 'Last Name', editable: true, field: 'lName'},
     { headerName: 'Email', editable: true, field: 'email'},
     { headerName: 'Phone Number', editable: true, field: 'ph'},
     { headerName: 'Address', editable: true, field: 'address'},
@@ -202,24 +206,38 @@ export class CheckinSuccessComponent implements OnInit {
   }
 
   submitNewGuest(){
+    console.log(this.currentUser);
 
-    if(!this.guestUserObj){
-      if(!this.guestUserObj.address){
+    if(this.guestUserObj.isFamily){
+      this.guestUserObj.email = this.currentUser['email'];
+      this.guestUserObj.address = this.currentUser['address'];
+      this.guestUserObj.ph = this.currentUser['phone'];
+
+      let name =  this.guestUserObj['fName'] + ' ' +  this.guestUserObj['lName']
+      this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + name).set(this.guestUserObj,{
+        merge: true
+      });
+
+    }else{
+      if(this.guestUserObj.address){
+        this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
+          merge: true
+        });
+      }else if(this.currentUser['address']){
         this.guestUserObj.address = this.currentUser['address'];
 
         this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
           merge: true
         });
-
-        // console.log(this.guestUserObj);
-        this.triggerGuestAdder()
       }else{
-        alert('An address is missing!')
+        alert('Address not found. please login again.')
       }
-    }else{
-      alert('Something is missing!')
     }
 
+    let scope = this;
+    setTimeout(function(){
+      scope.triggerGuestAdder();
+    }, 1000);
 
   }
 

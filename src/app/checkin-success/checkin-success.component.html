@@ -54,21 +54,29 @@
     </ag-grid-angular>
 
     <div class="fullSide coreStyler">
-      <button type="button" name="name" (click)="deleteGuests()" [ngClass]="{'disabledBtn' : !canConfirmGuests }" [disabled]="!canConfirmGuests" class="deleteBtn" *ngIf="!quickLogin">Delete Guests</button>
-      <button type="button" name="name" (click)="dontAddGuest()" class="backBtn">Back</button>
-      <button type="button" name="name" (click)="saveNewGuests()" [ngClass]="{'disabledBtn' : !canConfirmGuests }" [disabled]="!canConfirmGuests" *ngIf="!quickLogin">Confirm Guests</button>
+      <button type="button" (click)="deleteGuests()" [ngClass]="{'disabledBtn' : !canConfirmGuests }" [disabled]="!canConfirmGuests" class="deleteBtn" *ngIf="!quickLogin">Delete Guests</button>
+      <button type="button" (click)="dontAddGuest()" class="backBtn">Back</button>
+      <button type="button" (click)="saveNewGuests()" [ngClass]="{'disabledBtn' : !canConfirmGuests }" [disabled]="!canConfirmGuests" *ngIf="!quickLogin">Confirm Guests</button>
     </div>
   </div>
 
   <div *ngIf="newGuestForm" class="coreStyler">
-    <div class="slide">
-      <input type="text" name="name" placeholder="First & Last Name" [(ngModel)]="guestUserObj.name" />
+    <div class="fullSide">
+      <input type="text" name="fName" placeholder="First Name" [(ngModel)]="guestUserObj.fName" />
+      <input type="text" name="lName" placeholder="Last Name" [(ngModel)]="guestUserObj.lName" />
+    </div>
+    <div class="fullSide">
+      <div class="inlineCheck">
+        <input type="checkbox" name="isFamily" placeholder="First & Last Name" [(ngModel)]="guestUserObj.isFamily" /> This guest is a family member
+      </div>
+    </div>
+    <div class="fullSide" *ngIf="!guestUserObj.isFamily">
       <input type="email" name="email" placeholder="Email Address" [(ngModel)]="guestUserObj.email" />
     </div>
-    <div class="fullSide">
+    <div class="fullSide" *ngIf="!guestUserObj.isFamily">
       <input type="tel" name="ph" placeholder="Phone Number" [(ngModel)]="guestUserObj.ph" />
     </div>
-    <div class="fullSide">
+    <div class="fullSide" *ngIf="!guestUserObj.isFamily">
       <input type="text" placeholder="Guest Address (if different)" ngx-google-places-autocomplete #places="ngx-places" (onAddressChange)="onChange($event)"/>
     </div>
 

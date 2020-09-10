@@ -109,6 +109,8 @@ export class LandingComponent implements OnInit {
         this.canShowPage = true;
       }
     });
+
+    localStorage.removeItem('viewingVenue');
   }
 
   async googleSignin(){

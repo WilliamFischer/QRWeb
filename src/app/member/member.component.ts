@@ -33,7 +33,8 @@ export class MemberComponent implements OnInit {
   gridOptions = {
     columnDefs: [
       { maxWidth: 50, headerName: '', checkboxSelection: true},
-      { headerName: 'Full Name', editable: true, field: 'name'},
+      { headerName: 'First Name', editable: true, field: 'fName'},
+      { headerName: 'Last Name', editable: true, field: 'lName'},
       { headerName: 'Address', editable: true, field: 'address'},
     ],
     defaultColDef: {
@@ -47,7 +48,8 @@ export class MemberComponent implements OnInit {
   };
 
   guestUserObj = {
-    name: '',
+    fName: '',
+    lName: '',
     isFamily: '',
     address : '',
     email : '',
@@ -153,7 +155,8 @@ export class MemberComponent implements OnInit {
       this.guestUserObj.address = this.currentUser['address'];
       this.guestUserObj.ph = this.currentUser['phone'];
 
-      this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['name']).set(this.guestUserObj,{
+      let name =  this.guestUserObj['fName'] + ' ' +  this.guestUserObj['lName']
+      this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + name).set(this.guestUserObj,{
         merge: true
       });
 
