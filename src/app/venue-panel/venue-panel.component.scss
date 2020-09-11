@@ -6,7 +6,6 @@ h1{
   text-transform: capitalize;
   color: #8e8e8e;
   font-size: 21px;
-  margin-bottom: 5%;
 }
 
 
@@ -18,6 +17,16 @@ h1{
     height: 60px;
     width: 130px;
     opacity: 0;
+  }
+}
+
+.addNewVenueOptions{
+  margin-top: 2%;
+  margin-bottom: 3%;
+
+  a{
+    text-decoration: none;
+    color: #3A97D2;
   }
 }
 

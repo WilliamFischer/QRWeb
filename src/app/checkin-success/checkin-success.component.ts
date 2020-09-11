@@ -66,11 +66,8 @@ export class CheckinSuccessComponent implements OnInit {
   ];
 
   signedInGuests = [
-    { headerName: 'First Name', editable: true, field: 'fName'},
-    { headerName: 'Last Name', editable: true, field: 'lName'},
-    { headerName: 'Email', editable: true, field: 'email'},
-    { headerName: 'Phone Number', editable: true, field: 'ph'},
-    { headerName: 'Address', editable: true, field: 'address'},
+    { headerName: 'Full Name', field: 'name'},
+    { headerName: 'Date', field: 'date'},
   ];
 
 
@@ -158,12 +155,20 @@ export class CheckinSuccessComponent implements OnInit {
       this.signedInUsers.push(this.currentUser);
 
       for (var i = 0; i < this.selectedRows.length; i++) {
+
         this.signedInUsers.push(this.selectedRows[i]);
       }
     }else{
       this.signedInUsers.push(this.currentUser);
     }
 
+    // Transform all fNames & lNames to 'name' variable
+    for (var i = 0; i < this.signedInUsers.length; i++){
+      if(!this.signedInUsers[i].name){
+        this.signedInUsers[i].name = this.signedInUsers[i].fName + ' ' + this.signedInUsers[i].lName
+      }
+    }
+    
     console.log(this.signedInUsers);
   }
 

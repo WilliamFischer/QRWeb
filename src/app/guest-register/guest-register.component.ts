@@ -72,43 +72,46 @@ export class GuestRegisterComponent implements OnInit {
   submitQuickGuest(){
     let scope = this;
 
-    if(this.quickGuest.address){
-      this.afAuth.createUserWithEmailAndPassword(this.quickGuest.email, this.quickGuest.password).then(function() {
-        scope.afAuth.authState.subscribe(user => {
+    if(this.quickGuest.email && this.quickGuest.email.includes('@') && this.quickGuest.email.includes('.')){
+      if(this.quickGuest.address){
+        this.afAuth.createUserWithEmailAndPassword(this.quickGuest.email, this.quickGuest.password).then(function() {
+          scope.afAuth.authState.subscribe(user => {
 
-          let cleanUser = {
-            accountType : 'guest',
-            address : scope.quickGuest.address,
-            email : scope.quickGuest.email,
-            name : scope.quickGuest.first_name + ' ' + scope.quickGuest.last_name,
-            phone : scope.quickGuest.phone,
-            photoURL : 'https://mcdowellhomes.com.au/wp-content/uploads/2016/09/no-user-image-300x300.gif',
-            uid : user.uid,
-          }
-          scope.fireStore.doc('Users/' + user.uid).set(cleanUser, {
-            merge: true
+            let cleanUser = {
+              accountType : 'guest',
+              address : scope.quickGuest.address,
+              email : scope.quickGuest.email,
+              name : scope.quickGuest.first_name + ' ' + scope.quickGuest.last_name,
+              phone : scope.quickGuest.phone,
+              photoURL : 'https://mcdowellhomes.com.au/wp-content/uploads/2016/09/no-user-image-300x300.gif',
+              uid : user.uid,
+            }
+            scope.fireStore.doc('Users/' + user.uid).set(cleanUser, {
+              merge: true
+            });
+
+            localStorage.setItem('guestUser', JSON.stringify(cleanUser));
+
+            let vewingVenue = localStorage.getItem('viewingVenue');
+            console.log(vewingVenue)
+
+            if(vewingVenue){
+              scope.router.navigate(['/' + vewingVenue]);
+            }else{
+              scope.router.navigate(['/member']);
+            }
+
           });
 
-          localStorage.setItem('guestUser', JSON.stringify(cleanUser));
-
-          let vewingVenue = localStorage.getItem('viewingVenue');
-          console.log(vewingVenue)
-
-          if(vewingVenue){
-            scope.router.navigate(['/' + vewingVenue]);
-          }else{
-            scope.router.navigate(['/member']);
-          }
-
+        }).catch(function(error) {
+          alert(error.message);
         });
-
-      }).catch(function(error) {
-        alert(error.message);
-      });
+      }else{
+        alert('Invalid Address')
+      }
     }else{
-      alert('Invalid Address')
+      alert('Invalid Email')
     }
-
   }
 
   onChange(address: Address) {

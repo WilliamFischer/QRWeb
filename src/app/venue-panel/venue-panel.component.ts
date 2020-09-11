@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
 // Maps
@@ -22,6 +23,8 @@ export class VenuePanelComponent implements OnInit {
   showVenueAddModel: boolean;
   loadingImageUpload: boolean;
   hasChecked: boolean;
+  showConfirmDelete:boolean;
+  showEdit: boolean;
 
   user: any;
   venue : any;
@@ -34,8 +37,15 @@ export class VenuePanelComponent implements OnInit {
     industry : '',
     url : '',
     date : '',
-    createdBy : ''
+    createdBy : '',
+    hidden: false
   }
+
+  venueEdit: any = {
+    name : '',
+    address : '',
+    industry: ''
+  };
 
   gridOptions = {
     columnDefs: [
@@ -66,7 +76,8 @@ export class VenuePanelComponent implements OnInit {
   constructor(
     private fireStore : AngularFirestore,
     private afAuth : AngularFireAuth,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -179,7 +190,29 @@ export class VenuePanelComponent implements OnInit {
     this.venueOBJ.location = address.formatted_address;
   }
 
+  deleteVenue(){
+    this.showConfirmDelete = true;
+  }
 
+  editVenue(){
+    this.showEdit = true;
+    console.log(this.venue)
+  }
+
+  actuallyDeleteVenue(){
+    this.fireStore.doc('Venues/' + this.venue.url).delete().then(() => {
+      this.venueOBJ = null;
+      this.venue = null;
+
+      this.closeModals();
+      location.reload();
+    });
+  }
+
+  confirmEditVenue(){
+    this.closeModals();
+    location.reload();
+  }
 
   triggerModel() {
     this.showVenueAddModel = true;
@@ -187,6 +220,8 @@ export class VenuePanelComponent implements OnInit {
 
   closeModals() {
     this.showVenueAddModel = false;
+    this.showConfirmDelete = false;
+    this.showEdit = false;
   }
 
 }

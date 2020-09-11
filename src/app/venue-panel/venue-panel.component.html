@@ -7,6 +7,12 @@
   <div *ngIf="!loadingImageUpload">
     <h1>{{venue.name}}'s Guests</h1>
 
+    <p class="addNewVenueOptions">
+      <a (click)="deleteVenue()">Remove {{venue.name}}</a> &bull;
+      <a  (click)="editVenue()">Edit {{venue.name}}'s Details</a>
+      <!-- &bull; <a href="">+ Add New Venue</a> -->
+    </p>
+
     <ag-grid-angular
         style="width: 100%; height: 50vh;"
         class="ag-theme-alpine"
@@ -27,6 +33,48 @@
   </h1>
   <button class="registerBtn" (click)="triggerModel()"> + Add Venue</button>
 
+</div>
+
+<div class="customModel registerModel" *ngIf="showConfirmDelete">
+  <div class="paddedInputs">
+    <div class="fullSide">
+      <p>Are you sure you want to delete {{venue.name}}?</p>
+    </div>
+    <div class="side" (click)="closeModals()">
+      <p>Go Back</p>
+    </div>
+    <div class="side" (click)="actuallyDeleteVenue()">
+      <p>Delete</p>
+    </div>
+  </div>
+</div>
+
+<div class="customModel registerModel" *ngIf="showEdit && venue.name">
+  <div class="paddedInputs">
+
+    <div class="side">
+      <div>
+        <input type="text" name="name" placeholder="Venue Name" [value]="venue.name" [(ngModel)]="venue.name" />
+      </div>
+    </div>
+    <div class="side">
+      <div>
+        <input type="text" name="address" placeholder="Venue Address" [value]="venue.location" [(ngModel)]="venue.location" />
+      </div>
+    </div>
+    <div class="fullSide">
+      <div>
+        <input type="text" name="industry" placeholder="Venue Industry" [value]="venue.industry" [(ngModel)]="venue.industry" />
+      </div>
+    </div>
+
+    <div class="side" (click)="closeModals()">
+      <p>Go Back</p>
+    </div>
+    <div class="side" (click)="confirmEditVenue()">
+      <p>Confrim Changes</p>
+    </div>
+  </div>
 </div>
 
 
@@ -61,4 +109,4 @@
 
 </form>
 
-<div class="dimmer" *ngIf="showVenueAddModel" (click)="closeModals()"></div>
+<div class="dimmer" *ngIf="showVenueAddModel || showConfirmDelete || showEdit" (click)="closeModals()"></div>

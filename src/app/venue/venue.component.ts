@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
 // Maps
@@ -63,6 +64,7 @@ export class VenueComponent implements OnInit {
     private fireStore: AngularFirestore,
     private router: Router,
     private afAuth : AngularFireAuth,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -168,8 +170,12 @@ export class VenueComponent implements OnInit {
   }
 
   selectionHomeTrigger() {
-    this.emailSignupMode = false;
-    this.emailSigninMode = false;
+    if(this.emailSignupMode){
+      this.emailSignupMode = false;
+      this.emailSigninMode = false;
+    }else{
+      this.location.back();
+    }
   }
 
   async googleSignin(){
