@@ -1,26 +1,30 @@
-<div class="coreWrapper dataTableWrapper" *ngIf="canShowPage && !hasNoVenue && venue">
+<div class="coreWrapper dataTableWrapper" *ngIf="canShowPage && !hasNoVenue && venues.length">
 
   <div *ngIf="loadingImageUpload">
     <img src="../assets/uploading.gif" />
   </div>
 
-  <div *ngIf="!loadingImageUpload">
-    <h1>{{venue.name}}'s Guests</h1>
+  <div class="venuePanelWrapper" *ngFor="let venue of venues; let i = index">
+    <div *ngIf="!loadingImageUpload">
+      <h1>{{venue.name}}'s Guests</h1>
 
-    <p class="addNewVenueOptions">
-      <a (click)="deleteVenue()">Remove {{venue.name}}</a> &bull;
-      <a  (click)="editVenue()">Edit {{venue.name}}'s Details</a>
-      <!-- &bull; <a href="">+ Add New Venue</a> -->
-    </p>
+      <p class="addNewVenueOptions">
+        <a (click)="deleteVenue()">Remove {{venue.name}}</a> &bull;
+        <a  (click)="editVenue()">Edit {{venue.name}}'s Details</a>
+        &bull; <a (click)="triggerModel()">+ Add New Venue</a>
+      </p>
 
-    <ag-grid-angular
-        style="width: 100%; height: 50vh;"
-        class="ag-theme-alpine"
-        [rowData]="rowData"
-        [gridOptions]="gridOptions"
-        >
-    </ag-grid-angular>
+      <ag-grid-angular
+          style="width: 100%; height: 50vh;"
+          class="ag-theme-alpine"
+          [rowData]="rowData"
+          [gridOptions]="gridOptions"
+          [frameworkComponents]="frameworkComponents"
+          (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    </div>
   </div>
+
 
 </div>
 
@@ -43,7 +47,7 @@
     <div class="side" (click)="closeModals()">
       <p>Go Back</p>
     </div>
-    <div class="side" (click)="actuallyDeleteVenue()">
+    <div class="side" (click)="actuallyDeleteVenue(venue)">
       <p>Delete</p>
     </div>
   </div>
@@ -102,7 +106,7 @@
 
 
   <div class="fullSide">
-    <div class="inlineLineCheckbox"><input type="checkbox" [(ngModel)]="hasChecked" [ngModelOptions]="{standalone: true}"/> I agree to the <a href="#">Terms & Conditions</a> & <a href="#">Privacy Policy</a></div>
+    <div class="inlineLineCheckbox"><input class="checkboxInput" type="checkbox" [(ngModel)]="hasChecked" [ngModelOptions]="{standalone: true}"/> I agree to the <a href="#">Terms & Conditions</a> & <a href="#">Privacy Policy</a></div>
     <button type="button" class="registerVenueBtn" (click)="submitVenue()">Submit Venue</button>
     <div class="buffer"></div>
   </div>

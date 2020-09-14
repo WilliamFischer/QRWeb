@@ -27,9 +27,11 @@ export class VenuePanelComponent implements OnInit {
   showEdit: boolean;
 
   user: any;
-  venue : any;
-  rowData : any;
   moreUserInfo: any;
+  gridApi : any;
+
+  rowData : any = [];
+  venues : any = [];
 
   venueOBJ: any = {
     name : '',
@@ -51,6 +53,9 @@ export class VenuePanelComponent implements OnInit {
     columnDefs: [
       {headerName: 'Check-in Date', field: 'date'},
       {headerName: 'UID', field: 'guestId'},
+      {headerName: 'Options', cellRenderer : function(){
+            return '<div class="optionButtons"><button id="reportGuest">Report Guest</button></div>'
+      }},
     ],
     defaultColDef : {
       flex: 1,
@@ -78,7 +83,16 @@ export class VenuePanelComponent implements OnInit {
     private afAuth : AngularFireAuth,
     private router: Router,
     private location: Location
-  ) { }
+  ) {
+    let scope = this;
+
+    document.addEventListener('click', function (event) {
+        if(event.target['id'] !== 'reportGuest') return;
+      	event.preventDefault();
+
+        scope.reportGuest(event)
+    }, false);
+  }
 
   ngOnInit(): void {
     this.afAuth.authState.subscribe(user => {
@@ -109,20 +123,30 @@ export class VenuePanelComponent implements OnInit {
         // console.log(this.user.uid +' vs '+ venue['createdBy'])
         if(this.user.uid == venue['createdBy']){
           venueExists = true;
-          this.venue = venue;
+          this.venues.push(venue);
           localStorage.setItem('venue', JSON.stringify(venue));
           // console.log(venue)
 
           let userCollection = this.fireStore.collection('Venues/' + venue['url']  + '/guests').valueChanges().subscribe(
           users =>{
-            // console.log(users);
-            this.rowData = users;
+            users.forEach(user => {
+              this.rowData.push(user);
+              this.gridApi.setRowData(this.rowData);
+              console.log(this.rowData);
+            });
+
+
             this.hasNoVenue = false;
 
-            venueCollection.unsubscribe();
-            userCollection.unsubscribe();
+            // venueCollection.unsubscribe();
+            // userCollection.unsubscribe();
           });
         }
+        //
+        //
+        //
+          console.log(this.rowData);
+        console.log(this.venues);
       });
 
       if(!venueExists){
@@ -130,7 +154,6 @@ export class VenuePanelComponent implements OnInit {
         // this.logout();
         this.hasNoVenue = true;
       }
-
     });
   }
 
@@ -196,13 +219,12 @@ export class VenuePanelComponent implements OnInit {
 
   editVenue(){
     this.showEdit = true;
-    console.log(this.venue)
   }
 
-  actuallyDeleteVenue(){
-    this.fireStore.doc('Venues/' + this.venue.url).delete().then(() => {
+  actuallyDeleteVenue(venue){
+    this.fireStore.doc('Venues/' + venue.url).delete().then(() => {
       this.venueOBJ = null;
-      this.venue = null;
+      this.venues = [];
 
       this.closeModals();
       location.reload();
@@ -222,6 +244,37 @@ export class VenuePanelComponent implements OnInit {
     this.showVenueAddModel = false;
     this.showConfirmDelete = false;
     this.showEdit = false;
+  }
+
+  reportGuest(guest){
+    let reportedID = guest.target.parentElement.parentElement.parentElement.parentNode.children[1].innerHTML;
+    let checkedInTime = guest.target.parentElement.parentElement.parentElement.parentNode.children[0].innerHTML;
+
+    let reportObject = {
+      id : reportedID,
+      reportedTime: new Date().toString(),
+      checkedInTime : checkedInTime
+    }
+
+    setTimeout(() => {
+      this.fireStore.doc('Reports/' + reportedID).set(reportObject,{
+        merge: true
+      }).catch((error) => {
+        console.log(error)
+      }).then(() => {
+        console.log(reportObject)
+        alert('User has been tagged reported. You will be emailed with further details.');
+      });
+    }, 1000);
+
+
+
+
+  }
+
+
+  onGridReady(params) {
+    this.gridApi = params.api;
   }
 
 }

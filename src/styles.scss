@@ -222,6 +222,18 @@ button{
   }
 }
 
+
+.optionButtons{
+  button{
+    background: #ff814d;
+    border: none;
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+}
+
 .venueLogo{
   width: 200px;
   height: 150px;
@@ -273,7 +285,7 @@ button{
   height: 100%;
   top: 0;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 900;
+  z-index: 90000;
 }
 
 .qrCode img{
@@ -296,7 +308,7 @@ button{
   position: absolute;
   display: flex;
   flex-wrap: wrap;
-  z-index: 9000;
+  z-index: 900000;
 
   background: #FCFBFC;
   border-radius: 10px;
