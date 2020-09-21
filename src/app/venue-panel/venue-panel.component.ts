@@ -124,17 +124,29 @@ export class VenuePanelComponent implements OnInit {
         if(this.user.uid == venue['createdBy']){
           venueExists = true;
           this.venues.push(venue);
+
           localStorage.setItem('venue', JSON.stringify(venue));
           // console.log(venue)
 
           let userCollection = this.fireStore.collection('Venues/' + venue['url']  + '/guests').valueChanges().subscribe(
           users =>{
             users.forEach(user => {
-              this.rowData.push(user);
-              this.gridApi.setRowData(this.rowData);
-              console.log(this.rowData);
-            });
 
+              //FOR EXTENSIVE ROWDATA ARRAY
+              // this.rowData[venue.url] = [];
+              // this.rowData[venue.url].push(user);
+              //
+              // console.log(this.gridOptions)
+
+              // for(let i in this.rowData[venue.url]){
+              //   console.log( this.rowData[venue.url][i]);
+              // }
+
+              this.rowData.push(user);
+              this.expireOldGuest(user, venue);
+
+              this.gridApi.setRowData(this.rowData);
+            });
 
             this.hasNoVenue = false;
 
@@ -142,17 +154,16 @@ export class VenuePanelComponent implements OnInit {
             // userCollection.unsubscribe();
           });
         }
-        //
-        //
-        //
-          console.log(this.rowData);
-        console.log(this.venues);
       });
 
       if(!venueExists){
         // console.log('Oops! We couldn\'t find any venues under your account, please login again.');
         // this.logout();
         this.hasNoVenue = true;
+      }else{
+        // console.log(this.rowData);
+        // console.log(this.venues);
+        venueCollection.unsubscribe();
       }
     });
   }
@@ -266,15 +277,23 @@ export class VenuePanelComponent implements OnInit {
         alert('User has been tagged reported. You will be emailed with further details.');
       });
     }, 1000);
-
-
-
-
   }
 
 
   onGridReady(params) {
     this.gridApi = params.api;
+  }
+
+  expireOldGuest(user, venue){
+    const date1 = new Date().getDate();
+    const date2 = new Date(user.date).getDate();
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if(diffDays >= 64){
+      console.log("DELETING GUEST" + user.name);
+      this.fireStore.doc('Venues/' + venue.url + '/guests/' + user.uid).delete();
+    }
   }
 
 }

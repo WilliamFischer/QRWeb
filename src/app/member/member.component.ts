@@ -106,6 +106,17 @@ export class MemberComponent implements OnInit {
       // console.log(users);
       this.rowData = users;
       this.gridApi.setRowData(this.rowData);
+
+      this.guestUserObj = {
+        fName: '',
+        lName: '',
+        isFamily: '',
+        address : '',
+        email : '',
+        ph : '',
+        date: ''
+      }
+
       userCollection.unsubscribe();
     });
   }
@@ -161,18 +172,22 @@ export class MemberComponent implements OnInit {
       });
 
     }else{
-      if(this.guestUserObj.address){
-        this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
-          merge: true
-        });
-      }else if(this.currentUser['address']){
-        this.guestUserObj.address = this.currentUser['address'];
+      if(!this.guestUserObj.email){
+        if(this.guestUserObj.address){
+          this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
+            merge: true
+          });
+        }else if(this.currentUser['address']){
+          this.guestUserObj.address = this.currentUser['address'];
 
-        this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
-          merge: true
-        });
+          this.fireStore.doc('Users/' + this.currentUser['uid'] + '/companions/' + this.guestUserObj['email']).set(this.guestUserObj,{
+            merge: true
+          });
+        }else{
+          alert('Address not found. please login again.')
+        }
       }else{
-        alert('Address not found. please login again.')
+        alert('Please enter an email address')
       }
     }
 
