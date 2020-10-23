@@ -1,5 +1,6 @@
 <div class="basicWrapper">
-  <div class="regoForm">
+
+  <div class="regoForm" *ngIf="!paypalMode">
     <h1>Venue Register</h1>
 
     <div class="google-btn" (click)="googleSignin()">
@@ -20,9 +21,15 @@
     </form>
 
     <div class="proccedRow">
-      <button (click)="register()">Register ></button> <br /><br /><br />
+      <button (click)="continueToPaypal()">Next ></button> <br /><br /><br />
         Already have an account? <label (click)="goToPage('venue-login')">Login</label>
     </div>
-
   </div>
+
+  <div class="paypalSection" *ngIf="paypalMode">
+    <h1>Complete your account with Paypal</h1>
+    <h2>For now, Ezy Checkin is a one time fee of $14.99 AUD</h2>
+    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+  </div>
+
 </div>

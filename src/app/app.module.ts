@@ -10,25 +10,7 @@ import { AppComponent } from './app.component';
 import { LandingComponent } from './landing/landing.component';
 import { VenueComponent } from './venue/venue.component';
 import { CheckinSuccessComponent } from './checkin-success/checkin-success.component';
-
-// Firebase
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireAuthModule } from '@angular/fire/auth';
 import { VenuePanelComponent } from './venue-panel/venue-panel.component';
-
-// AG Grid
-import { AgGridModule } from 'ag-grid-angular';
-import 'ag-grid-enterprise';
-
-// Autocomplete Module
-import { AutocompleteLibModule } from 'angular-ng-autocomplete';
-
-// GOOGLE MAPS AUTOCOMPLETE
-import { GooglePlaceModule } from "ngx-google-places-autocomplete";
-
-// QR Code
-import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { GeneratedQRComponent } from './generated-qr/generated-qr.component';
 import { AboutComponent } from './about/about.component';
 import { FaqComponent } from './faq/faq.component';
@@ -45,6 +27,28 @@ import { UploadComponent } from './upload/upload.component';
 import { MemberComponent } from './member/member.component';
 import { VenueRegisterComponent } from './venue-register/venue-register.component';
 import { GuestRegisterComponent } from './guest-register/guest-register.component';
+import { AdminComponent } from './admin/admin.component';
+
+// Firebase
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
+// AG Grid
+import { AgGridModule } from 'ag-grid-angular';
+import 'ag-grid-enterprise';
+
+// Autocomplete Module
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+
+// Google Maps Autocomplete
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+
+// QR Code
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+
+// Paypal
+import { NgxPayPalModule } from 'ngx-paypal';
 
 export const environment = {
   production: false,
@@ -81,7 +85,8 @@ export const environment = {
     UploadComponent,
     MemberComponent,
     VenueRegisterComponent,
-    GuestRegisterComponent
+    GuestRegisterComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -94,7 +99,8 @@ export const environment = {
     AutocompleteLibModule,
     GooglePlaceModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPayPalModule
   ],
   providers: [],
   bootstrap: [AppComponent]

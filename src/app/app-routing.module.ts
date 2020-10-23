@@ -22,6 +22,7 @@ import { UploadComponent } from './upload/upload.component';
 import { MemberComponent } from './member/member.component';
 import { VenueRegisterComponent } from './venue-register/venue-register.component';
 import { GuestRegisterComponent } from './guest-register/guest-register.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 const routes: Routes = [
@@ -44,6 +45,7 @@ const routes: Routes = [
   { path: 'venue-register', component: VenueRegisterComponent },
   { path: 'moreinfo', component: MoreinfoComponent },
   { path: 'upload', component: UploadComponent },
+  { path: 'admin', component: AdminComponent },
   { path: ':id', component: VenueComponent },
 ];
 

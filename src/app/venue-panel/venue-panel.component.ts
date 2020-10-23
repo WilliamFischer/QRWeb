@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import {HttpClient} from "@angular/common/http";
 
 // Maps
 import { GooglePlaceDirective } from "ngx-google-places-autocomplete";
@@ -82,7 +83,8 @@ export class VenuePanelComponent implements OnInit {
     private fireStore : AngularFirestore,
     private afAuth : AngularFireAuth,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private http:HttpClient
   ) {
     let scope = this;
 
@@ -125,13 +127,27 @@ export class VenuePanelComponent implements OnInit {
           venueExists = true;
           this.venues.push(venue);
 
+          if(!venue.key){
+            console.log('VENUE MISSING KEY. ASSIGNING...');
+
+            this.http.get('http://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&minCorpusCount=0&minLength=5&maxLength=15&limit=1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5').subscribe(
+              result => {
+                let randomKey = result[0]['word'] + Math.floor(Math.random() * 300);
+
+                this.fireStore.doc('Venues/' + venue.url).set({
+                  key : randomKey
+                },{
+                  merge: true
+                });
+              })
+          }
+
           localStorage.setItem('venue', JSON.stringify(venue));
           // console.log(venue)
 
           let userCollection = this.fireStore.collection('Venues/' + venue['url']  + '/guests').valueChanges().subscribe(
           users =>{
             users.forEach(user => {
-
               //FOR EXTENSIVE ROWDATA ARRAY
               // this.rowData[venue.url] = [];
               // this.rowData[venue.url].push(user);
@@ -294,6 +310,10 @@ export class VenuePanelComponent implements OnInit {
       console.log("DELETING GUEST" + user.name);
       this.fireStore.doc('Venues/' + venue.url + '/guests/' + user.uid).delete();
     }
+  }
+
+  showKey(venue){
+    alert(venue.name + '\'s key is ' + venue.key)
   }
 
 }

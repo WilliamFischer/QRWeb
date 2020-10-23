@@ -1,0 +1,34 @@
+<div class="coreWrapper">
+    <div *ngIf="!isAdmin">
+        <h1>Please enter the admin password</h1>
+        <input autofocus type="password" [(ngModel)]="attemptedPass"/> <br /><br />
+        <button (click)="submitPassword()">Submit</button>
+    </div>
+
+    <div  *ngIf="isAdmin">
+        Welcome Admin!
+
+        <br /><br />
+
+        <ag-grid-angular
+            style="width: 100%; height: 300px;"
+            class="ag-theme-alpine"
+            [rowData]="rowData"
+            [gridOptions]="gridOptions"
+            (gridReady)="onGridReady($event)"
+            (rowSelected)='onRowClicked($event)'>
+        </ag-grid-angular>
+        
+        <br /><br />
+        
+        <ag-grid-angular
+            style="width: 100%; height: 300px;"
+            class="ag-theme-alpine"
+            *ngIf="showGuestGrid"
+            [rowData]="guestData"
+            [gridOptions]="guestGridOptions"
+            (gridReady)="onGuestGridReady($event)">
+        </ag-grid-angular>
+
+    </div>
+</div>

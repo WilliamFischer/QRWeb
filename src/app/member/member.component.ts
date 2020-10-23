@@ -23,7 +23,7 @@ export class MemberComponent implements OnInit {
   guestAdder:boolean;
   newGuestForm:boolean;
   canConfirmGuests:boolean;
-    isDiningAlone:boolean;
+  isDiningAlone:boolean;
 
   rowData : any;
   gridApi : any;
@@ -44,7 +44,7 @@ export class MemberComponent implements OnInit {
     rowSelection: 'multiple',
     groupSelectsChildren: true,
     suppressRowClickSelection: true,
-    suppressAggFuncInHeader: true,
+    suppressAggFuncInHeader: true
   };
 
   guestUserObj = {
@@ -262,5 +262,4 @@ export class MemberComponent implements OnInit {
     // console.log(address);
     this.guestUserObj.address = address.formatted_address;
   }
-
 }

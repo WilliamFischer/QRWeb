@@ -6,12 +6,18 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 
+// Paypal
+import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
+
 @Component({
   selector: 'app-venue-register',
   templateUrl: './venue-register.component.html',
   styleUrls: ['./venue-register.component.scss']
 })
 export class VenueRegisterComponent implements OnInit {
+ 
+  payPalConfig ? : IPayPalConfig;
+
   googleResults: any;
 
   userObj : any = {
@@ -26,6 +32,8 @@ export class VenueRegisterComponent implements OnInit {
     confirm_password : ''
   }
 
+  paypalMode: boolean;
+
   constructor(
     private fireStore: AngularFirestore,
     private router: Router,
@@ -33,6 +41,7 @@ export class VenueRegisterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initConfig();
   }
 
   goToPage(page){
@@ -45,11 +54,15 @@ export class VenueRegisterComponent implements OnInit {
 
     await this.afAuth.signInWithPopup(provider).then(function(results) {
       scope.googleResults = results.user;
-      scope.userAddedSuccess();
+      this.continueToPaypal();
     }).catch(function(error) {
       console.log(error);
       alert(error.message);
     });
+  }  
+  
+  continueToPaypal(){
+   this.paypalMode = true;
   }
 
   async register(){
@@ -65,6 +78,14 @@ export class VenueRegisterComponent implements OnInit {
       alert('Your passwords do not match')
     }
 
+  }
+
+  payPalCompleted(){
+    if(!this.googleResults){
+      this.register();
+    }else{
+      this.userAddedSuccess();
+    }
   }
 
   submitUserDetails(fbUserObj){
@@ -87,4 +108,64 @@ export class VenueRegisterComponent implements OnInit {
     localStorage.setItem('guestUser', JSON.stringify(this.googleResults));
     this.router.navigateByUrl('/moreinfo');
   }
+
+  private initConfig(): void {
+    this.payPalConfig = {
+        currency: 'AUD',
+        clientId: 'sb',
+        createOrderOnClient: (data) => < ICreateOrderRequest > {
+            intent: 'CAPTURE',
+            purchase_units: [{
+                amount: {
+                    currency_code: 'AUD',
+                    value: '14.99',
+                    breakdown: {
+                        item_total: {
+                            currency_code: 'AUD',
+                            value: '14.99'
+                        }
+                    }
+                },
+                items: [{
+                    name: 'EzyCheckin Premium Membership',
+                    quantity: '1',
+                    category: 'DIGITAL_GOODS',
+                    unit_amount: {
+                        currency_code: 'AUD',
+                        value: '14.99',
+                    },
+                }]
+            }]
+        },
+        advanced: {
+            commit: 'true'
+        },
+        style: {
+            label: 'paypal',
+            layout: 'vertical'
+        },
+        onApprove: (data, actions) => {
+            console.log('onApprove - transaction was approved, but not authorized', data, actions);
+            actions.order.get().then(details => {
+                console.log('onApprove - you can get full order details inside onApprove: ', details);
+            });
+
+            this.payPalCompleted();
+        },
+        onClientAuthorization: (data) => {
+            console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+        },
+        onCancel: (data, actions) => {
+            console.log('OnCancel', data, actions);
+
+        },
+        onError: err => {
+            console.log('OnError', err);
+        },
+        onClick: (data, actions) => {
+            console.log('onClick', data, actions);
+        },
+    };
+}
+
 }
