@@ -47,7 +47,7 @@ export class UploadComponent implements OnInit {
 
     const file = event.target.files[0];
     let randomID = Math.floor(Math.random() * 1000);
-    const filePath = this.user['email'] + '/Tank Images/' + randomID;
+    const filePath = this.user['email'] + '/Profile Images/' + randomID;
     const fileRef = this.storage.ref(filePath)
     const task = this.storage.upload(filePath, file);
 

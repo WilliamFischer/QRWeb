@@ -11,7 +11,7 @@
       <p class="addNewVenueOptions">
         <a (click)="showKey(venue)">Get Key</a> &bull;
         <a  (click)="editVenue()">Edit {{venue.name}}'s Details</a> &bull;
-        <a (click)="deleteVenue()">Remove {{venue.name}}</a> &bull; 
+        <a (click)="deleteVenue()">Remove {{venue.name}}</a> &bull;
         <a (click)="triggerModel()">+ Add New Venue</a>
       </p>
 
@@ -54,7 +54,7 @@
   </div>
 </div>
 
-<div class="customModel registerModel" *ngIf="showEdit && venue.name">
+<div class="customModel registerModel" *ngIf="showEdit">
   <div class="paddedInputs">
 
     <div class="side">
