@@ -153,39 +153,35 @@ export class LandingComponent implements OnInit {
     let scope = this;
 
     if(this.quickGuest.email && this.quickGuest.email.includes('@') && this.quickGuest.email.includes('.')){
-      if(this.quickGuest.address){
-        this.afAuth.createUserWithEmailAndPassword(this.quickGuest.email, this.quickGuest.password).then(function() {
 
-          // alert('Welcome to Ezy Checkin! You will now be taken to your QR Code');
-          // this.triggerModel();
-          //
-          // this.router.navigate(['/myqr']);
+      if(!this.quickGuest.address){
+        this.quickGuest.address = '';
+      }
+      
+      this.afAuth.createUserWithEmailAndPassword(this.quickGuest.email, this.quickGuest.password).then(function() {
 
-          scope.afAuth.authState.subscribe(user => {
+        scope.afAuth.authState.subscribe(user => {
 
-            let cleanUser = {
-              accountType : 'guest',
-              address : scope.quickGuest.address,
-              email : scope.quickGuest.email,
-              name : scope.quickGuest.first_name + ' ' + scope.quickGuest.last_name,
-              phone : scope.quickGuest.phone,
-              photoURL : 'https://mcdowellhomes.com.au/wp-content/uploads/2016/09/no-user-image-300x300.gif',
-              uid : user.uid,
-            }
-            scope.fireStore.doc('Users/' + user.uid).set(cleanUser, {
-              merge: true
-            });
-
-            localStorage.setItem('guestUser', JSON.stringify(cleanUser));
-            scope.router.navigateByUrl('/member');
+          let cleanUser = {
+            accountType : 'guest',
+            address : scope.quickGuest.address,
+            email : scope.quickGuest.email,
+            name : scope.quickGuest.first_name + ' ' + scope.quickGuest.last_name,
+            phone : scope.quickGuest.phone,
+            photoURL : 'https://mcdowellhomes.com.au/wp-content/uploads/2016/09/no-user-image-300x300.gif',
+            uid : user.uid,
+          }
+          scope.fireStore.doc('Users/' + user.uid).set(cleanUser, {
+            merge: true
           });
 
-        }).catch(function(error) {
-          alert(error.message);
+          localStorage.setItem('guestUser', JSON.stringify(cleanUser));
+          scope.router.navigateByUrl('/member');
         });
-      }else{
-        alert('Invalid Address')
-      }
+
+      }).catch(function(error) {
+        alert(error.message);
+      });
     }else{
       alert('Invalid Email')
     }

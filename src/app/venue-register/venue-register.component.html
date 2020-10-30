@@ -30,6 +30,15 @@
     <h1>Complete your account with Paypal</h1>
     <h2>For now, Ezy Checkin is a one time fee of $14.99 AUD</h2>
     <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+
+    <div class="proccedRow">
+      <h3>Or enter our promo code</h3>
+      <input type="password" placeholder="xyz" [(ngModel)]="promoPass" /><br /><br />
+      <button class="registerVenueBtn" (click)="enterPromoSkipPayment()">Submit</button> <br /><br /><br />
+    </div>
+
+
+
   </div>
 
 </div>

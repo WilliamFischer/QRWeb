@@ -15,7 +15,7 @@ import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
   styleUrls: ['./venue-register.component.scss']
 })
 export class VenueRegisterComponent implements OnInit {
- 
+
   payPalConfig ? : IPayPalConfig;
 
   googleResults: any;
@@ -33,6 +33,8 @@ export class VenueRegisterComponent implements OnInit {
   }
 
   paypalMode: boolean;
+  payPalKey: string = 'sb'
+  promoPass: string;
 
   constructor(
     private fireStore: AngularFirestore,
@@ -59,8 +61,8 @@ export class VenueRegisterComponent implements OnInit {
       console.log(error);
       alert(error.message);
     });
-  }  
-  
+  }
+
   continueToPaypal(){
    this.paypalMode = true;
   }
@@ -88,6 +90,21 @@ export class VenueRegisterComponent implements OnInit {
     }
   }
 
+  enterPromoSkipPayment(){
+    let adminCollection = this.fireStore.doc('Settings/Admin').valueChanges().subscribe(
+      info =>{
+        let promoPassword = info['freeCode'];
+
+        if(this.promoPass.toLowerCase() == promoPassword.toLowerCase()){
+          this.payPalCompleted();
+        }else{
+          alert('Incorrect password. Please try again.')
+        }
+
+        adminCollection.unsubscribe();
+    });
+  }
+
   submitUserDetails(fbUserObj){
 
     this.userObj.uid = fbUserObj.user.uid;
@@ -112,7 +129,7 @@ export class VenueRegisterComponent implements OnInit {
   private initConfig(): void {
     this.payPalConfig = {
         currency: 'AUD',
-        clientId: 'sb',
+        clientId: this.payPalKey,
         createOrderOnClient: (data) => < ICreateOrderRequest > {
             intent: 'CAPTURE',
             purchase_units: [{

@@ -18,7 +18,7 @@
       <div class="coreGrid topSpace">
         <div class="side leftSide">
           <div class="contentWrap">
-            <h1>Welcome to the <br /><label>easist</label> and <label>safest</label><br /> way to check-in</h1>
+            <h1>Welcome to the <br /><label>easiest</label> and <label>safest</label><br /> way to check-in</h1>
 
             <!-- <div class="dualMobileBtns">
               <button class="registerBtn mobileBtn" (click)="guestSigninModel()">Login as a Guest</button>
@@ -30,7 +30,10 @@
         <div class="side rightSide">
 
           <div class="regoForm">
-            <h1>Register & Check-in as <label>Guest</label></h1>
+            <h1>
+              Register on EzyCheckin as a <label>Guest</label> <br />
+              Or login to checkin
+            </h1>
 
             <div class="google-btn" (click)="googleSignin()">
               <div class="google-icon-wrapper">
@@ -51,7 +54,7 @@
                 <input type="tel" name="phone" placeholder="Phone" [(ngModel)]="quickGuest.phone" />
               </div>
               <div>
-                <input ngx-google-places-autocomplete readonly onfocus="this.removeAttribute('readonly');" #places="ngx-places" class="fullSpanInput" (onAddressChange)="onChange($event)"/>
+                <input ngx-google-places-autocomplete readonly onfocus="this.removeAttribute('readonly');" #places="ngx-places" class="fullSpanInput" placeholder="Enter an address (optional)" autocomplete="chrome-off" (onAddressChange)="onChange($event)"/>
               </div>
               <div>
                 <input type="password" name="password" placeholder="Create Password"  [(ngModel)]="quickGuest.password" />
@@ -60,7 +63,7 @@
             </form>
 
             <div class="proccedRow">
-              Already have an account? <label (click)="goToPage('guest-login')">Login</label>
+              Already registered? <label (click)="goToPage('guest-login')">Login to checkin</label>
               <button (click)="submitQuickGuest()">Next ></button>
             </div>
 
@@ -74,13 +77,19 @@
         </div>
       </div>
 
+      <div class="coreGrid blueBack">
+        <div class="fullSide midRegoSec">
+          <h1>Register your business as an EzyCheckin venue today</h1>
+          <!-- <button class="registerBtn" (click)="goToPage('venue-register')">Register as a Venue</button> -->
+        </div>
+      </div>
 
       <div class="coreGrid lightEvenSection">
         <div class="side leftSide">
           <img class="sideImage" src="assets/checkin.svg" />
         </div>
         <div class="side rightSide midRegoSec">
-          <h1>Check your guests in the zero fuss. <br /> Ezy Checkin is made simplicity.</h1>
+          <h1>Check your guests in with zero fuss. <br /> Ezy Checkin is simple.</h1>
           <button class="registerBtn" (click)="goToPage('venue-register')">Register as a venue</button>
         </div>
       </div>
@@ -93,7 +102,7 @@
               <div class="block">
                 <img src="assets/register.svg" />
               </div>
-              <label>Quickly Register your business <a (click)="goToPage('venue-register')">here</a></label>
+              <label>Quickly Register your venue <a (click)="goToPage('venue-register')">here</a></label>
             </div>
             <div class="gridSec">
               <div class="block">
@@ -130,8 +139,8 @@
           <div class="longBlock">
             <h3>Secure</h3>
             <p>
-              We store all data securely in encrypted form, available <br />
-              upon request
+              We store all data securely in encrypted form, <br />
+              in our EzyVault
             </p>
           </div>
           <div class="longBlock">
@@ -144,13 +153,6 @@
         </div>
         <div class="side rightSide">
           <img class="sideImage" src="assets/eating.svg" />
-        </div>
-      </div>
-
-      <div class="coreGrid blueBack">
-        <div class="fullSide midRegoSec">
-          <h1>Register your business as an EzyCheckin venue today</h1>
-          <button class="registerBtn" (click)="goToPage('venue-register')">Register as a Venue</button>
         </div>
       </div>
 
