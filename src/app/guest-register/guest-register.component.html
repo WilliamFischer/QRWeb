@@ -22,7 +22,7 @@
           <input type="tel" name="phone" placeholder="Phone" [(ngModel)]="quickGuest.phone" />
         </div>
         <div>
-          <input ngx-google-places-autocomplete readonly onfocus="this.removeAttribute('readonly');" #places="ngx-places" class="fullSpanInput" (onAddressChange)="onChange($event)"/>
+          <input  placeholder="Enter an address (optional)" autofill="chrome-off" ngx-google-places-autocomplete readonly onfocus="this.removeAttribute('readonly');" #places="ngx-places" class="fullSpanInput" (onAddressChange)="onChange($event)"/>
         </div>
         <div>
           <input type="password" name="password" placeholder="Create Password"  [(ngModel)]="quickGuest.password" />

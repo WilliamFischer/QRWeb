@@ -73,8 +73,11 @@ export class GuestRegisterComponent implements OnInit {
     let scope = this;
 
     if(this.quickGuest.email && this.quickGuest.email.includes('@') && this.quickGuest.email.includes('.')){
-      if(this.quickGuest.address){
+      if(!this.quickGuest.address){
+        this.quickGuest.address = "";
+      }
         this.afAuth.createUserWithEmailAndPassword(this.quickGuest.email, this.quickGuest.password).then(function() {
+         
           scope.afAuth.authState.subscribe(user => {
 
             let cleanUser = {
@@ -106,9 +109,7 @@ export class GuestRegisterComponent implements OnInit {
         }).catch(function(error) {
           alert(error.message);
         });
-      }else{
-        alert('Invalid Address')
-      }
+      
     }else{
       alert('Invalid Email')
     }

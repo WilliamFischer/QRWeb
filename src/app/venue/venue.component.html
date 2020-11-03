@@ -46,7 +46,7 @@
         <div *ngIf="googleSigninMode && googleResults.user.displayName">
 
           <div class="slide">
-            <input type="text" ngx-google-places-autocomplete readonly onfocus="this.removeAttribute('readonly');" #places="ngx-places" (onAddressChange)="onChange($event)"/>
+            <input type="text" placeholder="Enter an address" autofill="chrome-off" ngx-google-places-autocomplete readonly onfocus="this.removeAttribute('readonly');" #places="ngx-places" (onAddressChange)="onChange($event)"/>
           </div>
           <div class="slide">
             <input type="tel" name="ph" placeholder="Phone Number" [(ngModel)]="googleUserObj.ph" />
@@ -74,7 +74,7 @@
         <div *ngIf="emailSignupMode">
           <div class="slide">
             <input type="text" name="name" placeholder="First & Last Name" [(ngModel)]="userObj.name" />
-            <input type="text" readonly onfocus="this.removeAttribute('readonly');" ngx-google-places-autocomplete #places="ngx-places" (onAddressChange)="onChange($event)"/>
+            <input type="text"  placeholder="Enter an address" autofill="chrome-off" readonly onfocus="this.removeAttribute('readonly');" ngx-google-places-autocomplete #places="ngx-places" (onAddressChange)="onChange($event)"/>
           </div>
           <div class="slide">
             <input type="email" name="email" placeholder="Email Address" [(ngModel)]="userObj.email" />
