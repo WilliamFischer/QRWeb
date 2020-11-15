@@ -302,7 +302,7 @@ export class VenueComponent implements OnInit {
     if(this.userObj.name){
       if(this.userObj.address){
         // console.log(this.userObj)
-
+        
         this.userObj.date = new Date().toString();
 
         this.fireStore.doc('Users/' + this.userObj.email).set(this.userObj,{
