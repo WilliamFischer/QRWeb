@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QrPrintComponent implements OnInit {
 
+  qrCodeUrl : string;
   venue: any;
 
   constructor() { }
@@ -14,7 +15,9 @@ export class QrPrintComponent implements OnInit {
   ngOnInit(): void {
     this.venue = JSON.parse(localStorage.getItem('printVenue'));
     console.log(this.venue);
-    // window.print();
+    // window.print(); 
+    this.qrCodeUrl = this.venue.url;
+
   }
 
 }

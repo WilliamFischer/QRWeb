@@ -1,6 +1,6 @@
 .simpleWrapper{
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
   // overflow: auto;
   // overflow-x: hidden;
@@ -71,7 +71,7 @@
 
 .headerSection{
   width: 100%;
-  height: 70vh;
+  height: auto;
   margin-top: 10%;
 
   background: #fefefe;

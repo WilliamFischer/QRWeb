@@ -68,8 +68,11 @@
             </div>
 
             <div class="ppRow">
-              By checking-in you agree to Tempsafe's <label (click)="goToPage('terms')">Terms of Sevice</label><br />
-              View our <label (click)="goToPage('pp')">Privacy Policy</label> or <label (click)="goToPage('data')">Data & Security Statement</label>
+              By checking-in you agree to Tempsafe's 
+              <a href="assets/End_User_License_Agreement.docx">Terms of Sevice</a><br />
+              View our <a href="assets/Virtech_Limited_End_User_Privacy_Policy.docx">User Privacy policy</a>, 
+              <a href="assets/Virtech_Limited_Venue_Privacy_Policy.docx">Venue Privacy policy</a> or
+              <a href="assets/Data_and_Security_statement.docx">Data & Security Statement</a> 
             </div>
 
           </div>
@@ -99,10 +102,10 @@
           <h1>Four Ezy Steps To Set Up</h1>
           <div class="sidewaysGrid">
             <div class="gridSec">
-              <div class="block">
+              <div class="block" (click)="goToPage('venue-register')">
                 <img src="assets/register.svg" />
               </div>
-              <label>Quickly Register your venue <a (click)="goToPage('venue-register')">here</a></label>
+              <label>Quickly Register your venue <a>here</a></label>
             </div>
             <div class="gridSec">
               <div class="block">

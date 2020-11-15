@@ -1,7 +1,18 @@
 <div class="coreWrapper">
     <div *ngIf="!isAdmin">
-        <h1>Please enter the admin password</h1>
-        <input autofocus type="password" [(ngModel)]="attemptedPass"/> <br /><br />
+        <h1>Welcome, please enter your data request</h1>
+        <label>Venue Name: </label>
+        <input autofocus type="text" [(ngModel)]="request.name" placeholder="Venue Name"/> <br /><br />
+        <label>Start Date: </label>
+        <input autofocus type="date" [(ngModel)]="request.sDate" placeholder="Start Date"/> <br /><br />
+        <label>End Date: </label>
+        <input autofocus type="date" [(ngModel)]="request.eDate" placeholder="End Date"/> <br /><br />
+        <label>Start Time: </label>
+        <input autofocus type="time" [(ngModel)]="request.sTime" placeholder="Start Time"/> <br /><br />
+        <label>End Time: </label>
+        <input autofocus type="time" [(ngModel)]="request.eTime" placeholder="End Time"/> <br /><br />
+        <label>Admin Password: </label>
+        <input autofocus type="password" [(ngModel)]="request.aPass" placeholder="Admin Password"/> <br /><br />
         <button (click)="submitPassword()">Submit</button>
     </div>
 

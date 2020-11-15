@@ -1,7 +1,15 @@
 <div class="coreWrapper">
 
-    <img (src)="venue.image" *ngIf="venue.image" />
-    <img src="assets/logo.png" *ngIf="!venue.image" />
+    <img [src]="venue.image" *ngIf="venue.image" />
+  
 
+    <ngx-qrcode
+        [elementType]="qrCodeUrl"
+        [value] = "qrCodeUrl"
+        cssClass = "printQR"
+        errorCorrectionLevel = "L">
+    </ngx-qrcode>
 
+    <p>https://ezycheckin.com.au/{{venue.url}}</p>
+    <h2>EzyCheckin</h2>
 </div>
