@@ -28,6 +28,7 @@ import { MemberComponent } from './member/member.component';
 import { VenueRegisterComponent } from './venue-register/venue-register.component';
 import { GuestRegisterComponent } from './guest-register/guest-register.component';
 import { AdminComponent } from './admin/admin.component';
+import { QrPrintComponent } from './qr-print/qr-print.component';
 
 // Firebase
 import { AngularFireModule } from '@angular/fire';
@@ -86,7 +87,8 @@ export const environment = {
     MemberComponent,
     VenueRegisterComponent,
     GuestRegisterComponent,
-    AdminComponent
+    AdminComponent,
+    QrPrintComponent
   ],
   imports: [
     BrowserModule,

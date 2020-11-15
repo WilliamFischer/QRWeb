@@ -23,6 +23,7 @@ import { MemberComponent } from './member/member.component';
 import { VenueRegisterComponent } from './venue-register/venue-register.component';
 import { GuestRegisterComponent } from './guest-register/guest-register.component';
 import { AdminComponent } from './admin/admin.component';
+import { QrPrintComponent } from './qr-print/qr-print.component';
 
 
 const routes: Routes = [
@@ -46,6 +47,7 @@ const routes: Routes = [
   { path: 'moreinfo', component: MoreinfoComponent },
   { path: 'upload', component: UploadComponent },
   { path: 'admin', component: AdminComponent },
+  { path: 'qrPrint', component: QrPrintComponent },
   { path: ':id', component: VenueComponent },
 ];
 

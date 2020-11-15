@@ -15,6 +15,7 @@ export class GeneratedQRComponent implements OnInit {
   qrCodeUrl : string;
 
   user : any;
+  printVenue : any;
   canShowPage: boolean;
 
 
@@ -50,6 +51,7 @@ export class GeneratedQRComponent implements OnInit {
 
           this.qrCodeUrl = window.location.href.replace('/myqr', '/' + venue.url);
           // console.log('Generated URL is ' + this.qrCodeUrl)
+          this.printVenue = venue;
 
           this.canShowPage = true;
           hasVenue = true;
@@ -72,7 +74,8 @@ export class GeneratedQRComponent implements OnInit {
   }
 
   printTrigger(){
-    window.print();
+    localStorage.setItem('printVenue', JSON.stringify(this.printVenue));
+    this.router.navigate(['/qrPrint']);
   }
 
   logout(){
